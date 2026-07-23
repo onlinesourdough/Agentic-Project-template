@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible problem in a profile, workflow, or bootstrap command.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include secrets or private customer information.
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Profile
+      options:
+        - static-pages
+        - cloudflare-native
+        - convex
+        - external
+        - shared documentation or tooling
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Template version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include the command, expected behavior, observed behavior, and a minimal public repository when possible.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Checks already run
+      placeholder: npm run check

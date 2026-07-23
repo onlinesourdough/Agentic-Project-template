@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose a change tied to a real product responsibility.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Product problem
+      description: Describe the responsibility or boundary the current template does not protect.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and current workaround
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Likely scope
+      options:
+        - shared architecture
+        - static-pages
+        - cloudflare-native
+        - convex
+        - external
+        - bootstrap or delivery tooling
+    validations:
+      required: true
