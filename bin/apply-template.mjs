@@ -8,28 +8,49 @@ const templateRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
+const supportedShapes = new Set([
+  "application",
+  "service",
+  "automation",
+  "integration",
+  "system",
+]);
 const supportedProfiles = new Set([
   "static-pages",
   "cloudflare-native",
   "convex",
   "external",
 ]);
-const expectedScripts = ["lint", "typecheck", "test", "build"];
+const projectMarkers = [
+  ".git",
+  "package.json",
+  "pyproject.toml",
+  "requirements.txt",
+  "go.mod",
+  "Cargo.toml",
+];
+const expectedApplicationScripts = ["lint", "typecheck", "test", "build"];
 
 function usage() {
-  return `Apply AI-first App Template guidance to an official scaffold.
+  return `Apply AI-native Solution Template guidance to an existing target.
 
 Usage:
-  node bin/apply-template.mjs --target <path> --profile <profile> [options]
+  node bin/apply-template.mjs --target <path> --shape <shape> [options]
 
 Required:
-  --target <path>       Existing application with package.json
+  --target <path>       Existing repository or scaffold
+  --shape <shape>       application | service | automation | integration | system
+
+Application:
   --profile <profile>   static-pages | cloudflare-native | convex | external
 
 Options:
   --dry-run             Report changes without writing files
-  --force               Replace files whose contents differ
-  --help                 Show this help`;
+  --force               Replace template-owned files whose contents differ
+  --help                Show this help
+
+Compatibility:
+  --profile without --shape infers application during the v0.x preview.`;
 }
 
 function fail(message, exitCode = 1) {
@@ -42,6 +63,7 @@ function parseArguments(argv) {
     dryRun: false,
     force: false,
     profile: undefined,
+    shape: undefined,
     target: undefined,
   };
 
@@ -62,13 +84,18 @@ function parseArguments(argv) {
       continue;
     }
 
-    if (argument === "--target" || argument === "--profile") {
+    if (
+      argument === "--target" ||
+      argument === "--shape" ||
+      argument === "--profile"
+    ) {
       const value = argv[index + 1];
       if (!value || value.startsWith("--")) {
         throw new Error(`${argument} requires a value`);
       }
 
-      result[argument === "--target" ? "target" : "profile"] = value;
+      const key = argument.slice(2);
+      result[key] = value;
       index += 1;
       continue;
     }
@@ -98,41 +125,69 @@ async function readJson(filePath) {
   }
 }
 
-async function plannedFiles(profile) {
-  const common = [
-    ["AGENTS.md", "AGENTS.md"],
-    ["ARCHITECTURE.md", "docs/app-template/ARCHITECTURE.md"],
-    ["delivery/README.md", "docs/app-template/DELIVERY.md"],
-    [`profiles/${profile}/PROFILE.md`, "docs/app-template/PROFILE.md"],
+async function detectProjectMarkers(targetRoot) {
+  const results = await Promise.all(
+    projectMarkers.map(async (marker) => ({
+      exists: await pathExists(path.join(targetRoot, marker)),
+      marker,
+    })),
+  );
+
+  return results
+    .filter((result) => result.exists)
+    .map((result) => result.marker);
+}
+
+function applicationFiles(profile) {
+  const files = [
+    [
+      "shapes/application/ARCHITECTURE.md",
+      "docs/solution-template/APPLICATION_ARCHITECTURE.md",
+    ],
+    [`profiles/${profile}/PROFILE.md`, "docs/solution-template/PROFILE.md"],
   ];
   const continuousIntegration =
     profile === "convex"
       ? "delivery/github-actions/ci-convex.yml"
       : "delivery/github-actions/ci.yml";
-  common.push([continuousIntegration, ".github/workflows/ci.yml"]);
+  files.push([continuousIntegration, ".github/workflows/ci.yml"]);
+
   const deployment = {
     "cloudflare-native": [
-      [
-        "delivery/github-actions/deploy-cloudflare.yml",
-        ".github/workflows/deploy-cloudflare.yml",
-      ],
+      "delivery/github-actions/deploy-cloudflare.yml",
+      ".github/workflows/deploy-cloudflare.yml",
     ],
     convex: [
-      [
-        "delivery/github-actions/deploy-cloudflare-convex.yml",
-        ".github/workflows/deploy-cloudflare-convex.yml",
-      ],
+      "delivery/github-actions/deploy-cloudflare-convex.yml",
+      ".github/workflows/deploy-cloudflare-convex.yml",
     ],
-    external: [],
+    external: null,
     "static-pages": [
-      [
-        "delivery/github-actions/deploy-github-pages.yml",
-        ".github/workflows/deploy-github-pages.yml",
-      ],
+      "delivery/github-actions/deploy-github-pages.yml",
+      ".github/workflows/deploy-github-pages.yml",
     ],
   };
 
-  return [...common, ...deployment[profile]].map(([source, destination]) => ({
+  if (deployment[profile]) {
+    files.push(deployment[profile]);
+  }
+
+  return files;
+}
+
+function plannedFiles(shape, profile) {
+  const files = [
+    ["AGENTS.md", "AGENTS.md"],
+    ["ARCHITECTURE.md", "docs/solution-template/ARCHITECTURE.md"],
+    ["delivery/README.md", "docs/solution-template/DELIVERY.md"],
+    [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
+  ];
+
+  if (shape === "application") {
+    files.push(...applicationFiles(profile));
+  }
+
+  return files.map(([source, destination]) => ({
     content: readFile(path.join(templateRoot, source), "utf8"),
     destination,
     source,
@@ -154,36 +209,87 @@ async function main() {
     return;
   }
 
-  if (!options.target || !options.profile) {
-    fail("--target and --profile are required");
+  if (!options.target) {
+    fail("--target is required");
     console.error(`\n${usage()}`);
     return;
   }
 
-  if (!supportedProfiles.has(options.profile)) {
+  if (!options.shape && options.profile) {
+    options.shape = "application";
+    console.warn(
+      "Deprecated: --profile without --shape currently infers --shape application. Add the shape explicitly.",
+    );
+  }
+
+  if (!options.shape) {
+    fail("--shape is required");
+    console.error(`\n${usage()}`);
+    return;
+  }
+
+  if (!supportedShapes.has(options.shape)) {
     fail(
-      `unsupported profile "${options.profile}". Choose: ${[
-        ...supportedProfiles,
+      `unsupported shape "${options.shape}". Choose: ${[
+        ...supportedShapes,
       ].join(", ")}`,
     );
     return;
   }
 
-  const targetRoot = path.resolve(process.cwd(), options.target);
-  const packagePath = path.join(targetRoot, "package.json");
-  if (!(await pathExists(packagePath))) {
-    fail(`target must contain package.json: ${targetRoot}`);
+  if (options.shape === "application") {
+    if (!options.profile) {
+      fail("--profile is required for the application shape");
+      return;
+    }
+    if (!supportedProfiles.has(options.profile)) {
+      fail(
+        `unsupported profile "${options.profile}". Choose: ${[
+          ...supportedProfiles,
+        ].join(", ")}`,
+      );
+      return;
+    }
+  } else if (options.profile) {
+    fail("--profile is only valid for the application shape");
     return;
   }
 
-  const targetPackage = await readJson(packagePath);
-  const scripts = targetPackage.scripts ?? {};
-  const missingScripts = expectedScripts.filter((script) => !scripts[script]);
+  const targetRoot = path.resolve(process.cwd(), options.target);
+  const detectedProjectMarkers = await detectProjectMarkers(targetRoot);
+  if (detectedProjectMarkers.length === 0) {
+    fail(
+      `target must be an existing repository or scaffold containing one of: ${projectMarkers.join(
+        ", ",
+      )}`,
+    );
+    return;
+  }
+
+  const packagePath = path.join(targetRoot, "package.json");
+  if (
+    options.shape === "application" &&
+    !detectedProjectMarkers.includes("package.json")
+  ) {
+    fail("application target must contain package.json");
+    return;
+  }
+
+  let missingScripts = [];
+  if (detectedProjectMarkers.includes("package.json")) {
+    const targetPackage = await readJson(packagePath);
+    if (options.shape === "application") {
+      const scripts = targetPackage.scripts ?? {};
+      missingScripts = expectedApplicationScripts.filter(
+        (script) => !scripts[script],
+      );
+    }
+  }
+
   const templatePackage = await readJson(
     path.join(templateRoot, "package.json"),
   );
-  const files = await plannedFiles(options.profile);
-
+  const files = plannedFiles(options.shape, options.profile);
   const resolvedFiles = await Promise.all(
     files.map(async (file) => ({
       ...file,
@@ -193,14 +299,16 @@ async function main() {
   );
   const manifest = {
     templateVersion: templatePackage.version,
-    profile: options.profile,
+    shape: options.shape,
+    profile: options.profile ?? null,
+    detectedProjectMarkers,
     appliedFiles: resolvedFiles.map((file) => file.destination).sort(),
     missingScripts,
   };
   resolvedFiles.push({
     content: `${JSON.stringify(manifest, null, 2)}\n`,
-    destination: ".app-template.json",
-    destinationPath: path.join(targetRoot, ".app-template.json"),
+    destination: ".solution-template.json",
+    destinationPath: path.join(targetRoot, ".solution-template.json"),
     source: "generated manifest",
   });
 
@@ -258,11 +366,19 @@ async function main() {
     }
   }
 
+  if (options.shape !== "application") {
+    console.log(
+      "\nNo universal CI or deployment workflow was installed. Follow the selected shape guide and the target runtime's official tooling.",
+    );
+  }
+
   const changed = actions.filter((action) => action.state !== "unchanged");
+  const selection =
+    options.shape === "application"
+      ? `${options.shape}/${options.profile}`
+      : options.shape;
   console.log(
-    `\n${options.dryRun ? "Dry run complete" : "Template applied"}: ${
-      options.profile
-    } (${changed.length} file${changed.length === 1 ? "" : "s"})`,
+    `\n${options.dryRun ? "AI-native Solution Template dry run complete" : "AI-native Solution Template applied"}: ${selection} (${changed.length} file${changed.length === 1 ? "" : "s"})`,
   );
 }
 

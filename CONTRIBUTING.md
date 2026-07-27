@@ -41,7 +41,8 @@ Open pull requests against `dev`. Include:
 - migration or compatibility notes
 - screenshots only when presentation changed
 
-Changes to profile names, bootstrap options, `.app-template.json`, or copied
-file locations are public-interface changes and require a changelog entry.
+Changes to shape or profile names, bootstrap options,
+`.solution-template.json`, legacy manifest handling, or copied file locations
+are public-interface changes and require a changelog entry.
 
 By participating, you agree to follow [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
