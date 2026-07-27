@@ -1,12 +1,12 @@
 {
-  "name": "@arcitai/app-template",
-  "version": "0.1.0",
-  "description": "AI-first, product-first architecture and delivery profiles for small web products.",
+  "name": "@arcitai/solution-template",
+  "version": "0.2.0",
+  "description": "AI-native architecture and delivery guidance for applications, services, automations, integrations, and systems.",
   "private": true,
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
   },
   "scripts": {
     "test": "node --test",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "markdown-link-check": "3.14.2",
-    "markdownlint-cli2": "0.23.1",
+    "markdownlint-cli2": "0.23.2",
     "prettier": "3.9.6",
     "yaml": "2.9.0"
   }
