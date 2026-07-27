@@ -1,7 +1,7 @@
 # Online Sourdough Resources
 
 [`resources.onlinesourdough.com`](https://resources.onlinesourdough.com) is the
-first product migrated to the AI-first App Template boundaries.
+first product migrated to the AI-native Solution Template boundaries.
 
 ## Product shape
 
