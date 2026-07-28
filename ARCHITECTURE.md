@@ -2,18 +2,23 @@
 
 This document contains the principles shared by every solution shape. The
 copied `SHAPE.md` contains the responsibilities and delivery gate for the
-selected application, service, automation, integration, or system.
+selected application, service, automation, integration, or system. Read
+`LIFECYCLE.md` first for the template's entry, Adoption responsibility, and
+exit.
 
 ## Start with sufficient context
 
 Code and frameworks come after business understanding and architecture. Before
 implementation, find the answers to:
 
-1. Which outcome should change?
-2. Which existing workflow or system is affected?
-3. Who owns data, identity, process, deployment, and operations?
-4. What is the smallest independently valuable slice?
-5. What is explicitly deferred?
+1. Why is a maintained technical intervention justified?
+2. Which outcome should change, and what is the current baseline?
+3. Which users, workflow, or system are affected?
+4. Who owns data, identity, process, deployment, and operations?
+5. Which rules, examples, and exceptions matter to the first slice?
+6. What is the smallest independently valuable slice?
+7. What will prove technical acceptance and early adoption?
+8. What is explicitly deferred?
 
 The answers may live in an AIOS task, board issue, README, decision record,
 architecture map, customer conversation, or another useful artifact. Do not

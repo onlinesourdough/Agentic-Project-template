@@ -8,11 +8,13 @@ Use the selected `SHAPE.md` for its specific evidence gate.
 Before changing a target, identify:
 
 - intended outcome and testable done-state
+- current baseline and evidence that a technical intervention is justified
 - existing owners and contracts
 - selected solution shape
 - smallest valuable slice
 - explicit non-goals
 - runtime and operational owner
+- technical acceptance and early adoption evidence
 
 Do not require a fixed business brief. Link or read the best existing source of
 context and ask only for material missing decisions.
@@ -83,11 +85,23 @@ Use:
 - `chore/<short-name>`: maintenance
 
 Create feature branches from `dev`, open pull requests to `dev`, and release
-through a pull request from `dev` to `main`. Hotfixes branch from `main` and are
-merged back into `dev`.
+through a pull request from `dev` to `main`.
+
+Use these merge methods deliberately:
+
+- squash feature and fix pull requests into `dev`
+- merge release pull requests from `dev` to `main` with a merge commit
+- never squash or rebase a `dev` to `main` release pull request
+- after a hotfix reaches `main`, merge `main` back into `dev` with a merge
+  commit before starting the next release
+
+The merge commit keeps the integration branch in production history, so the
+next release review contains only new work. Squashing or rebasing the release
+pull request makes `main` and `dev` diverge even when their files match.
 
 Protect production branches from force-push. Require the checks that actually
-prove the selected shape.
+prove the selected shape. Do not require linear history on `main` or `dev`,
+because release and hotfix synchronization intentionally use merge commits.
 
 ## Pull requests
 
@@ -171,6 +185,28 @@ or cloud runtime configuration are necessary.
 - Verify deployment output, health, and the critical journey before claiming a
   release succeeded.
 
+## Launch, adoption, and handover
+
+Deployment is a technical checkpoint. It does not prove that the solution works
+inside the real process or can be operated by its owner.
+
+For the selected slice:
+
+1. Launch with a named user, workflow, and operational owner.
+2. Verify acceptance in the real environment.
+3. Make the agreed adoption, reliability, cost, and failure evidence observable.
+4. Provide only the user, operator, recovery, and training material the slice
+   requires.
+5. Observe friction and incidents, then fix, reduce, or stop the slice when the
+   evidence justifies it.
+6. Confirm another human can operate, recover, and change the solution.
+7. Return learning to the relevant project or business context without
+   duplicating its source of truth.
+
+Business change management and interpretation of company-level outcomes sit
+outside this technical delivery guide. Record the evidence and named owner
+instead of claiming the software caused a business result on its own.
+
 ## Completion
 
 Before Done:
@@ -178,9 +214,10 @@ Before Done:
 1. Walk every requirement against evidence.
 2. Resolve artifact paths and links.
 3. Run automated checks and real-runtime acceptance appropriate to the shape.
-4. State anything skipped, partial, or unavailable.
-5. Confirm recovery, rollback, replay, or disable behavior.
-6. Record operational ownership and handover notes.
+4. Review early adoption evidence or state why it is not yet available.
+5. State anything skipped, partial, or unavailable.
+6. Confirm recovery, rollback, replay, or disable behavior.
+7. Record operational ownership, documentation, and handover evidence.
 
 ## References
 

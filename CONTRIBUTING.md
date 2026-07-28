@@ -15,8 +15,8 @@ current official scaffold.
 
 ## Development
 
-Repository checks require Node.js 22 or newer. The zero-dependency applicator
-itself remains compatible with Node.js 20 or newer.
+Repository checks and the zero-dependency applicator require Node.js 20 or
+newer.
 
 ```sh
 npm ci
@@ -44,5 +44,9 @@ Open pull requests against `dev`. Include:
 Changes to shape or profile names, bootstrap options,
 `.solution-template.json`, legacy manifest handling, or copied file locations
 are public-interface changes and require a changelog entry.
+
+Maintainers squash focused pull requests into `dev`. Releases use a merge commit
+from `dev` to `main`; do not squash or rebase the release pull request. This
+keeps `dev` in production history and future release diffs focused.
 
 By participating, you agree to follow [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).

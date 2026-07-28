@@ -178,6 +178,7 @@ function applicationFiles(profile) {
 function plannedFiles(shape, profile) {
   const files = [
     ["AGENTS.md", "AGENTS.md"],
+    ["LIFECYCLE.md", "docs/solution-template/LIFECYCLE.md"],
     ["ARCHITECTURE.md", "docs/solution-template/ARCHITECTURE.md"],
     ["delivery/README.md", "docs/solution-template/DELIVERY.md"],
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],

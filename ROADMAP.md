@@ -5,6 +5,7 @@
 - Five documented solution shapes.
 - Four Application runtime profiles.
 - Shape-aware, zero-dependency applicator.
+- Explicit Plan, Build, Adoption, and handover lifecycle boundaries.
 - Static Application reference.
 - Cloudflare-native Resources case study.
 - Retrospective multi-shape CryptoClub case study.

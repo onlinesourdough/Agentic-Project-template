@@ -1,6 +1,6 @@
 {
   "name": "@arcitai/solution-template",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AI-native architecture and delivery guidance for applications, services, automations, integrations, and systems.",
   "private": true,
   "type": "module",

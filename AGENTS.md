@@ -8,41 +8,47 @@ framework choices.
 
 Before implementation, find:
 
-1. the intended outcome
-2. the existing workflow or system being changed
-3. the owners of data, identity, process, deployment, and operations
-4. the smallest independently valuable slice
-5. the capabilities explicitly deferred
+1. evidence that a maintained technical intervention is justified
+2. the intended outcome and current baseline
+3. the users, workflow, or system being changed
+4. the owners of data, identity, process, deployment, and operations
+5. the rules, examples, and exceptions relevant to the first slice
+6. the smallest independently valuable slice
+7. the evidence that will prove technical acceptance and early adoption
+8. the capabilities explicitly deferred
 
 Context may live in a README, issue, decision record, architecture map, AIOS
-task, or conversation. Do not impose a new brief format. If a material answer
-is missing, ask one precise question.
+task, optional `DESIGN.md`, or conversation. Do not impose a new brief format.
+If a material answer is missing, ask one precise question.
 
 ## Read in this order
 
 In an applied repository:
 
 1. existing project context
-2. `docs/solution-template/ARCHITECTURE.md`
-3. `docs/solution-template/SHAPE.md`
-4. `docs/solution-template/PROFILE.md` for an Application
-5. `docs/solution-template/APPLICATION_ARCHITECTURE.md` when its detail is needed
-6. `docs/solution-template/DELIVERY.md`
+2. `docs/solution-template/LIFECYCLE.md`
+3. `docs/solution-template/ARCHITECTURE.md`
+4. `docs/solution-template/SHAPE.md`
+5. `docs/solution-template/PROFILE.md` for an Application
+6. `docs/solution-template/APPLICATION_ARCHITECTURE.md` when its detail is needed
+7. `docs/solution-template/DELIVERY.md`
 
-In the source template repository, read `README.md`, `ARCHITECTURE.md`,
-`delivery/README.md`, the selected file under `shapes/`, and an Application
-profile only when relevant.
+In the source template repository, read `README.md`, `LIFECYCLE.md`,
+`ARCHITECTURE.md`, `delivery/README.md`, the selected file under `shapes/`, and
+an Application profile only when relevant.
 
 ## Working order
 
-1. Confirm one solution shape.
-2. Inspect existing owners and boundaries.
-3. Choose the smallest valuable slice.
+1. Confirm the entry gate and one solution shape.
+2. Inspect existing owners, boundaries, baseline, and adoption evidence.
+3. Choose the smallest valuable slice and explicit non-goals.
 4. Write or update tests before testable behavior.
 5. Add only capabilities required by the slice.
 6. Keep product or domain rules outside framework entrypoints.
 7. Run the checks appropriate to the runtime and shape.
-8. Verify the real outcome, failure path, recovery, and handover.
+8. Launch into the real workflow and observe the agreed evidence.
+9. Verify failure paths, recovery, documentation, and handover.
+10. Return learning to the relevant business or project context.
 
 Do not create every possible folder. A missing layer is correct when the
 solution has no responsibility for it.
@@ -126,6 +132,8 @@ Before declaring completion:
 - confirm the selected shape still fits
 - confirm no existing owner was duplicated
 - exercise relevant success and failure paths
+- verify acceptance and adoption evidence in the real workflow
+- confirm documentation, operations, recovery, and handover are sufficient
 - document skipped or unavailable evidence
 - keep feature branches targeted at `dev`; release changes move `dev` to `main`
 
