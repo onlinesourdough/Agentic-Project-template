@@ -24,20 +24,40 @@ AI-native does not mean AI-only or maximally autonomous. It means:
 Every repository should be **coding-agent-ready**. A product becomes
 **agent-capable** only when a real user outcome requires a runtime agent.
 
+## Where it enters the work
+
+The Solution Template does not replace discovery, business context, or the
+decision that software should exist. It joins at the technical edge of Plan,
+governs Build, and remains through the technical side of Adoption.
+
+| Stage     | Template responsibility                                                        |
+| --------- | ------------------------------------------------------------------------------ |
+| Discovery | None: understand the work, constraint, people, and build-or-not decision       |
+| Outcome   | Consume: users, baseline, data, rules, examples, exceptions, and useful result |
+| Plan      | Join: choose the smallest owned technical change and explicit non-goals        |
+| Build     | Govern: design, code, AI, integrations, tests, security, deployment, recovery  |
+| Adoption  | Support: documentation, measurement, iteration, operations, and handover       |
+
+Deployment is a checkpoint, not the end. Read
+[`LIFECYCLE.md`](LIFECYCLE.md) for the entry gate, optional shared-intent
+pattern, scope boundaries, feedback loop, and exit conditions.
+
 ## Start with context
 
 The template does not require a particular brief, AIOS, or planning tool. Before
 implementation, Codex or another collaborator should be able to find:
 
-1. the intended outcome
-2. the existing workflow or system being changed
+1. the intended outcome and current baseline
+2. the users, workflow, or system being changed
 3. the owners of data, identity, process, deployment, and operations
-4. the smallest independently valuable slice
-5. the capabilities explicitly deferred
+4. the rules, examples, and exceptions that matter to the first slice
+5. the smallest independently valuable slice
+6. the evidence that will prove technical acceptance and early adoption
+7. the capabilities explicitly deferred
 
 That context may live in an issue, README, decision record, architecture map,
-customer conversation, or an AIOS. If something material is missing, ask one
-precise question instead of imposing a new intake schema.
+customer conversation, optional `DESIGN.md`, or an AIOS. If something material
+is missing, ask one precise question instead of imposing a new intake schema.
 
 AIOS and this template are independent. AIOS can help decide what deserves to
 change; the Solution Template helps build the technical change. They share
@@ -206,6 +226,7 @@ emerged in a real customer platform before the current AIOS existed.
 ## Repository map
 
 - [`AGENTS.md`](AGENTS.md): short operational rules for coding agents
+- [`LIFECYCLE.md`](LIFECYCLE.md): entry, pipeline scope, adoption, and exit
 - [`ARCHITECTURE.md`](ARCHITECTURE.md): principles shared by all shapes
 - [`shapes/`](shapes): responsibility and delivery rules by solution shape
 - [`profiles/`](profiles): Application runtime profiles

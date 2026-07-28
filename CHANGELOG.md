@@ -3,6 +3,26 @@
 All notable changes are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-07-28
+
+### Added
+
+- A shared Solution Lifecycle guide that places the template at the technical
+  edge of Plan, through Build, and into the technical side of Adoption.
+- Entry and exit gates covering baseline, shared intent, acceptance, adoption,
+  operations, recovery, documentation, and handover.
+- An optional lightweight `DESIGN.md` pattern without introducing a required
+  brief, schema, or AIOS handoff.
+
+### Changed
+
+- The applicator now copies `docs/solution-template/LIFECYCLE.md` for every
+  solution shape.
+- Agent and delivery guidance now treats deployment as a checkpoint rather than
+  completion.
+- Clarified that AIOS may route to a separate project repository while project
+  truth and unattended execution remain in that repository.
+
 ## [0.2.0] - 2026-07-27
 
 ### Added

@@ -8,11 +8,13 @@ Use the selected `SHAPE.md` for its specific evidence gate.
 Before changing a target, identify:
 
 - intended outcome and testable done-state
+- current baseline and evidence that a technical intervention is justified
 - existing owners and contracts
 - selected solution shape
 - smallest valuable slice
 - explicit non-goals
 - runtime and operational owner
+- technical acceptance and early adoption evidence
 
 Do not require a fixed business brief. Link or read the best existing source of
 context and ask only for material missing decisions.
@@ -171,6 +173,28 @@ or cloud runtime configuration are necessary.
 - Verify deployment output, health, and the critical journey before claiming a
   release succeeded.
 
+## Launch, adoption, and handover
+
+Deployment is a technical checkpoint. It does not prove that the solution works
+inside the real process or can be operated by its owner.
+
+For the selected slice:
+
+1. Launch with a named user, workflow, and operational owner.
+2. Verify acceptance in the real environment.
+3. Make the agreed adoption, reliability, cost, and failure evidence observable.
+4. Provide only the user, operator, recovery, and training material the slice
+   requires.
+5. Observe friction and incidents, then fix, reduce, or stop the slice when the
+   evidence justifies it.
+6. Confirm another human can operate, recover, and change the solution.
+7. Return learning to the relevant project or business context without
+   duplicating its source of truth.
+
+Business change management and interpretation of company-level outcomes sit
+outside this technical delivery guide. Record the evidence and named owner
+instead of claiming the software caused a business result on its own.
+
 ## Completion
 
 Before Done:
@@ -178,9 +202,10 @@ Before Done:
 1. Walk every requirement against evidence.
 2. Resolve artifact paths and links.
 3. Run automated checks and real-runtime acceptance appropriate to the shape.
-4. State anything skipped, partial, or unavailable.
-5. Confirm recovery, rollback, replay, or disable behavior.
-6. Record operational ownership and handover notes.
+4. Review early adoption evidence or state why it is not yet available.
+5. State anything skipped, partial, or unavailable.
+6. Confirm recovery, rollback, replay, or disable behavior.
+7. Record operational ownership, documentation, and handover evidence.
 
 ## References
 
