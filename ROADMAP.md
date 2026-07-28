@@ -1,48 +1,21 @@
 # Roadmap
 
-## AI-native foundation: 0.2
+The MIT core stays deliberately small:
 
-- Five documented solution shapes.
-- Four Application runtime profiles.
-- Shape-aware, zero-dependency applicator.
-- Explicit Plan, Build, Adoption, and handover lifecycle boundaries.
-- Static Application reference.
-- Cloudflare-native Resources case study.
-- Retrospective multi-shape CryptoClub case study.
-- Public CI, contribution, security, and release practices.
+- one zero-dependency applicator
+- five solution shapes
+- four Application profiles
+- only workflows that can be honest without knowing the target runtime
 
-## Adoption: 0.3
+Future changes must come from repeated use in real projects. Prefer improving a
+shape, profile, workflow, or test over adding another general guide.
 
-- Feedback-driven shape and profile refinements.
-- More real-world case studies and operating-cost baselines.
-- Update and uninstall support for files recorded in
-  `.solution-template.json`.
-- Optional machine-readable conformance checks without imposing a business
-  intake schema.
-- A proven agent-capable case before optional runtime integration guidance.
+Possible next work:
 
-## Product layer
+- prove the AIOS-to-project journey with fresh repositories
+- add safe update or cleanup support for recorded template-owned files
+- refine workflows when official platforms or real failures require it
 
-Commercial products remain separate from the MIT core:
-
-- guided implementation material in Online Sourdough Resources
-- maintained production-readiness and conformance checks
-- agent and workflow packs
-- done-with-you adoption through Inner Circle
-- done-for-you delivery through Arc'IT
-
-The same method is delivered at different service levels:
-
-| Layer                  | Customer buys                                                        |
-| ---------------------- | -------------------------------------------------------------------- |
-| MIT template           | Safe architecture, decisions, bootstrap, and baseline workflows      |
-| Resources              | Maintained recipes, examples, evaluations, and implementation kits   |
-| Inner Circle           | Solution mapping, implementation direction, review, and integration  |
-| Arc'IT / Complete Bake | Customer-specific implementation, migration, operation, and handover |
-
-AIOS can help identify what deserves to change. Solution Template can then
-support a justified technical intervention. They remain independent products
-with no shared runtime or required data handoff.
-
-Customer-specific code does not automatically become a reusable product. No
-paid layer should make the free core unsafe or intentionally incomplete.
+Business discovery, implementation recipes, case studies, agent packs, and
+commercial delivery material belong in AIOS, Online Sourdough Resources, Inner
+Circle, or Arc'IT—not in the copied technical core.

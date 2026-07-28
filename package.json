@@ -1,7 +1,7 @@
 {
   "name": "@arcitai/solution-template",
-  "version": "0.2.1",
-  "description": "AI-native architecture and delivery guidance for applications, services, automations, integrations, and systems.",
+  "version": "0.3.0",
+  "description": "A minimal AI-native seed for applications, services, automations, integrations, and systems.",
   "private": true,
   "type": "module",
   "license": "MIT",

@@ -69,12 +69,9 @@ async function readManifest(target) {
   );
 }
 
-async function assertCommonGuidance(target, manifest, shape) {
+async function assertMinimalGuidance(target, manifest, shape) {
   for (const [source, destination] of [
     ["AGENTS.md", "AGENTS.md"],
-    ["LIFECYCLE.md", "docs/solution-template/LIFECYCLE.md"],
-    ["ARCHITECTURE.md", "docs/solution-template/ARCHITECTURE.md"],
-    ["delivery/README.md", "docs/solution-template/DELIVERY.md"],
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ]) {
     assert.equal(
@@ -84,18 +81,14 @@ async function assertCommonGuidance(target, manifest, shape) {
     assert.equal(manifest.appliedFiles.includes(destination), true);
   }
 
-  assert.equal(
-    manifest.appliedFiles.includes(
-      "docs/solution-template/AGENT_CAPABILITIES.md",
-    ),
-    false,
-  );
-  assert.equal(
-    manifest.appliedFiles.includes(
-      "docs/solution-template/ADOPTING_EXISTING_APPS.md",
-    ),
-    false,
-  );
+  for (const removedFile of [
+    "docs/solution-template/LIFECYCLE.md",
+    "docs/solution-template/ARCHITECTURE.md",
+    "docs/solution-template/DELIVERY.md",
+    "docs/solution-template/APPLICATION_ARCHITECTURE.md",
+  ]) {
+    assert.equal(manifest.appliedFiles.includes(removedFile), false);
+  }
 }
 
 for (const [profile, deployment] of [
@@ -114,7 +107,7 @@ for (const [profile, deployment] of [
       assert.equal(manifest.profile, profile);
       assert.deepEqual(manifest.detectedProjectMarkers, ["package.json"]);
       assert.deepEqual(manifest.missingScripts, []);
-      await assertCommonGuidance(target, manifest, "application");
+      await assertMinimalGuidance(target, manifest, "application");
 
       assert.equal(
         await readFile(
@@ -131,15 +124,10 @@ for (const [profile, deployment] of [
         [`.github/workflows/${deployment}`],
       );
       assert.equal(
-        manifest.appliedFiles.includes(
-          "docs/solution-template/APPLICATION_ARCHITECTURE.md",
-        ),
-        true,
-      );
-      assert.equal(
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         true,
       );
+      assert.equal(manifest.appliedFiles.length, 5);
     } finally {
       await rm(target, { recursive: true, force: true });
     }
@@ -164,7 +152,8 @@ test("external application copies CI without a deployment workflow", async () =>
       manifest.appliedFiles.includes(".github/workflows/ci.yml"),
       true,
     );
-    await assertCommonGuidance(target, manifest, "application");
+    await assertMinimalGuidance(target, manifest, "application");
+    assert.equal(manifest.appliedFiles.length, 4);
   } finally {
     await rm(target, { recursive: true, force: true });
   }
@@ -194,16 +183,11 @@ for (const [shape, marker] of [
         false,
       );
       assert.equal(
-        manifest.appliedFiles.includes(
-          "docs/solution-template/APPLICATION_ARCHITECTURE.md",
-        ),
-        false,
-      );
-      assert.equal(
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         false,
       );
-      await assertCommonGuidance(target, manifest, shape);
+      assert.equal(manifest.appliedFiles.length, 2);
+      await assertMinimalGuidance(target, manifest, shape);
     } finally {
       await rm(target, { recursive: true, force: true });
     }

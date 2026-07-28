@@ -1,13 +1,13 @@
 # Contributing
 
-Thank you for helping make small products cheaper, safer, and easier to own.
+Thank you for helping make small technical solutions safer and easier to own.
 
 ## Before starting
 
 1. Search existing issues and discussions.
-2. Open an issue for a new profile, public interface, or architectural change.
+2. Open an issue for a new shape, profile, workflow, or public interface.
 3. Create a feature or fix branch from `dev`.
-4. Keep the change focused on a real product boundary.
+4. Keep the change focused on a repeated technical need.
 
 Do not commit a generated TanStack or Convex starter into this repository.
 Create reference applications in separate repositories so they can follow the
@@ -41,7 +41,7 @@ Open pull requests against `dev`. Include:
 - migration or compatibility notes
 - screenshots only when presentation changed
 
-Changes to shape or profile names, bootstrap options,
+Changes to shape or profile names, applicator options,
 `.solution-template.json`, legacy manifest handling, or copied file locations
 are public-interface changes and require a changelog entry.
 

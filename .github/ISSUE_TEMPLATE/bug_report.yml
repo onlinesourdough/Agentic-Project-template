@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a reproducible problem in a profile, workflow, or bootstrap command.
+description: Report a reproducible problem in a shape, profile, workflow, or applicator command.
 title: "[Bug]: "
 labels:
   - bug
@@ -8,22 +8,28 @@ body:
     attributes:
       value: Do not include secrets or private customer information.
   - type: dropdown
-    id: profile
+    id: area
     attributes:
-      label: Profile
+      label: Area
       options:
+        - application
+        - service
+        - automation
+        - integration
+        - system
         - static-pages
         - cloudflare-native
         - convex
         - external
-        - shared documentation or tooling
+        - applicator
+        - workflow
     validations:
       required: true
   - type: input
     id: version
     attributes:
       label: Template version
-      placeholder: 0.1.0
+      placeholder: 0.3.0
     validations:
       required: true
   - type: textarea

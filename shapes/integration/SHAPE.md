@@ -1,47 +1,25 @@
-# Integration Shape
+# Integration
 
-Use this shape for a webhook receiver, protocol adapter, proxy, bot boundary, or
-translation layer between authoritative systems.
+A webhook, adapter, proxy, bot boundary, or other connection between
+authoritative systems.
 
-## Ownership map
+## Owns
 
-Name:
+Own translation and delivery, not a new system of record. Name the upstream,
+downstream, credentials, mapping, compatibility, and incident owners.
 
-- upstream owner
-- downstream owner
-- authentication and credential owner
-- source of truth
-- mapping and compatibility owner
-- incident owner
+## Boundaries
 
-An integration transports and translates responsibility. It does not become a
-new system of record.
+- Validate service identity, signatures, accepted events, and commands.
+- Test schema and semantic mapping.
+- Define timeouts, rate limits, retries, duplicates, ordering, and
+  acknowledgement.
+- Make partial failure and reconciliation observable.
+- Redact payloads and downstream internals from logs and errors.
 
-## Boundary behavior
+## Evidence
 
-Validate and test:
-
-- signatures, tokens, or service identity
-- accepted events or commands
-- schema and semantic mapping
-- timeouts, rate limits, and retries
-- duplicate and out-of-order delivery
-- acknowledgement behavior
-- partial failure and reconciliation
-
-Return stable errors without exposing credentials or downstream internals.
-
-## Operations
-
-Expose health that distinguishes runtime availability from downstream
-configuration. Redact payloads in logs, make delivery failures observable, and
-document command registration, secret rotation, replay, and rollback where
-relevant.
-
-## Delivery gate
-
-- upstream and downstream contracts are explicit
-- source-of-truth ownership is unchanged
-- authentication and mapping have tests
-- retry, duplicate, timeout, and downstream failure are verified
-- operators can identify and replay or reconcile failed work
+- auth and mapping tests pass
+- timeout, retry, duplicate, and downstream failure are exercised
+- failed work can be identified, replayed, or reconciled
+- source-of-truth ownership remains unchanged
