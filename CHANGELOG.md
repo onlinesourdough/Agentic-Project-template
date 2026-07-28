@@ -22,6 +22,8 @@ All notable changes are documented here. This project follows
   completion.
 - Clarified that AIOS may route to a separate project repository while project
   truth and unattended execution remain in that repository.
+- Defined merge commits for `dev` to `main` releases so long-lived branch
+  ancestry and future release diffs remain correct.
 
 ## [0.2.0] - 2026-07-27
 
