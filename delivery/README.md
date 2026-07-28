@@ -85,11 +85,23 @@ Use:
 - `chore/<short-name>`: maintenance
 
 Create feature branches from `dev`, open pull requests to `dev`, and release
-through a pull request from `dev` to `main`. Hotfixes branch from `main` and are
-merged back into `dev`.
+through a pull request from `dev` to `main`.
+
+Use these merge methods deliberately:
+
+- squash feature and fix pull requests into `dev`
+- merge release pull requests from `dev` to `main` with a merge commit
+- never squash or rebase a `dev` to `main` release pull request
+- after a hotfix reaches `main`, merge `main` back into `dev` with a merge
+  commit before starting the next release
+
+The merge commit keeps the integration branch in production history, so the
+next release review contains only new work. Squashing or rebasing the release
+pull request makes `main` and `dev` diverge even when their files match.
 
 Protect production branches from force-push. Require the checks that actually
-prove the selected shape.
+prove the selected shape. Do not require linear history on `main` or `dev`,
+because release and hotfix synchronization intentionally use merge commits.
 
 ## Pull requests
 
