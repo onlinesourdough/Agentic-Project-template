@@ -1,66 +1,23 @@
-# Static Pages profile
+# Static Pages
 
-Choose this profile for a public site, documentation, portfolio, open resource,
-or developer-product storefront that can be built entirely to static files.
+Use for a public site that builds entirely to `dist/`.
 
-## Minimum capabilities
+## Runtime
 
-- TypeScript and React
-- Vite with TanStack Router or another client/static router
-- `dist/` build output
+- Vite with a static/client router
 - GitHub Actions CI
 - GitHub Pages deployment
 
-Create the current TanStack Router scaffold with:
+Expected scripts are `lint`, `typecheck`, `test`, and `build`. Use the current
+official scaffold's commands when their names differ.
 
-```sh
-npx @tanstack/cli@latest create my-product \
-  --router-only \
-  --blank \
-  --toolchain eslint
-```
+The copied workflow sets `VITE_BASE_PATH` to the repository subpath. The app
+must use it in Vite and router base configuration. Set the repository variable
+`VITE_BASE_PATH=/` for a custom domain.
 
-Do not select TanStack Start SSR for GitHub Pages.
+GitHub Pages has no application server. Use pre-rendering, a hash router, or a
+deliberate fallback for client routes.
 
-## Expected scripts
-
-```json
-{
-  "scripts": {
-    "lint": "eslint .",
-    "typecheck": "npm run generate-routes && tsc --noEmit",
-    "test": "vitest run",
-    "build": "vite build"
-  }
-}
-```
-
-Use the scripts produced by the current official scaffold when they differ.
-The apply tool reports missing scripts but does not rewrite `package.json`.
-
-## Deployment contract
-
-The copied Pages workflow publishes `dist/`. It sets `VITE_BASE_PATH` to the
-repository subpath by default. The application must use that value in its Vite
-and router base configuration.
-
-For a custom domain, create the repository variable:
-
-```text
-VITE_BASE_PATH=/
-```
-
-Use pre-rendered routes, a hash router, or a deliberate 404 fallback. GitHub
-Pages does not provide an application server for arbitrary client-side route
-fallbacks.
-
-## Do not add yet
-
-- authentication
-- a database
-- billing SDKs
-- server-side entitlements
-- queues or background workers
-
-A static storefront may link to Stripe Payment Links, but paid files and
-secrets must not be present in the public repository or Pages artifact.
+Do not add auth, a database, billing, queues, or private files. A static
+storefront may link to checkout, but secrets, paid content, and entitlement
+decisions must not exist in the public build.

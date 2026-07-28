@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   checks:
-    name: Documentation and bootstrap
+    name: Template and applicator
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

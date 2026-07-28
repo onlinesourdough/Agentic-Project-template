@@ -24,6 +24,6 @@ assessed.
 
 ## Scope
 
-Security reports may cover the bootstrap tool, copied workflows, documented
+Security reports may cover the applicator, copied workflows, documented
 access-control patterns, or secrets handling. Vulnerabilities in upstream
 frameworks and platforms should also be reported to the relevant maintainer.
