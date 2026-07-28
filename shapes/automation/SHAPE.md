@@ -1,51 +1,24 @@
-# Automation Shape
+# Automation
 
-Use this shape for an n8n workflow, scheduled job, event-driven process, or
-other orchestration whose main responsibility is moving work between steps.
+A triggered or scheduled workflow that moves work through explicit steps.
 
-## Process contract
+## Owns
 
-Document:
+Document the trigger, input, ordered steps, output, system owner for each step,
+and which decisions are deterministic or AI-driven. Keep complex reusable
+domain logic in a service rather than the workflow engine.
 
-- trigger and schedule
-- accepted input
-- ordered steps and decision points
-- output and delivery target
-- system owner for every step
-- expected KPI, latency, and freshness
-- deterministic versus AI-driven steps
+## Boundaries
 
-Keep complex reusable domain logic in a bounded service. Keep orchestration in
-the workflow engine.
+- Define duplicate handling, idempotency, retry, backoff, and timeouts.
+- Provide replay or backfill, partial-failure handling, and a kill switch.
+- Name the error channel, human review points, and operational owner.
+- Keep a sanitized, versioned workflow source or export.
+- Keep credentials and production payloads in their runtime owners.
 
-## Reliability
+## Evidence
 
-Define:
-
-- idempotency and duplicate handling
-- retry ownership and backoff
-- replay or backfill procedure
-- partial failure and compensation
-- timeout behavior
-- error channel and incident owner
-- human review points
-- kill switch
-
-Never hide paid access, security policy, or irreversible decisions inside an
-unreviewed model prompt.
-
-## Source control
-
-Keep a sanitized, versioned source or export when the workflow engine is not
-itself the durable review history. Separate raw backups from curated domain
-documentation. Never commit credentials, execution payloads, or private
-production exports.
-
-## Delivery gate
-
-- one end-to-end run succeeds with safe test data
+- one safe end-to-end run succeeds
 - duplicate, retry, and failure paths are exercised
-- credentials remain in the runtime secret store
-- source/export and production workflow identity are traceable
-- replay, disable, and incident procedures are documented
-- ongoing time or cost savings are measurable
+- production identity is traceable to the versioned source
+- replay and disable procedures work

@@ -3,6 +3,37 @@
 All notable changes are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-07-28
+
+### Changed
+
+- Reduced the applied bundle to `AGENTS.md`, one shape guide, an optional
+  Application profile, relevant workflows, and the provenance manifest.
+- Made AIOS the documented home base for business context, priorities, task
+  routing, and learning while keeping project-specific technical truth in the
+  target repository.
+- Shortened all shape and profile guides to the decisions and evidence their
+  selected repository actually owns.
+- Simplified the README around one natural-language AIOS journey and the
+  standalone applicator interface.
+
+### Removed
+
+- `LIFECYCLE.md`, shared `ARCHITECTURE.md`, and `delivery/README.md`.
+- The 842-line Application architecture guide.
+- Specialist agent-capability, existing-application, digital-product, and case
+  study documentation from the technical core.
+- Discovery, adoption, business-feedback, and branch-model instructions from
+  files copied into customer projects.
+
+### Migration
+
+- Applying `v0.3.0` does not delete files previously copied by `v0.2.x`.
+  Existing projects may remove obsolete files under `docs/solution-template/`
+  after checking that they contain no local decisions.
+- Shape names, Application profile names, command options, workflows, and
+  `.solution-template.json` remain compatible.
+
 ## [0.2.1] - 2026-07-28
 
 ### Added

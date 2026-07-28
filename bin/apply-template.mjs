@@ -32,7 +32,7 @@ const projectMarkers = [
 const expectedApplicationScripts = ["lint", "typecheck", "test", "build"];
 
 function usage() {
-  return `Apply AI-native Solution Template guidance to an existing target.
+  return `Seed an existing target with the AI-native Solution Template.
 
 Usage:
   node bin/apply-template.mjs --target <path> --shape <shape> [options]
@@ -140,10 +140,6 @@ async function detectProjectMarkers(targetRoot) {
 
 function applicationFiles(profile) {
   const files = [
-    [
-      "shapes/application/ARCHITECTURE.md",
-      "docs/solution-template/APPLICATION_ARCHITECTURE.md",
-    ],
     [`profiles/${profile}/PROFILE.md`, "docs/solution-template/PROFILE.md"],
   ];
   const continuousIntegration =
@@ -178,9 +174,6 @@ function applicationFiles(profile) {
 function plannedFiles(shape, profile) {
   const files = [
     ["AGENTS.md", "AGENTS.md"],
-    ["LIFECYCLE.md", "docs/solution-template/LIFECYCLE.md"],
-    ["ARCHITECTURE.md", "docs/solution-template/ARCHITECTURE.md"],
-    ["delivery/README.md", "docs/solution-template/DELIVERY.md"],
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ];
 

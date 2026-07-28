@@ -1,40 +1,19 @@
-# External backend profile
+# External Backend
 
-Choose this profile when the product requires Python or FastAPI, specialist
-compute, an existing database, a separately operated data platform, or an
-independently deployed service.
+Use when an existing or specialist backend owns Application behavior.
 
-## Minimum capabilities
+## Runtime
 
-- TypeScript frontend using stable contracts
-- explicit HTTP API between frontend and backend
+- TypeScript frontend with a stable HTTP contract
 - GitHub Actions CI for the frontend
-- backend-owned deployment and operational documentation
+- backend-owned deployment, monitoring, migrations, and rollback
 
-## Expected frontend scripts
+Expected frontend scripts are `lint`, `typecheck`, `test`, and `build`.
 
-```json
-{
-  "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc -b",
-    "test": "vitest run",
-    "build": "vite build"
-  }
-}
-```
+The template copies no generic deployment workflow because containers, regions,
+credentials, callbacks, and rollback belong to the actual backend.
 
-The profile copies CI but no generic deployment workflow. A pretend universal
-workflow would hide real choices about containers, regions, migrations,
-credentials, callbacks, and rollback.
-
-## Boundaries
-
-- shared DTOs and schemas define the frontend/backend contract
-- API clients live in feature hooks or HTTP adapters
-- the backend owns persistence, background work, and specialist runtime details
-- external inputs are validated independently on both sides of the boundary
-- contract, integration, and end-to-end tests cover compatibility
-- deployment ownership, monitoring, and rollback are explicit
-
-Do not duplicate backend domain types directly into presentational components.
+Keep DTOs and schemas at the boundary, backend types out of presentational
+components, and persistence and background work with the backend. Validate
+external input independently on both sides and cover compatibility with
+contract, integration, and end-to-end tests.
