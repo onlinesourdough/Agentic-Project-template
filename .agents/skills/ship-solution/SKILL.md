@@ -1,6 +1,6 @@
 ---
 name: ship-solution
-description: Prepare, release, deploy, activate, and verify a technical solution with a real recovery path. Use after review when publishing an Application, Service, Automation, Integration, or System change, or when changing CI, environments, secrets, migrations, deployment, rollback, replay, or operational ownership.
+description: Prepare, release, deploy, activate, and verify a technical solution with a real recovery path. Use after review when publishing an Application, Service, Automation, Integration, Library, or System change, or when changing CI, environments, secrets, migrations, deployment, rollback, replay, or operational ownership.
 ---
 
 # Ship Solution
@@ -57,6 +57,8 @@ Shape-specific proof:
   error channel, activation owner, and kill switch.
 - **Integration:** both ends, delivery acknowledgement, timeout, retry, and
   reconciliation.
+- **Library:** immutable package or artifact, clean consumer install, public
+  interface, compatibility, and previous-version recovery.
 - **System:** reviewed technical truth, desired state, drift signal, ownership,
   incident route, and a validated rebuild or restore; no fake runtime
   deployment.

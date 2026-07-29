@@ -2,83 +2,75 @@
 
 # Solution Template
 
-**Solution Template** is a minimal AI-native foundation for turning a real
-problem into the smallest useful technical solution.
+**Solution Template** is a minimal AI-native foundation for building the
+smallest useful technical solution.
 
-It gives a coding agent one simple workflow:
+Use it when an application, service, automation, integration, library, or
+system needs its own durable home, ownership, and lifecycle.
 
-| Step   | Purpose                                                                         |
-| ------ | ------------------------------------------------------------------------------- |
-| Spec   | Understand the outcome, choose the solution shape, and plan the smallest slices |
-| Build  | Implement and test one complete vertical slice at a time                        |
-| Review | Check the result against intent and simplify the changed area                   |
-| Ship   | Release, verify, and preserve a real recovery path                              |
+AI-native means that humans and agents can understand, change, verify, operate,
+and recover the solution safely. Business intent and architecture come before
+code and frameworks.
 
-Natural language is the interface. The skills make the process repeatable
-without forcing a framework, platform, or large software methodology.
+## Workflow
 
-Use the template when the result needs an independent lifecycle: it must be
-possible to understand, develop, operate, access, or hand over the solution
-without the original owner's workspace. A schedule, credential, agent, growing
-file count, or internal versus external audience does not decide that boundary.
+| Step   | Purpose                                                 |
+| ------ | ------------------------------------------------------- |
+| Spec   | Understand the outcome and choose the smallest solution |
+| Build  | Create one complete, testable slice                     |
+| Review | Check the result and remove unnecessary complexity      |
+| Ship   | Release, verify, and preserve a recovery path           |
+
+Natural language is the interface. The repository instructions make the
+workflow repeatable without requiring a specific coding agent or platform.
 
 ## Start
 
-1. Bring the canonical context: a Product Brief, issue, existing README,
-   architecture note, customer source, or the durable decisions from a
-   conversation.
-2. Ask the agent to confirm that an independent repository is justified. If an
-   existing process, tool, or workspace should own the capability, stop before
-   creating a repository unless you explicitly override the recommendation.
-3. Create a private repository from this template.
-4. Open it in Codex or another coding agent that reads `AGENTS.md`.
-5. Describe the result you want and say:
+1. Create a repository from this template, or open an existing project.
+2. Add or link the context that explains the intended outcome.
+3. Open the repository in a coding agent that reads `AGENTS.md`.
+4. Ask:
 
-> Help me spec the smallest solution that can create this result.
+> Spec the smallest useful solution for this outcome.
 
-The agent asks one question at a time when something consequential is unclear.
-When the spec is sufficient, continue naturally:
+Continue naturally with:
 
 > Build the first slice.
 
-> Review and simplify the change.
+> Review and simplify it.
 
 > Ship it when the evidence passes.
 
-Before Build begins, replace this guide with a project-specific README. Link to
-the canonical context instead of copying it. Record the project's outcome,
-status and current slice, ownership and boundaries, shape and architecture,
-dependencies, working commands, delivery path, operation, and recovery as those
-facts become known.
+Before Build, make the README specific to the project and link to the canonical
+Product Brief, issue, or other context source.
 
 ## Solution shapes
 
-| Shape       | Examples                                                                    |
-| ----------- | --------------------------------------------------------------------------- |
-| Application | Landing page, content library, internal tool, portal, or full-stack product |
-| Service     | API, calculation, image renderer, algorithm, or bounded capability          |
-| Automation  | n8n workflow, scheduled job, or event-driven process                        |
-| Integration | Webhook, adapter, proxy, bot boundary, or system connection                 |
-| System      | Architecture, infrastructure, ownership, and operational repository         |
+| Shape       | Examples                                                          |
+| ----------- | ----------------------------------------------------------------- |
+| Application | Website, product UI, mobile or desktop app, internal tool, or CLI |
+| Service     | API, calculation, model, renderer, or bounded domain capability   |
+| Automation  | n8n workflow, scheduled job, or event-driven process              |
+| Integration | Webhook, adapter, proxy, bot boundary, or system connection       |
+| Library     | Package, SDK, template, shared module, or reusable capability     |
+| System      | Infrastructure, architecture, ownership, or operations repository |
 
-The shape describes what the repository owns. It does not prescribe its size
-or vendor.
+Choose the primary responsibility of the repository. Supporting parts may use
+other shapes without becoming separate projects.
 
-## Stack defaults
+## Technology
 
-Use **React, TypeScript, and TanStack** for Applications. Prefer TypeScript
-end-to-end when one language keeps the product simpler.
+Technology is chosen last. Existing ownership and a working system outrank
+every recommendation.
 
-Use **Python** for a separate Service when its core capability benefits from
-Python's quant, data, image, scientific, or machine-learning ecosystem. A
-heatmap renderer or trading algorithm can therefore be Python without making
-Python the default backend for every Application.
+- Prefer **TypeScript** for browser interfaces and ordinary web systems.
+- Prefer **Python** for data, scientific, image, quant, and machine-learning
+  capabilities.
+- Prefer **n8n** or another workflow runtime for visible orchestration.
+- Add databases, hosting, queues, containers, and observability only when a
+  concrete responsibility needs them.
 
-Use **n8n** or another workflow runtime for orchestration. Move logic into a
-Service only when it needs stronger tests, reuse, performance, or independent
-operation.
-
-Existing ownership and a working system outrank every default.
+See [Technology recommendations](TECHNOLOGY.md) for the full decision guide.
 
 ## Repository map
 
@@ -90,21 +82,11 @@ Solution Template
 │   ├── build-solution/SKILL.md
 │   ├── review-solution/SKILL.md
 │   └── ship-solution/SKILL.md
+├── TECHNOLOGY.md
 ├── CLAUDE.md
 ├── assets/solution-template-overview.png
 └── README.md
 ```
 
-`AGENTS.md` contains the stable engineering rules. Each skill is loaded only
-when its part of the workflow is relevant.
-
-## Keep it small
-
-Start with the outcome, one owner, one repository, one deployable unit, and one
-vertical slice. Add auth, data, queues, billing, containers, runtime AI, or
-additional services only when the solution has a concrete responsibility for
-them.
-
-A delivered artifact is not automatically production-ready. Delivery,
-recovery, and outcome are separate gates: the artifact can be deployed while
-the business or operational outcome remains pending.
+Start with one outcome, one owner, one repository, and one complete slice. Add
+another layer only when the solution has a clear responsibility for it.
