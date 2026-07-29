@@ -19,6 +19,9 @@ Identify:
 - critical journey and failure signal
 - rollback, replay, disable, restore, or reconciliation path
 - operational owner
+- outcome signal, measurement owner, and next measurement point
+- recovery point and recovery time expectations when state or continuity makes
+  them material
 
 Ask before a production release, external publication, workflow activation,
 destructive migration, or other consequential action unless the user already
@@ -47,15 +50,31 @@ gave specific authority.
 Shape-specific proof:
 
 - **Application:** real browser journey, assets, server boundaries, and
-  rollback.
+  rollback or reproducible redeploy.
 - **Service:** health, caller contract, dependency failure, and previous
   artifact or forward recovery.
 - **Automation:** safe run, published version, credentials, retries, replay,
   error channel, activation owner, and kill switch.
 - **Integration:** both ends, delivery acknowledgement, timeout, retry, and
   reconciliation.
-- **System:** reviewed technical truth, valid links, ownership, and incident
-  route; no fake runtime deployment.
+- **System:** reviewed technical truth, desired state, drift signal, ownership,
+  incident route, and a validated rebuild or restore; no fake runtime
+  deployment.
 
-Report the commit, artifact, environment, platform result, smoke evidence,
-recovery status, and any remaining operational risk.
+A backup is recovery evidence only after its restore path has been tested.
+Document retention and access ownership. Keep secrets out of repositories,
+artifacts, and ordinary backups.
+
+## Report three independent results
+
+- **Delivery — PASS or FAIL:** the reviewed artifact was built and deployed,
+  published, or applied correctly.
+- **Recovery — PASS, FAIL, or NOT APPLICABLE:** rollback, restore, rebuild,
+  replay, or reconciliation was verified for the solution's risk.
+- **Outcome — PASS, FAIL, or PENDING:** the agreed business or operational
+  signal was measured. Tests can prove behavior and delivery, not an outcome
+  whose measurement window has not elapsed.
+
+Do not call a solution production-ready when required recovery evidence is
+missing. Report the commit, artifact, environment, platform result, smoke
+evidence, all three statuses, and any remaining operational risk.

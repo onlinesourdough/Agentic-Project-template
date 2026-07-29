@@ -11,8 +11,9 @@ responsibility, not an imaginary ideal architecture.
 ## Inspect
 
 1. Establish the comparison point and intended outcome.
-2. Read the diff, relevant implementation, tests, interfaces, configuration,
-   and runtime evidence.
+2. Read the diff, relevant code, project-local agents and skills, workflow
+   exports, interfaces, configuration, infrastructure, contracts, architecture,
+   runbooks, tests, and runtime evidence.
 3. Run or inspect the checks that can actually prove the change.
 4. Review correctness and failure paths before style.
 
@@ -26,11 +27,14 @@ Review these gates:
 - **Simplicity:** names are clear, modules are cohesive, interfaces are small,
   and abstractions earn their cost.
 - **Ownership:** responsibilities, data authority, and framework boundaries are
-  not duplicated or blurred.
+  not duplicated or blurred; project truth has one canonical owner.
+- **Lifecycle:** the repository still merits independent ownership, and it does
+  not duplicate a smaller existing owner without justification.
 - **Security:** trust, authorization, secrets, private data, dependencies, and
   external side effects are handled proportionally.
 - **Operation:** important failure is visible and rollback, replay, disable,
-  restore, or reconciliation is real.
+  restore, rebuild, or reconciliation is real and has been exercised when the
+  risk requires it.
 
 ## Simplify the changed area
 
@@ -45,10 +49,10 @@ data, compatibility behavior, or code whose ownership is uncertain.
 
 Lead with findings by severity and exact location:
 
-- **P1:** likely wrong, insecure, destructive, or unrecoverable.
-- **P2:** material quality, boundary, test, or operational gap.
-- **P3:** worthwhile simplification or maintainability improvement.
+- **Critical:** likely wrong, insecure, destructive, or unrecoverable.
+- **Required:** material quality, boundary, test, or operational gap.
+- **Improvement:** worthwhile simplification or maintainability improvement.
 
 End with **PASS** or **FAIL**, checks performed, evidence that was unavailable,
-and the smallest next action. A required P1 or P2 finding fails the gate. Fix
-findings only when the request authorizes changes.
+and the smallest next action. A Critical or Required finding fails the gate.
+Fix findings only when the request authorizes changes.

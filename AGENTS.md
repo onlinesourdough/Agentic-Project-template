@@ -6,14 +6,41 @@ operable, and owned.
 
 ## Start
 
-1. Read the request, this guide, and existing project context.
-2. Confirm what the repository owns, consumes, and does not own.
-3. Identify the solution shape and current stack.
-4. Choose the smallest valuable vertical slice.
+1. Read the request, this guide, and the canonical project context.
+2. Confirm that the work needs an independent lifecycle.
+3. Confirm what the repository owns, consumes, and does not own.
+4. Identify the solution shape and current stack.
+5. Choose the smallest valuable vertical slice.
 
 Ask exactly one question, with a best guess, when one missing decision would
 materially change the solution. Inspect the repository instead of asking for
 facts it already contains.
+
+## Independent lifecycle gate
+
+Before scaffolding a new repository, classify the smallest valid owner:
+
+1. an existing process or tool
+2. a capability local to an existing workspace
+3. an independent Solution project
+
+Use a Solution project only when it must be understandable, developable,
+operable, accessible, or handover-ready without the original workspace or
+owner. A schedule, credentials, an agent, code volume, or an internal versus
+external audience does not decide ownership. Stop before scaffolding when a
+smaller owner is sufficient, unless the user explicitly overrides the
+recommendation.
+
+## Repository truth
+
+This README is the template guide. Before Build in a generated repository,
+replace it with a project-specific README containing the current technical and
+operational truth. Preserve an existing project's working README when adopting
+the workflow.
+
+A Product Brief or equivalent context owns the problem, audience, outcome, and
+direction. Keep one canonical copy: move it once if the project naturally owns
+it; otherwise link to its owner. Do not duplicate the whole brief in README.
 
 ## Workflow
 
@@ -56,6 +83,10 @@ workflow.
 - Reuse working systems and owners instead of rebuilding for symmetry.
 - Preserve rollback, replay, disable, restore, reconciliation, or export as
   appropriate.
+- Treat code, configuration, workflow exports, infrastructure, architecture,
+  runbooks, and project-local agents or skills as valid solution artifacts.
+- For infrastructure, document desired state, access and secret ownership,
+  health, patching, drift, and a reproducible rebuild or tested restore path.
 
 ## Before completion
 
@@ -65,6 +96,8 @@ workflow.
 - check relevant failure, denial, duplicate, and recovery behavior
 - update only technical truth made stale by the change
 - review and simplify the changed responsibility
+- report Delivery, Recovery, and Outcome evidence separately; Outcome may be
+  `PENDING` when its measurement window has not elapsed
 - state unavailable evidence and remaining risk
 
 Never claim that a test, deployment, migration, or runtime path succeeded

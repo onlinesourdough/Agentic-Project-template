@@ -17,11 +17,22 @@ It gives a coding agent one simple workflow:
 Natural language is the interface. The skills make the process repeatable
 without forcing a framework, platform, or large software methodology.
 
+Use the template when the result needs an independent lifecycle: it must be
+possible to understand, develop, operate, access, or hand over the solution
+without the original owner's workspace. A schedule, credential, agent, growing
+file count, or internal versus external audience does not decide that boundary.
+
 ## Start
 
-1. Create a private repository from this template.
-2. Open it in Codex or another coding agent that reads `AGENTS.md`.
-3. Describe the result you want and say:
+1. Bring the canonical context: a Product Brief, issue, existing README,
+   architecture note, customer source, or the durable decisions from a
+   conversation.
+2. Ask the agent to confirm that an independent repository is justified. If an
+   existing process, tool, or workspace should own the capability, stop before
+   creating a repository unless you explicitly override the recommendation.
+3. Create a private repository from this template.
+4. Open it in Codex or another coding agent that reads `AGENTS.md`.
+5. Describe the result you want and say:
 
 > Help me spec the smallest solution that can create this result.
 
@@ -33,6 +44,12 @@ When the spec is sufficient, continue naturally:
 > Review and simplify the change.
 
 > Ship it when the evidence passes.
+
+Before Build begins, replace this guide with a project-specific README. Link to
+the canonical context instead of copying it. Record the project's outcome,
+status and current slice, ownership and boundaries, shape and architecture,
+dependencies, working commands, delivery path, operation, and recovery as those
+facts become known.
 
 ## Solution shapes
 
@@ -87,3 +104,7 @@ Start with the outcome, one owner, one repository, one deployable unit, and one
 vertical slice. Add auth, data, queues, billing, containers, runtime AI, or
 additional services only when the solution has a concrete responsibility for
 them.
+
+A delivered artifact is not automatically production-ready. Delivery,
+recovery, and outcome are separate gates: the artifact can be deployed while
+the business or operational outcome remains pending.
