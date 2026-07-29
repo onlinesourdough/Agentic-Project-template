@@ -50,9 +50,28 @@ non-goals are clear enough to proceed.
 One outcome may use more than one shape, but each repository needs one clear
 primary responsibility.
 
+## Choose architecture proportionally
+
+- Prefer one cohesive deployable unit. Split a Service or microservice only
+  when ownership, deployment, scaling, isolation, or recovery must be
+  independent.
+- Treat Clean Architecture as dependency direction and separation of stable
+  capability logic from delivery and infrastructure—not a required set of
+  layers or folders.
+- Use REST semantics when HTTP resources are the real interface. Use another
+  explicit contract when events, jobs, libraries, files, or workflows are the
+  natural boundary.
+
 ## Choose technology last
 
 - Read `TECHNOLOGY.md` before selecting a new stack.
+- Decide Build, Buy, Rent, and Self-host separately for each responsibility.
+  A small owned Service and a bought or self-hosted orchestration runtime can
+  be the simplest valid solution.
+- For a material external capability, read current official pricing, plan
+  limits, license, operational responsibilities, and exit options. Explain the
+  consequence before implementation instead of relying on a free tier or
+  remembered product behavior.
 - Prefer TypeScript for browser interfaces and ordinary web capabilities. Use
   React when a component-based user interface is required.
 - Prefer TypeScript for ordinary web APIs, Services, and Integrations.
@@ -75,6 +94,8 @@ State:
 - canonical context source and independent-lifecycle justification
 - outcome, user or caller or operator, success signal, and measurement owner
 - selected shape and stack
+- Build, Buy, Rent, and Self-host ownership for material responsibilities,
+  including the current source for consequential external-service decisions
 - what the repository owns, consumes, and does not own
 - interfaces, data authority, trust boundaries, and deployment unit
 - smallest valuable slice and explicit non-goals

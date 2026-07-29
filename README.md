@@ -58,7 +58,7 @@ Product Brief, issue, or other context source.
 Choose the primary responsibility of the repository. Supporting parts may use
 other shapes without becoming separate projects.
 
-## Technology
+## Technology and skills
 
 Technology is chosen last. Existing ownership and a working system outrank
 every recommendation.
@@ -69,8 +69,12 @@ every recommendation.
 - Prefer **n8n** or another workflow runtime for visible orchestration.
 - Add databases, hosting, queues, containers, and observability only when a
   concrete responsibility needs them.
+- Combine Build, Buy, Rent, and Self-host choices per responsibility when that
+  creates a smaller and better-owned solution.
 
 See [Technology recommendations](TECHNOLOGY.md) for the full decision guide.
+The four included lifecycle skills are the default workflow. Add a specialist
+skill only for a concrete project need; `manage-skills` handles that safely.
 
 ## Repository map
 
@@ -80,6 +84,7 @@ Solution Template
 ├── .agents/skills/
 │   ├── spec-solution/SKILL.md
 │   ├── build-solution/SKILL.md
+│   ├── manage-skills/SKILL.md
 │   ├── review-solution/SKILL.md
 │   └── ship-solution/SKILL.md
 ├── TECHNOLOGY.md

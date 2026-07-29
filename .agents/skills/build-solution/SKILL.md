@@ -44,6 +44,11 @@ For a bug, reproduce it first and keep the reproduction as a regression test.
 Use a validator, build, browser, workflow run, or runtime check when a unit test
 would be artificial.
 
+Treat Red-Green-Refactor as a feedback loop, not ceremony. Keep many fast tests
+for deterministic rules, fewer dependency tests, and only the end-to-end tests
+needed to protect critical journeys. Change that balance when risk or the
+solution shape demands different evidence.
+
 Valid vertical slices include:
 
 - an Application journey or Service contract and domain behavior
@@ -62,8 +67,22 @@ every test type to every slice.
 ## Create artifacts agents and humans can change
 
 - Keep modules cohesive with small, stable interfaces and meaningful depth.
+- Apply SOLID where it clarifies responsibilities and substitutable contracts.
+  Do not create extension points, interfaces, or inheritance for hypothetical
+  change.
+- Remove duplicated knowledge, not merely similar-looking code. Prefer a small
+  amount of local duplication over the wrong shared abstraction.
+- Organize modules around domain or capability responsibilities rather than
+  accidental framework layers.
+- Keep dependency direction toward stable domain or capability logic. Put
+  database, API, queue, filesystem, and vendor clients at the system edge.
+- Introduce interfaces, repositories, adapters, and wrappers only for real
+  contracts, trust boundaries, or substitutable dependencies. Do not create one
+  for every class or call.
 - Keep route, handler, component, trigger, and framework entrypoints thin.
 - Keep domain rules and irreversible policy deterministic.
+- Keep secrets, authorization, critical policy, and irreversible effects on a
+  trusted server or worker boundary. Do not rely on client enforcement.
 - Runtime-validate external input and return stable, safe errors.
 - Make retried side effects idempotent and bound timeouts, retries, reads, and
   concurrency.
@@ -76,6 +95,14 @@ For HTTP interfaces, use consistent resources, methods, status codes, error
 shapes, pagination, authentication, authorization, and compatibility. For user
 interfaces, handle loading, empty, error, keyboard, responsive, and public
 metadata behavior when relevant.
+
+Use a Repository Pattern only when persistence has behavior or variation that
+forms a meaningful boundary. Prefer direct, well-contained access when an extra
+repository would only pass calls through.
+
+Prefer one cohesive deployable unit. Introduce a microservice only when it needs
+independent ownership, deployment, scaling, isolation, or recovery and can own
+its contract, data responsibility, observability, and failure behavior.
 
 For infrastructure and VPS work, document desired state, access and secret
 ownership, health, patching, drift, and a reproducible rebuild or tested restore

@@ -15,6 +15,7 @@ Identify:
 - target environment and deployment owner
 - required checks and authority
 - configuration and secret ownership
+- external service plan, quota, license, and billing owner when material
 - migration and compatibility order
 - critical journey and failure signal
 - rollback, replay, disable, restore, or reconciliation path
@@ -30,9 +31,15 @@ gave specific authority.
 ## Keep delivery proportional
 
 - Install from the lockfile and run the repository's real checks.
+- Use CI to make required build, test, validation, and security evidence
+  repeatable. Automate deployment only when authority, verification, and
+  recovery are equally explicit.
 - Give CI and runtime credentials least privilege.
 - Keep secrets out of code, logs, artifacts, and untrusted change execution.
 - Pin third-party workflow actions to reviewed immutable versions.
+- Confirm that the selected external plans and quotas support the release, and
+  assign usage or billing alerts when an overage can interrupt service or
+  materially change cost.
 - Add environments, artifacts, migrations, and automation only when the
   solution actually has them.
 

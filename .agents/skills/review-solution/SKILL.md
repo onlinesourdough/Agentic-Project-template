@@ -26,13 +26,19 @@ Review these gates:
   claimed as runtime proof.
 - **Simplicity:** names are clear, modules are cohesive, interfaces are small,
   and abstractions earn their cost.
+- **Architecture:** dependencies point toward stable domain or capability
+  logic; framework and vendor clients stay at the edges; client code does not
+  own server trust; repositories, adapters, and interfaces represent real
+  boundaries instead of ceremony. SOLID, DRY, and Clean Architecture were used
+  to reduce change cost rather than to manufacture layers.
 - **Ownership:** responsibilities, data authority, and framework boundaries are
   not duplicated or blurred; project truth has one canonical owner.
 - **Lifecycle:** the repository still merits independent ownership, and it does
   not duplicate a smaller existing owner without justification.
 - **Technology:** each added layer owns a required capability, follows current
   project evidence and `TECHNOLOGY.md`, and has an understandable replacement
-  path.
+  path. Material bought or self-hosted capabilities were checked against
+  current official plans, limits, license, operations, and exit options.
 - **Security:** trust, authorization, secrets, private data, dependencies, and
   external side effects are handled proportionally.
 - **Operation:** important failure is visible and rollback, replay, disable,
@@ -44,6 +50,10 @@ Review these gates:
 Preserve behavior while removing unnecessary indirection, speculative
 generality, duplicate branches, pass-through wrappers, dead code, and comments
 that restate the code. Prefer fewer concepts, not merely fewer lines.
+
+Do not merge coincidentally similar code until it represents one stable concept
+with one owner. Challenge microservices, containers, interfaces, repositories,
+and generic extension points that have no current responsibility.
 
 Stay inside the changed responsibility. Ask before deleting public interfaces,
 data, compatibility behavior, or code whose ownership is uncertain.
