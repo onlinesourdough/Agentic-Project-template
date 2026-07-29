@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -171,26 +171,34 @@ function applicationFiles(profile) {
   return files;
 }
 
-function plannedFiles(shape, profile) {
+async function collectFiles(directory) {
+  const directoryPath = path.join(templateRoot, directory);
+  const entries = await readdir(directoryPath, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries.sort((left, right) =>
+    left.name.localeCompare(right.name),
+  )) {
+    const relativePath = path.posix.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await collectFiles(relativePath)));
+    } else if (entry.isFile()) {
+      files.push(relativePath);
+    }
+  }
+
+  return files;
+}
+
+async function plannedFiles(shape, profile) {
+  const skillFiles = [
+    ...(await collectFiles(".agents/skills")),
+    ...(await collectFiles(".claude/skills")),
+  ];
   const files = [
     ["AGENTS.md", "AGENTS.md"],
     ["CLAUDE.md", "CLAUDE.md"],
-    [
-      ".agents/skills/develop-solution/SKILL.md",
-      ".agents/skills/develop-solution/SKILL.md",
-    ],
-    [
-      ".agents/skills/develop-solution/agents/openai.yaml",
-      ".agents/skills/develop-solution/agents/openai.yaml",
-    ],
-    [
-      ".agents/skills/develop-solution/references/technical-readiness.md",
-      ".agents/skills/develop-solution/references/technical-readiness.md",
-    ],
-    [
-      ".claude/skills/develop-solution/SKILL.md",
-      ".claude/skills/develop-solution/SKILL.md",
-    ],
+    ...skillFiles.map((file) => [file, file]),
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ];
 
@@ -300,7 +308,7 @@ async function main() {
   const templatePackage = await readJson(
     path.join(templateRoot, "package.json"),
   );
-  const files = plannedFiles(options.shape, options.profile);
+  const files = await plannedFiles(options.shape, options.profile);
   const resolvedFiles = await Promise.all(
     files.map(async (file) => ({
       ...file,

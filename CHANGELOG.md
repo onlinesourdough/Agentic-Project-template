@@ -3,6 +3,40 @@
 All notable changes are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-07-29
+
+### Added
+
+- A focused suite for clarification, architecture, implementation, TDD,
+  security, documentation, delivery, operations, and evidence-based review,
+  with `develop-solution` as the broad router.
+- One-question-at-a-time shape clarification covering landing pages, content
+  libraries, full-stack Applications, Services, n8n Automations, Integrations,
+  and Systems.
+- Proportional guidance for REST/OpenAPI contracts, structured logging,
+  observability, resilience, documentation, recovery, and technical handover.
+- An original visual showing optional upstream context, five solution shapes,
+  verification, and recovery.
+
+### Changed
+
+- The applicator now installs the complete project skill suite and thin Claude
+  adapters for every shape.
+- Clarified the boundary between AIOS agent routines, workflow orchestration,
+  and separately owned technical Services and Automations.
+- Made TypeScript the web-oriented default while keeping Python first-class for
+  data, image, scientific, ML, and existing Python workloads.
+- Pinned every external GitHub Action to a reviewed immutable commit SHA.
+- Shortened the README around the actual AIOS-to-solution and standalone
+  journeys.
+
+### Compatibility
+
+- Shapes, Application profiles, CLI options, marker detection, and manifest
+  format remain compatible.
+- Existing `v0.4.x` targets need `--force` to replace template-owned files and
+  receive the expanded suite. Review local changes before applying.
+
 ## [0.4.0] - 2026-07-29
 
 ### Added

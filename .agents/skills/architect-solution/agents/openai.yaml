@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architect Solution"
+  short_description: "Design boundaries, contracts, and stack"
+  default_prompt: "Use $architect-solution to design the smallest owned architecture and its contracts."
