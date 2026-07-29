@@ -1,4 +1,0 @@
-interface:
-  display_name: "Review Solution"
-  short_description: "Review readiness with concrete evidence"
-  default_prompt: "Use $review-solution to audit this solution against its responsibilities and real evidence."

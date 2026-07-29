@@ -1,4 +1,0 @@
-interface:
-  display_name: "Develop Solution"
-  short_description: "Route work through focused solution skills"
-  default_prompt: "Use $develop-solution to route this work through the smallest relevant set of project skills."

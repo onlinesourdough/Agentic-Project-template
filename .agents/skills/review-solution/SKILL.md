@@ -1,49 +1,54 @@
 ---
 name: review-solution
-description: Review code, architecture, contracts, security, documentation, delivery, operations, or overall technical readiness using concrete evidence. Use for pull request review, pre-release checks, adoption audits, handover, Definition of Done, or when deciding whether a solution is actually ready.
+description: Review and simplify a technical change against its intended outcome using concrete evidence. Use before merge or shipping, for pull requests and code review, or when checking correctness, test quality, architecture, security, operability, scope, and unnecessary complexity.
 ---
 
 # Review Solution
 
-Review against the intended outcome and repository responsibility, not an
-imaginary ideal architecture.
-
-Read `references/technical-readiness.md` for a project-wide, release, adoption,
-or handover audit. For a narrow code review, load only the relevant specialist
-skill and readiness rows.
+Review the actual change against the intended behavior and repository
+responsibility, not an imaginary ideal architecture.
 
 ## Inspect
 
-1. Establish the requested behavior, selected shape/profile, scope, and changed
-   boundaries.
-2. Read the implementation, tests, contracts, workflows, and runtime evidence.
-3. Check correctness and failure paths before style.
-4. Verify claims by running or reading the authoritative check.
-5. Classify every applicable readiness area as **Ready**, **Not applicable**,
-   **Missing**, or **Blocked**.
+1. Establish the comparison point and intended outcome.
+2. Read the diff, relevant implementation, tests, interfaces, configuration,
+   and runtime evidence.
+3. Run or inspect the checks that can actually prove the change.
+4. Review correctness and failure paths before style.
 
-Use severity:
+Review these gates:
 
-- **P0:** active compromise, data loss, or production outage
-- **P1:** likely incorrect, insecure, or unrecoverable behavior
-- **P2:** material maintainability, operability, or edge-case gap
-- **P3:** useful improvement that does not block the stated outcome
+- **Intent:** the change implements the agreed outcome without scope creep.
+- **Correctness:** success, denial, invalid input, partial failure, duplicates,
+  concurrency, and recovery behave as relevant.
+- **Evidence:** tests observe public behavior; mocked or static evidence is not
+  claimed as runtime proof.
+- **Simplicity:** names are clear, modules are cohesive, interfaces are small,
+  and abstractions earn their cost.
+- **Ownership:** responsibilities, data authority, and framework boundaries are
+  not duplicated or blurred.
+- **Security:** trust, authorization, secrets, private data, dependencies, and
+  external side effects are handled proportionally.
+- **Operation:** important failure is visible and rollback, replay, disable,
+  restore, or reconciliation is real.
 
-Do not report speculative complexity, personal style preferences, or missing
-enterprise machinery as defects. Do report duplicated ownership, unstable
-contracts, untested policy, unsafe side effects, invisible failure, and
-unproven deployment.
+## Simplify the changed area
+
+Preserve behavior while removing unnecessary indirection, speculative
+generality, duplicate branches, pass-through wrappers, dead code, and comments
+that restate the code. Prefer fewer concepts, not merely fewer lines.
+
+Stay inside the changed responsibility. Ask before deleting public interfaces,
+data, compatibility behavior, or code whose ownership is uncertain.
 
 ## Return
 
-Lead with actionable findings ordered by severity and exact location. Then
-state:
+Lead with findings by severity and exact location:
 
-- readiness classification and evidence
-- tests or runtime paths checked
-- unavailable evidence
-- smallest next action
-- deployment and recovery status when relevant
+- **P1:** likely wrong, insecure, destructive, or unrecoverable.
+- **P2:** material quality, boundary, test, or operational gap.
+- **P3:** worthwhile simplification or maintainability improvement.
 
-If there are no findings, say so and name residual risks or evidence limits.
-Fix issues only when the request authorizes changes.
+End with **PASS** or **FAIL**, checks performed, evidence that was unavailable,
+and the smallest next action. A required P1 or P2 finding fails the gate. Fix
+findings only when the request authorizes changes.
