@@ -69,9 +69,31 @@ async function readManifest(target) {
   );
 }
 
-async function assertMinimalGuidance(target, manifest, shape) {
+async function assertStandaloneCore(target, manifest, shape) {
+  const templatePackage = JSON.parse(
+    await readFile(path.join(repositoryRoot, "package.json"), "utf8"),
+  );
+  assert.equal(manifest.templateVersion, templatePackage.version);
+
   for (const [source, destination] of [
     ["AGENTS.md", "AGENTS.md"],
+    ["CLAUDE.md", "CLAUDE.md"],
+    [
+      ".agents/skills/develop-solution/SKILL.md",
+      ".agents/skills/develop-solution/SKILL.md",
+    ],
+    [
+      ".agents/skills/develop-solution/agents/openai.yaml",
+      ".agents/skills/develop-solution/agents/openai.yaml",
+    ],
+    [
+      ".agents/skills/develop-solution/references/technical-readiness.md",
+      ".agents/skills/develop-solution/references/technical-readiness.md",
+    ],
+    [
+      ".claude/skills/develop-solution/SKILL.md",
+      ".claude/skills/develop-solution/SKILL.md",
+    ],
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ]) {
     assert.equal(
@@ -89,6 +111,84 @@ async function assertMinimalGuidance(target, manifest, shape) {
   ]) {
     assert.equal(manifest.appliedFiles.includes(removedFile), false);
   }
+
+  for (const aiosFile of ["CONTEXT.md", "MEMORY.md", "CONNECTIONS.md"]) {
+    assert.equal(manifest.appliedFiles.includes(aiosFile), false);
+  }
+
+  const skill = await readFile(
+    path.join(target, ".agents/skills/develop-solution/SKILL.md"),
+    "utf8",
+  );
+  assert.match(skill, /name: develop-solution/);
+  assert.match(skill, /Do not require AIOS/);
+  assert.match(skill, /## Deploy/);
+  assert.doesNotMatch(skill, /projects\//);
+
+  const readiness = await readFile(
+    path.join(
+      target,
+      ".agents/skills/develop-solution/references/technical-readiness.md",
+    ),
+    "utf8",
+  );
+  for (const area of [
+    "Responsibility",
+    "Shape and profile",
+    "Runtime and stack",
+    "Architecture",
+    "Contracts and data",
+    "Identity and trust",
+    "Security and privacy",
+    "AI and autonomy",
+    "Quality",
+    "Delivery",
+    "Deployment",
+    "Observability",
+    "Recovery",
+    "Operations",
+    "Handover and exit",
+  ]) {
+    assert.match(readiness, new RegExp(`\\|\\s+${area}\\s+\\|`));
+  }
+  for (const role of [
+    "Outcome owner",
+    "Solution owner",
+    "Implementation owner",
+    "Platform owner",
+    "Operational owner",
+  ]) {
+    assert.match(readiness, new RegExp(`\\|\\s+${role}\\s+\\|`));
+  }
+  assert.match(readiness, /## Deployment gate/);
+  for (const shapeName of [
+    "Application",
+    "Service",
+    "Automation",
+    "Integration",
+    "System",
+  ]) {
+    assert.match(readiness, new RegExp(`\\*\\*${shapeName}:\\*\\*`));
+  }
+
+  assert.equal(
+    await readFile(path.join(target, "CLAUDE.md"), "utf8"),
+    "@AGENTS.md\n",
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".claude/skills/develop-solution/SKILL.md"),
+      "utf8",
+    ),
+    /\.\.\/\.\.\/\.\.\/\.agents\/skills\/develop-solution\/SKILL\.md/,
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/develop-solution/agents/openai.yaml"),
+      "utf8",
+    ),
+    /\$develop-solution/,
+  );
 }
 
 for (const [profile, deployment] of [
@@ -107,7 +207,7 @@ for (const [profile, deployment] of [
       assert.equal(manifest.profile, profile);
       assert.deepEqual(manifest.detectedProjectMarkers, ["package.json"]);
       assert.deepEqual(manifest.missingScripts, []);
-      await assertMinimalGuidance(target, manifest, "application");
+      await assertStandaloneCore(target, manifest, "application");
 
       assert.equal(
         await readFile(
@@ -127,7 +227,14 @@ for (const [profile, deployment] of [
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         true,
       );
-      assert.equal(manifest.appliedFiles.length, 5);
+      assert.equal(manifest.appliedFiles.length, 10);
+      assert.match(
+        await readFile(
+          path.join(target, "docs/solution-template/PROFILE.md"),
+          "utf8",
+        ),
+        /## Deployment/,
+      );
     } finally {
       await rm(target, { recursive: true, force: true });
     }
@@ -152,8 +259,15 @@ test("external application copies CI without a deployment workflow", async () =>
       manifest.appliedFiles.includes(".github/workflows/ci.yml"),
       true,
     );
-    await assertMinimalGuidance(target, manifest, "application");
-    assert.equal(manifest.appliedFiles.length, 4);
+    await assertStandaloneCore(target, manifest, "application");
+    assert.equal(manifest.appliedFiles.length, 9);
+    assert.match(
+      await readFile(
+        path.join(target, "docs/solution-template/PROFILE.md"),
+        "utf8",
+      ),
+      /## Deployment/,
+    );
   } finally {
     await rm(target, { recursive: true, force: true });
   }
@@ -186,8 +300,8 @@ for (const [shape, marker] of [
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         false,
       );
-      assert.equal(manifest.appliedFiles.length, 2);
-      await assertMinimalGuidance(target, manifest, shape);
+      assert.equal(manifest.appliedFiles.length, 7);
+      await assertStandaloneCore(target, manifest, shape);
     } finally {
       await rm(target, { recursive: true, force: true });
     }

@@ -3,6 +3,7 @@
 The MIT core stays deliberately small:
 
 - one zero-dependency applicator
+- one canonical project-local technical skill
 - five solution shapes
 - four Application profiles
 - only workflows that can be honest without knowing the target runtime
@@ -12,8 +13,8 @@ shape, profile, workflow, or test over adding another general guide.
 
 Possible next work:
 
-- prove the AIOS-to-project journey with fresh repositories
 - add safe update or cleanup support for recorded template-owned files
+- prove additional runtime-specific Service, Automation, and Integration paths
 - refine workflows when official platforms or real failures require it
 
 Business discovery, implementation recipes, case studies, agent packs, and

@@ -21,6 +21,7 @@ body:
         - cloudflare-native
         - convex
         - external
+        - project skill
         - applicator
         - workflow
     validations:

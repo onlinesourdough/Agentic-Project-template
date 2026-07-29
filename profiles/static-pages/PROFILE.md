@@ -11,6 +11,11 @@ Use for a public site that builds entirely to `dist/`.
 Expected scripts are `lint`, `typecheck`, `test`, and `build`. Use the current
 official scaffold's commands when their names differ.
 
+Keep content and route data build-time or public. Do not add a server abstraction
+to a static profile.
+
+## Deployment
+
 The copied workflow sets `VITE_BASE_PATH` to the repository subpath. The app
 must use it in Vite and router base configuration. Set the repository variable
 `VITE_BASE_PATH=/` for a custom domain.
@@ -21,3 +26,7 @@ deliberate fallback for client routes.
 Do not add auth, a database, billing, queues, or private files. A static
 storefront may link to checkout, but secrets, paid content, and entitlement
 decisions must not exist in the public build.
+
+Verify the published URL, direct asset requests, navigation, and custom domain
+when present. Roll back by redeploying the previous known-good artifact or
+commit.

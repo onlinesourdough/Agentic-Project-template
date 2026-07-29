@@ -24,9 +24,31 @@ requires them.
 
 Select exactly one `PROFILE.md` for the primary runtime.
 
+## Architecture
+
+Prefer this dependency direction:
+
+```text
+routes and UI
+  → feature or application workflows
+    → domain rules and contracts
+      → adapters and runtime infrastructure
+```
+
+Keep remote state in its authoritative backend, temporary interaction state
+near the UI, and cross-client contracts independent of components. Introduce an
+interface only when it protects a real boundary or test seam.
+
+## Deployment
+
+Treat frontend, backend, migrations, and external configuration as one ordered
+release when they must remain compatible. Use separate non-production and
+production environments. Keep secrets in platform stores, verify the deployed
+critical journey and assets, and preserve a rollback or disable path.
+
 ## Evidence
 
 - relevant static checks, tests, and build pass
 - the critical journey works in a real browser
 - public, private, and paid boundaries behave as intended
-- deployment failure and rollback are understood
+- the deployed environment, failure visibility, and rollback are verified

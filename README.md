@@ -1,34 +1,65 @@
 # AI-native Solution Template
 
-A small technical seed for a repository that needs to become an application,
-service, automation, integration, or system.
+A self-contained technical foundation for building and operating an
+Application, Service, Automation, Integration, or System.
 
-Use it after you have decided that something technical should be built or
-changed. It does not discover the business problem, create an AIOS, generate a
-framework, or prescribe a full stack.
+It makes framework, stack, architecture, testing, deployment, recovery, and
+technical ownership simpler without pretending to know the business problem.
+It works with or without AIOS.
 
-## With AIOS
+## Responsibility boundary
 
-AIOS is the persistent home base. The solution remains a separate repository
-under `projects/`.
+| Supplied to the project                                            | Owned by the Solution Template                                                                        |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| Outcome, users, acceptance, business rules, constraints, authority | Shape, stack, architecture, contracts, implementation, tests, CI, deployment, observability, recovery |
 
-| AIOS owns                                                                | The project repository owns                                          |
-| ------------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| Business context, priorities, task routing, shared connections, learning | Code, contracts, technical decisions, commands, deployment, recovery |
+Inputs may come directly from a person, an existing README or issue, a meeting,
+an AIOS, or another trustworthy source. The template checks that enough input
+exists, but it does not invent it or require a handoff format.
 
-Start from the AIOS root and ask the agent in normal language:
+Project-specific technical truth stays in the project repository.
 
-> Create or use the repository at `projects/<name>`. Apply the AI-native
-> Solution Template as a `<shape>` with the `<profile>` profile when required.
-> Use the context already available for this task, build the smallest useful
-> slice, and keep project-specific technical truth in the project.
+## Start anywhere
 
-The agent can clone this template temporarily, run the applicator, and continue
-inside the target repository. No formal handoff document or data sync is
-required.
+Create or open the real project repository in Codex, Claude Code, Pi, or another
+file-capable agent harness. Then say:
 
-AIOS is optional. The template works equally well from a README, issue, meeting,
-architecture note, or direct conversation.
+> Use the project skill to set up this solution, choose the smallest fitting
+> architecture, and show which technical readiness areas are Ready, Not
+> applicable, Missing, or Blocked.
+
+The canonical project skill is:
+
+```text
+.agents/skills/develop-solution/SKILL.md
+```
+
+It supports four workflows:
+
+- **Set up:** establish responsibility, stack, architecture, commands, and
+  operations.
+- **Build:** implement and verify the smallest useful technical slice.
+- **Check:** audit architecture, security, quality, deployment, and recovery.
+- **Deploy:** release, verify, roll back, replay, or disable safely.
+
+Natural language works without a skill picker. `$develop-solution` is an
+optional Codex convenience, and a thin Claude adapter routes to the same
+canonical skill.
+
+## Optional AIOS transition
+
+AIOS can be the persistent home base where business context, priorities, and
+the decision to build are handled. When the answer requires a technical
+solution:
+
+1. Create or locate a separate repository under `projects/`.
+2. Give the project access or links to the relevant input.
+3. Apply the Solution Template.
+4. Continue with the project-local `develop-solution` skill.
+
+Nothing is copied from AIOS by default. There is no shared schema, runtime,
+version, skill, or data synchronization. The project remains fully usable when
+opened on its own.
 
 ## Choose one shape
 
@@ -42,20 +73,21 @@ architecture note, or direct conversation.
 
 Only an Application selects a runtime profile:
 
-| Profile             | Use when                                                          |
-| ------------------- | ----------------------------------------------------------------- |
-| `static-pages`      | The output is public and fully static                             |
-| `cloudflare-native` | Edge endpoints or Cloudflare-owned state are needed               |
-| `convex`            | Authenticated, realtime, collaborative application data is needed |
-| `external`          | An existing or specialist backend owns the behavior               |
+| Profile             | Primary runtime                                          |
+| ------------------- | -------------------------------------------------------- |
+| `static-pages`      | Vite/static router on GitHub Pages                       |
+| `cloudflare-native` | TanStack on Cloudflare with optional native state        |
+| `convex`            | TanStack and Convex as a coordinated application release |
+| `external`          | Frontend with an independently owned HTTP backend        |
 
-The shape describes what the repository owns. The profile is only an
-Application runtime choice.
+Shapes define responsibility. Profiles make an Application stack and deployment
+choice. Capabilities such as auth, persistence, billing, queues, analytics, or
+runtime AI are added only when the selected slice requires them.
 
 ## Apply
 
-The target must already be a repository or scaffold. Use the runtime's current
-official scaffold rather than frozen starter code from this repository.
+Use the runtime's current official scaffold. The template does not freeze or
+generate framework starter code.
 
 ```sh
 git clone --depth 1 https://github.com/gustavonline/solution-template.git
@@ -84,49 +116,72 @@ Options:
 --force
 ```
 
-`--profile` is required only for an Application. `--dry-run` previews the
-result. `--force` replaces template-owned files and should be used only after
-reviewing conflicts.
+`--dry-run` previews the result. `--force` replaces changed template-owned
+files and should be used only after review.
 
 ## What is added
 
-Every target receives only:
+Every target receives:
 
-- a short `AGENTS.md`
+- `AGENTS.md` and the thin `CLAUDE.md` adapter
+- the canonical `develop-solution` skill and technical readiness reference
+- optional Codex UI metadata and a thin Claude skill adapter
 - the selected `docs/solution-template/SHAPE.md`
-- `.solution-template.json` with provenance and detected project markers
+- `.solution-template.json` with version, selection, detected markers, applied
+  files, and missing Application scripts
 
 An Application also receives:
 
 - the selected `docs/solution-template/PROFILE.md`
-- CI and, where a real generic deployment exists, one deployment workflow
+- CI and one deployment workflow when the profile has an honest common path
 
-The applicator never writes framework code, rewrites manifests, adds auth or a
-database, copies AIOS context, or creates a product brief. Non-Application
-shapes receive no pretend universal CI.
+Non-Application shapes receive no fake universal CI or deployment. Their local
+skill establishes the official path for the selected runtime or platform.
 
-Applications must contain `package.json`. The applicator reports missing
-`lint`, `typecheck`, `test`, and `build` scripts without changing the file.
-Other shapes may be identified by `.git`, `pyproject.toml`,
-`requirements.txt`, `go.mod`, or `Cargo.toml`.
+The applicator never rewrites manifests, adds a framework, creates auth or a
+database, copies AIOS content, or claims a deployment succeeded.
 
-## AI-native
+## Technical coverage
 
-Here, AI-native means that the repository is understandable and safely
-changeable by both people and coding agents: ownership is explicit, external
-inputs are validated, critical rules remain deterministic, and verification,
-recovery, and handover are possible. Runtime AI is optional.
+The project skill checks every necessary technical area:
+
+- responsibility, shape, profile, runtime, and stack
+- architecture, contracts, data, identity, security, and privacy
+- optional AI boundaries and autonomy
+- tests, real-runtime acceptance, CI, and compatibility
+- environments, secrets, migrations, deployment, and verification
+- health, logs, metrics, performance, cost, incidents, and recovery
+- operations, handover, portability, and decommissioning
+
+Each area must be Ready, Not applicable with a reason, Missing, or Blocked.
+Depth is proportional to consequence; a static page does not need a database
+runbook, while a paid multi-tenant product does.
+
+## Deployment
+
+Static Pages, Cloudflare Native, and Convex Applications receive selected
+deployment workflows. External Applications receive frontend CI but no invented
+backend deployment.
+
+Services, Automations, Integrations, and Systems use their actual platform's
+official release or publication path. The project skill requires an exact
+artifact and environment, configuration and secret ownership, migration order,
+runtime verification, failure visibility, an operational owner, and a real
+rollback, replay, disable, or recovery path.
+
+Deployment is proven by the target environment—not by a successful build.
 
 ## Source repository
 
+- `.agents/skills/develop-solution/` — canonical project workflow
 - `bin/apply-template.mjs` — zero-dependency applicator
-- `shapes/` — one small guide per repository responsibility
-- `profiles/` — Application runtime guidance
-- `delivery/github-actions/` — workflows installed only when relevant
-- `test/` — applicator contract tests
+- `shapes/` — responsibility and deployment rules by solution shape
+- `profiles/` — Application stack and deployment guidance
+- `delivery/github-actions/` — selected Application workflows
+- `test/` — applicator and independence contract tests
 
-`v0.3.0` is a public preview. Read
-[`CHANGELOG.md`](CHANGELOG.md) for breaking changes,
+`v0.4.0` is a public preview. Read
+[`CHANGELOG.md`](CHANGELOG.md) for changes,
 [`CONTRIBUTING.md`](CONTRIBUTING.md) before contributing, and
 [`SECURITY.md`](SECURITY.md) for vulnerability reporting.
 
