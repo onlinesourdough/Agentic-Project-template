@@ -1,93 +1,76 @@
 # AI-native Solution Template
 
-A self-contained technical foundation for building and operating an
-Application, Service, Automation, Integration, or System.
+Build the smallest technical solution that can create the intended outcome—and
+leave it understandable, verifiable, operable, and owned.
 
-It makes framework, stack, architecture, testing, deployment, recovery, and
-technical ownership simpler without pretending to know the business problem.
-It works with or without AIOS.
+![Business context becoming a small modular solution with five possible shapes and a verified recovery loop](assets/solution-template-overview.png)
 
-## Responsibility boundary
+The template starts after a real problem or opportunity has been identified.
+It helps a person and coding agent turn that context into an **Application,
+Service, Automation, Integration, or System** without starting from a framework
+or adding capabilities that the solution does not need.
 
-| Supplied to the project                                            | Owned by the Solution Template                                                                        |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| Outcome, users, acceptance, business rules, constraints, authority | Shape, stack, architecture, contracts, implementation, tests, CI, deployment, observability, recovery |
+AI-native means that intent, boundaries, contracts, tests, operations, and
+recovery are explicit enough for humans and agents to understand and change
+safely. Runtime AI is optional.
 
-Inputs may come directly from a person, an existing README or issue, a meeting,
-an AIOS, or another trustworthy source. The template checks that enough input
-exists, but it does not invent it or require a handoff format.
+## AIOS is optional upstream context
 
-Project-specific technical truth stays in the project repository.
-
-## Start anywhere
-
-Create or open the real project repository in Codex, Claude Code, Pi, or another
-file-capable agent harness. Then say:
-
-> Use the project skill to set up this solution, choose the smallest fitting
-> architecture, and show which technical readiness areas are Ready, Not
-> applicable, Missing, or Blocked.
-
-The canonical project skill is:
+AIOS may hold business context, priorities, analysis, and the decision to
+build. This repository owns the downstream technical work:
 
 ```text
-.agents/skills/develop-solution/SKILL.md
+business context or AIOS
+  → smallest justified technical intervention
+    → separate solution repository
+      → architecture, implementation, verification, delivery, and operation
 ```
 
-It supports four workflows:
+There is no shared schema, runtime, handoff contract, or version dependency.
+The template also works from a README, issue, meeting, diagram, or direct
+conversation.
 
-- **Set up:** establish responsibility, stack, architecture, commands, and
-  operations.
-- **Build:** implement and verify the smallest useful technical slice.
-- **Check:** audit architecture, security, quality, deployment, and recovery.
-- **Deploy:** release, verify, roll back, replay, or disable safely.
+## Start
 
-Natural language works without a skill picker. `$develop-solution` is an
-optional Codex convenience, and a thin Claude adapter routes to the same
-canonical skill.
+1. Create or open the real target repository.
+2. Give your coding agent the relevant context.
+3. Ask it to use `clarify-solution` if the technical boundary is unclear.
+4. Choose one shape and, for an Application, one profile.
+5. Apply the template.
+6. Build and verify the smallest complete slice.
 
-## Optional AIOS transition
+The clarification skill asks exactly one consequential question at a time. It
+stops as soon as outcome, ownership, shape, smallest slice, and acceptance are
+clear enough to proceed.
 
-AIOS can be the persistent home base where business context, priorities, and
-the decision to build are handled. When the answer requires a technical
-solution:
+## Choose a shape
 
-1. Create or locate a separate repository under `projects/`.
-2. Give the project access or links to the relevant input.
-3. Apply the Solution Template.
-4. Continue with the project-local `develop-solution` skill.
+| Shape         | This repository owns                             | Examples                                                     |
+| ------------- | ------------------------------------------------ | ------------------------------------------------------------ |
+| `application` | A human-facing experience                        | Landing page, content library, dashboard, full-stack product |
+| `service`     | One bounded capability behind a stable contract  | Calculation API, image renderer, worker                      |
+| `automation`  | Trigger and ordered workflow steps               | n8n workflow, scheduled job                                  |
+| `integration` | Translation and reliable delivery between owners | Webhook, adapter, proxy, bot boundary                        |
+| `system`      | Cross-repository technical truth and operation   | Architecture, infrastructure, ownership, runbooks            |
 
-Nothing is copied from AIOS by default. There is no shared schema, runtime,
-version, skill, or data synchronization. The project remains fully usable when
-opened on its own.
+A mixed design is normal: n8n can own orchestration while a small Service owns
+deterministic specialist logic. An agent routine that reasons with AIOS context
+remains AIOS work; a separately versioned and operated workflow belongs here.
 
-## Choose one shape
+Only an Application selects a profile:
 
-| Shape         | Repository responsibility                                 |
-| ------------- | --------------------------------------------------------- |
-| `application` | Human-facing website, product, portal, dashboard, or tool |
-| `service`     | Bounded API, worker, calculation, or domain capability    |
-| `automation`  | Triggered or scheduled workflow                           |
-| `integration` | Translation and delivery between authoritative systems    |
-| `system`      | Cross-repository architecture, ownership, and operations  |
-
-Only an Application selects a runtime profile:
-
-| Profile             | Primary runtime                                          |
-| ------------------- | -------------------------------------------------------- |
-| `static-pages`      | Vite/static router on GitHub Pages                       |
-| `cloudflare-native` | TanStack on Cloudflare with optional native state        |
-| `convex`            | TanStack and Convex as a coordinated application release |
-| `external`          | Frontend with an independently owned HTTP backend        |
-
-Shapes define responsibility. Profiles make an Application stack and deployment
-choice. Capabilities such as auth, persistence, billing, queues, analytics, or
-runtime AI are added only when the selected slice requires them.
+| Profile             | Use when                                                   |
+| ------------------- | ---------------------------------------------------------- |
+| `static-pages`      | The output is public static content on GitHub Pages        |
+| `cloudflare-native` | The Application uses Cloudflare with optional native state |
+| `convex`            | Frontend and Convex backend release as one Application     |
+| `external`          | The frontend consumes an independently owned HTTP backend  |
 
 ## Apply
 
-Use the runtime's current official scaffold. The template does not freeze or
-generate framework starter code.
+Use the runtime's current official scaffold. The applicator adds technical
+guidance and workflows; it does not generate framework code or rewrite
+manifests.
 
 ```sh
 git clone --depth 1 https://github.com/gustavonline/solution-template.git
@@ -95,7 +78,7 @@ git clone --depth 1 https://github.com/gustavonline/solution-template.git
 node solution-template/bin/apply-template.mjs \
   --target ./my-solution \
   --shape application \
-  --profile cloudflare-native
+  --profile static-pages
 ```
 
 For another shape, omit the profile:
@@ -116,73 +99,46 @@ Options:
 --force
 ```
 
-`--dry-run` previews the result. `--force` replaces changed template-owned
-files and should be used only after review.
+The target needs one recognizable project marker such as `.git`,
+`package.json`, `pyproject.toml`, `requirements.txt`, `go.mod`, or
+`Cargo.toml`. Applications also need `package.json`.
 
-## What is added
+Every target receives `AGENTS.md`, the focused project skills, its shape guide,
+and `.solution-template.json`. Applications also receive one profile, CI, and
+an honest deployment workflow where a common path exists. Other shapes receive
+no invented universal runtime.
 
-Every target receives:
+## Focused project skills
 
-- `AGENTS.md` and the thin `CLAUDE.md` adapter
-- the canonical `develop-solution` skill and technical readiness reference
-- optional Codex UI metadata and a thin Claude skill adapter
-- the selected `docs/solution-template/SHAPE.md`
-- `.solution-template.json` with version, selection, detected markers, applied
-  files, and missing Application scripts
+Use natural language or start broad with `develop-solution`. Load only the
+specialist needed for the current task.
 
-An Application also receives:
+| Skill                | Responsibility                                               |
+| -------------------- | ------------------------------------------------------------ |
+| `clarify-solution`   | Outcome, scope, ownership, shape, profile, acceptance        |
+| `architect-solution` | Boundaries, stack, data, REST/API contracts, decisions       |
+| `test-solution`      | Risk-based TDD, regression, contracts, real-runtime evidence |
+| `implement-slice`    | One minimal complete vertical slice                          |
+| `secure-solution`    | Trust, identity, secrets, privacy, supply chain, runtime AI  |
+| `document-solution`  | README, ADR, OpenAPI, diagrams, runbooks, handover           |
+| `review-solution`    | Code review and evidence-based technical readiness           |
+| `deliver-solution`   | CI, release, migration, deployment, activation, rollback     |
+| `operate-solution`   | Logs, health, metrics, resilience, incidents, recovery       |
+| `develop-solution`   | Routes broad work through the smallest relevant set          |
 
-- the selected `docs/solution-template/PROFILE.md`
-- CI and one deployment workflow when the profile has an honest common path
+TypeScript is the default for web-oriented solutions and integrations when it
+fits; Python is a first-class choice for data, image, scientific, ML, or
+existing Python workloads. Current ownership and operator capability outrank
+either default.
 
-Non-Application shapes receive no fake universal CI or deployment. Their local
-skill establishes the official path for the selected runtime or platform.
+## Deliberately absent
 
-The applicator never rewrites manifests, adds a framework, creates auth or a
-database, copies AIOS content, or claims a deployment succeeded.
+The template adds no database, auth, billing, queue, container, analytics
+platform, runtime AI, or distributed architecture by default. GitHub Pages is
+only for public output; paid or private access must be enforced by a trusted
+server-side owner.
 
-## Technical coverage
-
-The project skill checks every necessary technical area:
-
-- responsibility, shape, profile, runtime, and stack
-- architecture, contracts, data, identity, security, and privacy
-- optional AI boundaries and autonomy
-- tests, real-runtime acceptance, CI, and compatibility
-- environments, secrets, migrations, deployment, and verification
-- health, logs, metrics, performance, cost, incidents, and recovery
-- operations, handover, portability, and decommissioning
-
-Each area must be Ready, Not applicable with a reason, Missing, or Blocked.
-Depth is proportional to consequence; a static page does not need a database
-runbook, while a paid multi-tenant product does.
-
-## Deployment
-
-Static Pages, Cloudflare Native, and Convex Applications receive selected
-deployment workflows. External Applications receive frontend CI but no invented
-backend deployment.
-
-Services, Automations, Integrations, and Systems use their actual platform's
-official release or publication path. The project skill requires an exact
-artifact and environment, configuration and secret ownership, migration order,
-runtime verification, failure visibility, an operational owner, and a real
-rollback, replay, disable, or recovery path.
-
-Deployment is proven by the target environment—not by a successful build.
-
-## Source repository
-
-- `.agents/skills/develop-solution/` — canonical project workflow
-- `bin/apply-template.mjs` — zero-dependency applicator
-- `shapes/` — responsibility and deployment rules by solution shape
-- `profiles/` — Application stack and deployment guidance
-- `delivery/github-actions/` — selected Application workflows
-- `test/` — applicator and independence contract tests
-
-`v0.4.0` is a public preview. Read
-[`CHANGELOG.md`](CHANGELOG.md) for changes,
-[`CONTRIBUTING.md`](CONTRIBUTING.md) before contributing, and
-[`SECURITY.md`](SECURITY.md) for vulnerability reporting.
+`v0.5.0` is a public preview. See [CONTRIBUTING.md](CONTRIBUTING.md),
+[SECURITY.md](SECURITY.md), and [CHANGELOG.md](CHANGELOG.md).
 
 MIT licensed. Built by Arc'IT and available through Online Sourdough Resources.

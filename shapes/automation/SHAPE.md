@@ -6,7 +6,7 @@ A triggered or scheduled workflow that moves work through explicit steps.
 
 Document the trigger, input, ordered steps, output, system owner for each step,
 and which decisions are deterministic or AI-driven. Keep complex reusable
-domain logic in a service rather than the workflow engine.
+domain logic in a Service rather than the workflow engine.
 
 ## Boundaries
 
@@ -15,6 +15,14 @@ domain logic in a service rather than the workflow engine.
 - Name the error channel, human review points, and operational owner.
 - Keep a sanitized, versioned workflow source or export.
 - Keep credentials and production payloads in their runtime owners.
+- Let n8n or the selected workflow runtime own orchestration. Extract a small
+  Service only when logic needs stronger tests, reuse, performance, or
+  independent deployment.
+
+An AIOS routine in which an agent reasons with business context and skills
+remains AIOS work, even when Codex Automations schedules it. Use this shape
+when a separate technical workflow, scheduled program, or event-driven
+artifact must be built, versioned, activated, and operated.
 
 ## Deployment
 

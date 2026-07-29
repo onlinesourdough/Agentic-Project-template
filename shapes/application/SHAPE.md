@@ -1,6 +1,7 @@
 # Application
 
-A human-facing website, product, portal, dashboard, or internal tool.
+A human-facing landing page, content library, website, portal, dashboard,
+internal tool, digital product, or full-stack product.
 
 ## Owns
 
@@ -21,6 +22,10 @@ requires them.
 - Put vendor calls in adapters or backend integrations.
 - Keep private and paid decisions server-owned.
 - Use explicit APIs for non-web clients and public integrations.
+- For public experiences, verify semantics, keyboard use, responsive behavior,
+  metadata, sharing previews, discoverability, and asset loading as relevant.
+- A landing page or public content library may correctly need no auth,
+  persistence, server runtime, or billing.
 
 Select exactly one `PROFILE.md` for the primary runtime.
 
@@ -49,6 +54,8 @@ critical journey and assets, and preserve a rollback or disable path.
 ## Evidence
 
 - relevant static checks, tests, and build pass
-- the critical journey works in a real browser
+- the critical journey works in a real browser, including keyboard and
+  responsive use where relevant
 - public, private, and paid boundaries behave as intended
+- public metadata, discoverability, and assets are verified when relevant
 - the deployed environment, failure visibility, and rollback are verified

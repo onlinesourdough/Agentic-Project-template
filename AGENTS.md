@@ -74,13 +74,24 @@ or AI dependency is correct when the solution does not need it.
 Never claim a test, deploy, migration, scan, or release succeeded without
 reading its result.
 
-## Project skill
+## Project skills
 
-When the user asks to set up, architect, build, change, check, deploy, recover,
-or maintain this solution, read and follow
-`.agents/skills/develop-solution/SKILL.md`.
+Use `.agents/skills/develop-solution/SKILL.md` to route broad work. For a narrow
+request, read only the relevant specialist:
 
-Natural language is the stable interface. Runtime skill pickers and
-`$develop-solution` are optional conveniences. The canonical skill must work
-with normal file access and without AIOS, shell access, subagents, connectors,
-or a specific model.
+| Need                                                             | Skill                |
+| ---------------------------------------------------------------- | -------------------- |
+| Clarify outcome, scope, shape, profile, or owner                 | `clarify-solution`   |
+| Design boundaries, stack, data, API, or architecture             | `architect-solution` |
+| Implement one complete slice                                     | `implement-slice`    |
+| Test-drive behavior or verify risk                               | `test-solution`      |
+| Review identity, trust, data, secrets, or supply chain           | `secure-solution`    |
+| Keep README, contracts, decisions, diagrams, or runbooks current | `document-solution`  |
+| Build, release, migrate, deploy, activate, or roll back          | `deliver-solution`   |
+| Add logging, health, resilience, incidents, or recovery          | `operate-solution`   |
+| Review code or technical readiness with evidence                 | `review-solution`    |
+
+Skills live under `.agents/skills/<name>/SKILL.md`. Natural language is the
+stable interface; runtime skill pickers are optional. Each canonical skill must
+work with normal file access and without AIOS, shell access, subagents,
+connectors, or a specific model.

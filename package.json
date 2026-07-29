@@ -1,6 +1,6 @@
 {
   "name": "@arcitai/solution-template",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A standalone AI-native technical foundation for applications, services, automations, integrations, and systems.",
   "private": true,
   "type": "module",
