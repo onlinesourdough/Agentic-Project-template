@@ -1,7 +1,8 @@
 # Agent Guide
 
-This repository uses the AI-native Solution Template. It contains only the
-technical truth needed to build and operate one solution.
+This is a self-contained technical project using the AI-native Solution
+Template. AIOS and other planning systems are optional context sources, not
+dependencies.
 
 ## Start
 
@@ -11,10 +12,10 @@ technical truth needed to build and operate one solution.
 4. Confirm what this repository owns, consumes, and deliberately does not own.
 5. Choose the smallest useful slice.
 
-Context may come from an AIOS, README, issue, decision, or conversation. Do not
-copy upstream business context into this repository merely to satisfy the
-template. If one missing decision would materially change the implementation,
-ask one precise question.
+Context may come from the user, a README, issue, decision, conversation, or an
+AIOS. Keep project-specific technical truth here and link to upstream context
+instead of copying it without a project reason. If one missing decision would
+materially change the implementation, ask one precise question.
 
 When working on the template source itself, read `README.md`,
 `CONTRIBUTING.md`, and only the shape or profile being changed.
@@ -72,3 +73,14 @@ or AI dependency is correct when the solution does not need it.
 
 Never claim a test, deploy, migration, scan, or release succeeded without
 reading its result.
+
+## Project skill
+
+When the user asks to set up, architect, build, change, check, deploy, recover,
+or maintain this solution, read and follow
+`.agents/skills/develop-solution/SKILL.md`.
+
+Natural language is the stable interface. Runtime skill pickers and
+`$develop-solution` are optional conveniences. The canonical skill must work
+with normal file access and without AIOS, shell access, subagents, connectors,
+or a specific model.

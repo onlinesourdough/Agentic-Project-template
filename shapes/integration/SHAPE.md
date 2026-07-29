@@ -17,6 +17,12 @@ downstream, credentials, mapping, compatibility, and incident owners.
 - Make partial failure and reconciliation observable.
 - Redact payloads and downstream internals from logs and errors.
 
+## Deployment
+
+Deploy the boundary and register webhooks, commands, callbacks, or credentials
+as explicit external configuration. Verify both ends, document secret rotation,
+and keep a way to pause delivery and reconcile messages after recovery.
+
 ## Evidence
 
 - auth and mapping tests pass

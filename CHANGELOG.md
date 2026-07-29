@@ -3,6 +3,36 @@
 All notable changes are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-07-29
+
+### Added
+
+- A canonical, harness-neutral `develop-solution` project skill for technical
+  setup, implementation, readiness checks, deployment, and recovery.
+- A progressive technical-readiness reference covering inputs, accountable
+  roles, architecture, stack, security, quality, deployment, observability,
+  operations, handover, and exit.
+- Thin Codex UI and Claude adapters without duplicated workflow logic.
+- Explicit deployment and activation guidance for every shape and Application
+  profile.
+
+### Changed
+
+- Repositioned the template as a fully standalone technical project foundation.
+  AIOS is an optional upstream context and transition path, not the owner of
+  project skills or technical workflow.
+- Expanded shape and profile guidance only where responsibility, architecture,
+  or deployment evidence would otherwise be ambiguous.
+- The applicator now installs the project-local skill and adapters for every
+  shape.
+
+### Compatibility
+
+- Shape names, Application profiles, CLI options, project markers, workflow
+  selection, and `.solution-template.json` remain compatible.
+- Applying with `--force` is required when updating previously customized
+  template-owned files; review conflicts before replacing them.
+
 ## [0.3.0] - 2026-07-28
 
 ### Changed

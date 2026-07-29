@@ -19,6 +19,13 @@ upstream data, caller workflows, and infrastructure with their existing owners.
 Use the language and current official scaffold that fit the responsibility.
 TypeScript is not required.
 
+## Deployment
+
+Use the runtime's official build and deployment path. Keep environments and
+configuration explicit, validate configuration at startup, deploy
+independently, verify readiness and contracts, and retain the previous
+deployable artifact or another proven rollback path.
+
 ## Evidence
 
 - contract and deterministic behavior tests pass
