@@ -174,6 +174,23 @@ function applicationFiles(profile) {
 function plannedFiles(shape, profile) {
   const files = [
     ["AGENTS.md", "AGENTS.md"],
+    ["CLAUDE.md", "CLAUDE.md"],
+    [
+      ".agents/skills/develop-solution/SKILL.md",
+      ".agents/skills/develop-solution/SKILL.md",
+    ],
+    [
+      ".agents/skills/develop-solution/agents/openai.yaml",
+      ".agents/skills/develop-solution/agents/openai.yaml",
+    ],
+    [
+      ".agents/skills/develop-solution/references/technical-readiness.md",
+      ".agents/skills/develop-solution/references/technical-readiness.md",
+    ],
+    [
+      ".claude/skills/develop-solution/SKILL.md",
+      ".claude/skills/develop-solution/SKILL.md",
+    ],
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ];
 

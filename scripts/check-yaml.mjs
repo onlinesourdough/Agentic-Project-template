@@ -18,7 +18,7 @@ async function collect(directory) {
   return files;
 }
 
-const directories = [".github", "delivery"];
+const directories = [".agents", ".github", "delivery"];
 const files = [];
 
 for (const directory of directories) {

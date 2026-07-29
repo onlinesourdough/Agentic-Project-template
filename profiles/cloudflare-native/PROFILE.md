@@ -18,3 +18,14 @@ separate `staging` and `production` environments.
 
 Keep workflows and domain rules outside routes, vendor calls at the edge, paid
 access server-owned, and side-effecting webhooks idempotent.
+
+## Deployment
+
+The copied workflow builds and deploys through Wrangler. It runs
+`db:migrate:remote` only when that script exists. Keep schema changes compatible
+with the running application, apply migrations in the documented order, and
+back up or export state before a destructive migration.
+
+Verify the deployed Worker or Pages URL, critical endpoints, bindings, logs,
+and the main browser journey. Roll back code with the previous deployment and
+use a forward or explicitly tested database recovery for state changes.

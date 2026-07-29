@@ -16,6 +16,13 @@ domain logic in a service rather than the workflow engine.
 - Keep a sanitized, versioned workflow source or export.
 - Keep credentials and production payloads in their runtime owners.
 
+## Deployment
+
+Treat publish and activation as separate actions when the workflow platform
+allows it. Record the version or export mapped to production, test with safe
+data, verify credentials and error delivery, then activate with an immediate
+disable path.
+
 ## Evidence
 
 - one safe end-to-end run succeeds
