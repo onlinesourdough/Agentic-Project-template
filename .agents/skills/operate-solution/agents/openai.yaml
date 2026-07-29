@@ -1,4 +1,0 @@
-interface:
-  display_name: "Operate Solution"
-  short_description: "Make runtime health and recovery visible"
-  default_prompt: "Use $operate-solution to add or audit proportional logging, observability, resilience, and recovery."

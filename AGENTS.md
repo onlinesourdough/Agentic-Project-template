@@ -1,97 +1,71 @@
 # Agent Guide
 
-This is a self-contained technical project using the AI-native Solution
-Template. AIOS and other planning systems are optional context sources, not
-dependencies.
+Build the smallest technical solution that can create the intended outcome.
+Work from repository evidence and keep the result understandable, testable,
+operable, and owned.
 
 ## Start
 
-1. Read the project's existing context and instructions.
-2. Read `docs/solution-template/SHAPE.md` when present.
-3. For an Application, read `docs/solution-template/PROFILE.md`.
-4. Confirm what this repository owns, consumes, and deliberately does not own.
-5. Choose the smallest useful slice.
+1. Read the request, this guide, and existing project context.
+2. Confirm what the repository owns, consumes, and does not own.
+3. Identify the solution shape and current stack.
+4. Choose the smallest valuable vertical slice.
 
-Context may come from the user, a README, issue, decision, conversation, or an
-AIOS. Keep project-specific technical truth here and link to upstream context
-instead of copying it without a project reason. If one missing decision would
-materially change the implementation, ask one precise question.
+Ask exactly one question, with a best guess, when one missing decision would
+materially change the solution. Inspect the repository instead of asking for
+facts it already contains.
 
-When working on the template source itself, read `README.md`,
-`CONTRIBUTING.md`, and only the shape or profile being changed.
+## Workflow
 
-## Build
+| Need                                                       | Skill                                     |
+| ---------------------------------------------------------- | ----------------------------------------- |
+| Clarify, choose shape or stack, define boundaries, or plan | `.agents/skills/spec-solution/SKILL.md`   |
+| Implement or change behavior with tests                    | `.agents/skills/build-solution/SKILL.md`  |
+| Review correctness, quality, security, and simplicity      | `.agents/skills/review-solution/SKILL.md` |
+| Release, deploy, activate, verify, or recover              | `.agents/skills/ship-solution/SKILL.md`   |
 
-1. Reuse existing owners and sources of truth.
-2. Define or update the smallest boundary or behavior under change.
-3. Add a failing test first for deterministic rules when practical.
-4. Implement only the capabilities required by the slice.
-5. Keep domain rules outside framework entrypoints.
-6. Validate success, relevant failure paths, and recovery.
-7. Run the target repository's real checks.
+Use only the relevant skill. Small mechanical changes do not need the complete
+workflow.
 
-A missing folder, database, auth system, queue, analytics tool, billing system,
-or AI dependency is correct when the solution does not need it.
+## Stack policy
 
-## Technical rules
+- Applications default to React, TypeScript, and TanStack. Prefer TypeScript
+  end-to-end when that keeps one Application simpler.
+- Services and Integrations default to TypeScript for ordinary web and API
+  work.
+- Choose Python when data, quant, image, scientific, machine-learning, or
+  existing Python ownership materially benefits the capability.
+- Let n8n or another workflow runtime own orchestration. A separate Service
+  owns only substantial reusable or specialist logic.
+- Do not mix languages inside one responsibility without a concrete benefit.
 
-- Give every responsibility one explicit owner.
-- Runtime-validate external inputs and keep contracts stable.
-- Keep vendor and infrastructure details at the edge.
-- Keep critical policy, authorization, calculations, and irreversible effects
-  in deterministic code.
-- Make retried or duplicate side effects idempotent.
-- Keep secrets and private production data out of code and committed exports.
-- Use bounded reads, explicit indexes, and checked-in migrations when relevant.
-- Use the lowest autonomy that delivers the outcome.
-- Preserve rollback, replay, disable, export, or another real recovery path.
-- Do not rebuild a working system for architectural symmetry.
+## Engineering rules
 
-## Shape boundaries
-
-- **Application:** keep routes thin, UI free of server types, and paid or
-  private access server-owned.
-- **Service:** own one bounded capability with validated contracts, health, and
-  observable dependency failure.
-- **Automation:** make triggers, retries, duplicates, replay, error handling,
-  human control, and the kill switch explicit.
-- **Integration:** preserve upstream and downstream ownership; test auth,
-  mapping, timeouts, acknowledgement, and reconciliation.
-- **System:** maintain architecture, ownership, decisions, topology, and
-  runbooks without fake runtime code.
+- Give every responsibility and source of truth one explicit owner.
+- Prefer one deployable unit before adding a network boundary.
+- Keep modules cohesive, interfaces small, and framework details at the edge.
+- Keep routes, handlers, components, and workflow triggers thin.
+- Runtime-validate external input and keep contracts stable.
+- Keep authorization, critical policy, calculations, and irreversible effects
+  deterministic.
+- Make retried side effects idempotent and bound reads, timeouts, retries, and
+  concurrency.
+- Keep secrets and private data out of code, logs, exports, and client builds.
+- Emit structured, redacted logs where runtime failure matters.
+- Add dependencies and infrastructure only for a demonstrated responsibility.
+- Reuse working systems and owners instead of rebuilding for symmetry.
+- Preserve rollback, replay, disable, restore, reconciliation, or export as
+  appropriate.
 
 ## Before completion
 
-- verify the intended artifact or behavior exists
-- confirm the selected shape still fits
-- confirm no existing owner or source of truth was duplicated
-- run relevant formatting, lint, type, test, build, contract, workflow, or link
-  checks
-- exercise the critical real-runtime path when mocks cannot prove it
-- verify failure visibility and recovery
-- state skipped or unavailable evidence
+- verify the intended behavior through its real interface
+- run the repository's actual format, lint, type, test, build, and contract
+  checks that the change affects
+- check relevant failure, denial, duplicate, and recovery behavior
+- update only technical truth made stale by the change
+- review and simplify the changed responsibility
+- state unavailable evidence and remaining risk
 
-Never claim a test, deploy, migration, scan, or release succeeded without
-reading its result.
-
-## Project skills
-
-Use `.agents/skills/develop-solution/SKILL.md` to route broad work. For a narrow
-request, read only the relevant specialist:
-
-| Need                                                             | Skill                |
-| ---------------------------------------------------------------- | -------------------- |
-| Clarify outcome, scope, shape, profile, or owner                 | `clarify-solution`   |
-| Design boundaries, stack, data, API, or architecture             | `architect-solution` |
-| Implement one complete slice                                     | `implement-slice`    |
-| Test-drive behavior or verify risk                               | `test-solution`      |
-| Review identity, trust, data, secrets, or supply chain           | `secure-solution`    |
-| Keep README, contracts, decisions, diagrams, or runbooks current | `document-solution`  |
-| Build, release, migrate, deploy, activate, or roll back          | `deliver-solution`   |
-| Add logging, health, resilience, incidents, or recovery          | `operate-solution`   |
-| Review code or technical readiness with evidence                 | `review-solution`    |
-
-Skills live under `.agents/skills/<name>/SKILL.md`. Natural language is the
-stable interface; runtime skill pickers are optional. Each canonical skill must
-work with normal file access and without AIOS, shell access, subagents,
-connectors, or a specific model.
+Never claim that a test, deployment, migration, or runtime path succeeded
+without reading its result.

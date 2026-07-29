@@ -1,144 +1,89 @@
-# AI-native Solution Template
+![Solution Template overview](assets/solution-template-overview.png)
 
-Build the smallest technical solution that can create the intended outcome—and
-leave it understandable, verifiable, operable, and owned.
+# Solution Template
 
-![Business context becoming a small modular solution with five possible shapes and a verified recovery loop](assets/solution-template-overview.png)
+**Solution Template** is a minimal AI-native foundation for turning a real
+problem into the smallest useful technical solution.
 
-The template starts after a real problem or opportunity has been identified.
-It helps a person and coding agent turn that context into an **Application,
-Service, Automation, Integration, or System** without starting from a framework
-or adding capabilities that the solution does not need.
+It gives a coding agent one simple workflow:
 
-AI-native means that intent, boundaries, contracts, tests, operations, and
-recovery are explicit enough for humans and agents to understand and change
-safely. Runtime AI is optional.
+| Step   | Purpose                                                                         |
+| ------ | ------------------------------------------------------------------------------- |
+| Spec   | Understand the outcome, choose the solution shape, and plan the smallest slices |
+| Build  | Implement and test one complete vertical slice at a time                        |
+| Review | Check the result against intent and simplify the changed area                   |
+| Ship   | Release, verify, and preserve a real recovery path                              |
 
-## AIOS is optional upstream context
-
-AIOS may hold business context, priorities, analysis, and the decision to
-build. This repository owns the downstream technical work:
-
-```text
-business context or AIOS
-  → smallest justified technical intervention
-    → separate solution repository
-      → architecture, implementation, verification, delivery, and operation
-```
-
-There is no shared schema, runtime, handoff contract, or version dependency.
-The template also works from a README, issue, meeting, diagram, or direct
-conversation.
+Natural language is the interface. The skills make the process repeatable
+without forcing a framework, platform, or large software methodology.
 
 ## Start
 
-1. Create or open the real target repository.
-2. Give your coding agent the relevant context.
-3. Ask it to use `clarify-solution` if the technical boundary is unclear.
-4. Choose one shape and, for an Application, one profile.
-5. Apply the template.
-6. Build and verify the smallest complete slice.
+1. Create a private repository from this template.
+2. Open it in Codex or another coding agent that reads `AGENTS.md`.
+3. Describe the result you want and say:
 
-The clarification skill asks exactly one consequential question at a time. It
-stops as soon as outcome, ownership, shape, smallest slice, and acceptance are
-clear enough to proceed.
+> Help me spec the smallest solution that can create this result.
 
-## Choose a shape
+The agent asks one question at a time when something consequential is unclear.
+When the spec is sufficient, continue naturally:
 
-| Shape         | This repository owns                             | Examples                                                     |
-| ------------- | ------------------------------------------------ | ------------------------------------------------------------ |
-| `application` | A human-facing experience                        | Landing page, content library, dashboard, full-stack product |
-| `service`     | One bounded capability behind a stable contract  | Calculation API, image renderer, worker                      |
-| `automation`  | Trigger and ordered workflow steps               | n8n workflow, scheduled job                                  |
-| `integration` | Translation and reliable delivery between owners | Webhook, adapter, proxy, bot boundary                        |
-| `system`      | Cross-repository technical truth and operation   | Architecture, infrastructure, ownership, runbooks            |
+> Build the first slice.
 
-A mixed design is normal: n8n can own orchestration while a small Service owns
-deterministic specialist logic. An agent routine that reasons with AIOS context
-remains AIOS work; a separately versioned and operated workflow belongs here.
+> Review and simplify the change.
 
-Only an Application selects a profile:
+> Ship it when the evidence passes.
 
-| Profile             | Use when                                                   |
-| ------------------- | ---------------------------------------------------------- |
-| `static-pages`      | The output is public static content on GitHub Pages        |
-| `cloudflare-native` | The Application uses Cloudflare with optional native state |
-| `convex`            | Frontend and Convex backend release as one Application     |
-| `external`          | The frontend consumes an independently owned HTTP backend  |
+## Solution shapes
 
-## Apply
+| Shape       | Examples                                                                    |
+| ----------- | --------------------------------------------------------------------------- |
+| Application | Landing page, content library, internal tool, portal, or full-stack product |
+| Service     | API, calculation, image renderer, algorithm, or bounded capability          |
+| Automation  | n8n workflow, scheduled job, or event-driven process                        |
+| Integration | Webhook, adapter, proxy, bot boundary, or system connection                 |
+| System      | Architecture, infrastructure, ownership, and operational repository         |
 
-Use the runtime's current official scaffold. The applicator adds technical
-guidance and workflows; it does not generate framework code or rewrite
-manifests.
+The shape describes what the repository owns. It does not prescribe its size
+or vendor.
 
-```sh
-git clone --depth 1 https://github.com/gustavonline/solution-template.git
+## Stack defaults
 
-node solution-template/bin/apply-template.mjs \
-  --target ./my-solution \
-  --shape application \
-  --profile static-pages
-```
+Use **React, TypeScript, and TanStack** for Applications. Prefer TypeScript
+end-to-end when one language keeps the product simpler.
 
-For another shape, omit the profile:
+Use **Python** for a separate Service when its core capability benefits from
+Python's quant, data, image, scientific, or machine-learning ecosystem. A
+heatmap renderer or trading algorithm can therefore be Python without making
+Python the default backend for every Application.
 
-```sh
-node solution-template/bin/apply-template.mjs \
-  --target ./my-service \
-  --shape service
-```
+Use **n8n** or another workflow runtime for orchestration. Move logic into a
+Service only when it needs stronger tests, reuse, performance, or independent
+operation.
 
-Options:
+Existing ownership and a working system outrank every default.
+
+## Repository map
 
 ```text
---target <path>
---shape <application|service|automation|integration|system>
---profile <static-pages|cloudflare-native|convex|external>
---dry-run
---force
+Solution Template
+├── AGENTS.md
+├── .agents/skills/
+│   ├── spec-solution/SKILL.md
+│   ├── build-solution/SKILL.md
+│   ├── review-solution/SKILL.md
+│   └── ship-solution/SKILL.md
+├── CLAUDE.md
+├── assets/solution-template-overview.png
+└── README.md
 ```
 
-The target needs one recognizable project marker such as `.git`,
-`package.json`, `pyproject.toml`, `requirements.txt`, `go.mod`, or
-`Cargo.toml`. Applications also need `package.json`.
+`AGENTS.md` contains the stable engineering rules. Each skill is loaded only
+when its part of the workflow is relevant.
 
-Every target receives `AGENTS.md`, the focused project skills, its shape guide,
-and `.solution-template.json`. Applications also receive one profile, CI, and
-an honest deployment workflow where a common path exists. Other shapes receive
-no invented universal runtime.
+## Keep it small
 
-## Focused project skills
-
-Use natural language or start broad with `develop-solution`. Load only the
-specialist needed for the current task.
-
-| Skill                | Responsibility                                               |
-| -------------------- | ------------------------------------------------------------ |
-| `clarify-solution`   | Outcome, scope, ownership, shape, profile, acceptance        |
-| `architect-solution` | Boundaries, stack, data, REST/API contracts, decisions       |
-| `test-solution`      | Risk-based TDD, regression, contracts, real-runtime evidence |
-| `implement-slice`    | One minimal complete vertical slice                          |
-| `secure-solution`    | Trust, identity, secrets, privacy, supply chain, runtime AI  |
-| `document-solution`  | README, ADR, OpenAPI, diagrams, runbooks, handover           |
-| `review-solution`    | Code review and evidence-based technical readiness           |
-| `deliver-solution`   | CI, release, migration, deployment, activation, rollback     |
-| `operate-solution`   | Logs, health, metrics, resilience, incidents, recovery       |
-| `develop-solution`   | Routes broad work through the smallest relevant set          |
-
-TypeScript is the default for web-oriented solutions and integrations when it
-fits; Python is a first-class choice for data, image, scientific, ML, or
-existing Python workloads. Current ownership and operator capability outrank
-either default.
-
-## Deliberately absent
-
-The template adds no database, auth, billing, queue, container, analytics
-platform, runtime AI, or distributed architecture by default. GitHub Pages is
-only for public output; paid or private access must be enforced by a trusted
-server-side owner.
-
-`v0.5.0` is a public preview. See [CONTRIBUTING.md](CONTRIBUTING.md),
-[SECURITY.md](SECURITY.md), and [CHANGELOG.md](CHANGELOG.md).
-
-MIT licensed. Built by Arc'IT and available through Online Sourdough Resources.
+Start with the outcome, one owner, one repository, one deployable unit, and one
+vertical slice. Add auth, data, queues, billing, containers, runtime AI, or
+additional services only when the solution has a concrete responsibility for
+them.

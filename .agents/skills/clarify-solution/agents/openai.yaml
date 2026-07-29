@@ -1,4 +1,0 @@
-interface:
-  display_name: "Clarify Solution"
-  short_description: "Clarify the smallest justified solution"
-  default_prompt: "Use $clarify-solution to ask one question at a time and identify the smallest justified solution."

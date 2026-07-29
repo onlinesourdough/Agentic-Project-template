@@ -1,4 +1,0 @@
-interface:
-  display_name: "Document Solution"
-  short_description: "Keep minimal technical truth current"
-  default_prompt: "Use $document-solution to update only the technical documentation this change requires."

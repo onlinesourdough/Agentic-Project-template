@@ -1,4 +1,0 @@
-interface:
-  display_name: "Test Solution"
-  short_description: "Drive behavior with risk-based tests"
-  default_prompt: "Use $test-solution to test-drive the current behavior and verify the right failure paths."
