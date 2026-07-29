@@ -5,11 +5,27 @@ description: Build and test one complete vertical slice of a specified technical
 
 # Build Solution
 
-Build the smallest complete behavior that can be observed through a real
-interface.
+Build the smallest complete artifact or behavior that can be verified through
+its real interface, validator, plan, health check, or rehearsal.
 
-If the intended behavior or boundary is still consequentially unclear, use
-`spec-solution` first.
+If the intended behavior, boundary, or independent lifecycle is still
+consequentially unclear, use `spec-solution` first.
+
+## Initialize without inventing a stack
+
+For a fresh repository:
+
+1. Make README project-specific before implementation.
+2. Create an official framework scaffold in the repository root only when the
+   selected shape and stack require one.
+3. Preserve repository instructions and use one package manager and lockfile
+   per ecosystem.
+4. Do not create fake runtime code when an Automation, Integration, or System
+   only needs a workflow export, configuration, contract, infrastructure,
+   architecture decision, or runbook.
+
+Adopt existing repositories in place without overwriting working structure or
+technical truth.
 
 ## Work in vertical slices
 
@@ -27,7 +43,21 @@ For a bug, reproduce it first and keep the reproduction as a regression test.
 Use a validator, build, browser, workflow run, or runtime check when a unit test
 would be artificial.
 
-## Write code agents and humans can change
+Valid vertical slices include:
+
+- an Application journey or Service contract and domain behavior
+- a versioned Automation workflow or Integration delivery path
+- infrastructure-as-code, VPS configuration, or desired-state validation
+- architecture, topology, a decision record, or an executable runbook
+- project-local agents and skills with observable acceptance evidence
+
+Choose evidence by risk: unit tests for deterministic rules, contract tests for
+boundaries, integration tests for dependencies, end-to-end tests for critical
+journeys, validators and dry-runs for workflows or infrastructure, and health,
+drift, replay, rebuild, or restore checks for operational solutions. Do not add
+every test type to every slice.
+
+## Create artifacts agents and humans can change
 
 - Keep modules cohesive with small, stable interfaces and meaningful depth.
 - Keep route, handler, component, trigger, and framework entrypoints thin.
@@ -45,6 +75,11 @@ shapes, pagination, authentication, authorization, and compatibility. For user
 interfaces, handle loading, empty, error, keyboard, responsive, and public
 metadata behavior when relevant.
 
+For infrastructure and VPS work, document desired state, access and secret
+ownership, health, patching, drift, and a reproducible rebuild or tested restore
+path. When a step cannot be automated safely, provide an exact, reviewable
+runbook.
+
 ## Language baseline
 
 - In TypeScript, keep strict types at boundaries, avoid silent casts, and share
@@ -61,4 +96,4 @@ or request identifier, outcome, duration, and safe failure information when
 useful. Never log secrets or unnecessary private payloads.
 
 Finish with a working repository, the smallest complete slice, updated local
-truth, and the exact evidence that proves it.
+truth in README, and the exact evidence that proves it.
