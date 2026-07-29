@@ -1,6 +1,6 @@
 ---
 name: spec-solution
-description: Clarify and plan the smallest technical solution one question at a time. Use when starting a project, feature, Service, Automation, Integration, or system change and the outcome, ownership, shape, stack, boundaries, acceptance, or implementation order is not yet explicit.
+description: Clarify and plan the smallest technical solution one question at a time. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and the outcome, ownership, shape, technology, boundaries, acceptance, or implementation order is not yet explicit.
 ---
 
 # Spec Solution
@@ -14,23 +14,14 @@ any supplied context. Identify the canonical context source and link to it
 instead of copying it. Resolve facts from the repository instead of asking the
 user.
 
-## Pass the lifecycle gate
+## Confirm the repository
 
-Before scaffolding, classify the need as:
+Before scaffolding, find the smallest valid owner for the work.
 
-1. an existing process or tool
-2. an agent, skill, workflow, or other capability local to an existing
-   workspace
-3. an independent Solution project
-
-An independent repository is justified when the solution must be understood,
-developed, operated, accessed, or handed over without the original owner or
-workspace. Schedule, credentials, agent use, code volume, and an internal or
-external audience are not decisive.
-
-Stop before scaffolding and recommend the smaller owner when an independent
-lifecycle is not justified. Continue only if the user explicitly overrides
-that recommendation.
+Use a Solution repository when the capability needs its own durable context,
+ownership, development, operation, or handover. Otherwise recommend the
+existing process, tool, workspace, or project that should own it. Stop before
+scaffolding unless the user explicitly chooses a separate project.
 
 ## Ask one question at a time
 
@@ -47,29 +38,33 @@ non-goals are clear enough to proceed.
 
 ## Choose the solution shape
 
-| Shape       | Primary responsibility                                                            |
-| ----------- | --------------------------------------------------------------------------------- |
-| Application | A human-facing landing page, content library, tool, portal, or full-stack product |
-| Service     | One bounded capability behind a stable interface                                  |
-| Automation  | A triggered or scheduled sequence of steps                                        |
-| Integration | Translation and reliable delivery between existing owners                         |
-| System      | Architecture, infrastructure, ownership, or operations across repositories        |
+| Shape       | Primary responsibility                                                           |
+| ----------- | -------------------------------------------------------------------------------- |
+| Application | A human-facing website, product UI, mobile or desktop app, internal tool, or CLI |
+| Service     | One bounded capability behind a stable interface                                 |
+| Automation  | A triggered or scheduled sequence of steps                                       |
+| Integration | Translation and reliable delivery between existing owners                        |
+| Library     | A package, SDK, template, or reusable capability consumed by other solutions     |
+| System      | Architecture, infrastructure, ownership, or operations across repositories       |
 
 One outcome may use more than one shape, but each repository needs one clear
 primary responsibility.
 
-## Choose the stack last
+## Choose technology last
 
-- Use React, TypeScript, and TanStack for Applications unless existing
-  ownership gives a better answer. Use TypeScript on the server too when it
-  keeps one Application simpler.
-- Use TypeScript by default for ordinary web APIs, Services, and Integrations.
+- Read `TECHNOLOGY.md` before selecting a new stack.
+- Prefer TypeScript for browser interfaces and ordinary web capabilities. Use
+  React when a component-based user interface is required.
+- Prefer TypeScript for ordinary web APIs, Services, and Integrations.
 - Use Python when the capability materially benefits from Python's data, quant,
   image, scientific, or machine-learning ecosystem, or already has a Python
   owner.
 - Let n8n or another workflow runtime own orchestration. Extract code into a
   Service only when logic needs stronger tests, reuse, performance, or
   independent operation.
+- Add data, deployment, and observability layers only when the solution owns a
+  responsibility for them.
+- Existing ownership and a working system outrank every recommendation.
 - Do not mix languages inside one responsibility without a concrete benefit.
   Cross-language parts communicate through an explicit contract.
 

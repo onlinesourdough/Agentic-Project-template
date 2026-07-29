@@ -1,6 +1,6 @@
 ---
 name: build-solution
-description: Build and test one complete vertical slice of a specified technical solution. Use when implementing or changing Application, Service, Automation, Integration, or System behavior after outcome, ownership, boundaries, and acceptance are sufficiently clear.
+description: Build and test one complete vertical slice of a specified technical solution. Use when implementing or changing Application, Service, Automation, Integration, Library, or System behavior after outcome, ownership, boundaries, and acceptance are sufficiently clear.
 ---
 
 # Build Solution
@@ -18,9 +18,10 @@ For a fresh repository:
 1. Make README project-specific before implementation.
 2. Create an official framework scaffold in the repository root only when the
    selected shape and stack require one.
-3. Preserve repository instructions and use one package manager and lockfile
+3. Follow `TECHNOLOGY.md` when choosing new technology.
+4. Preserve repository instructions and use one package manager and lockfile
    per ecosystem.
-4. Do not create fake runtime code when an Automation, Integration, or System
+5. Do not create fake runtime code when an Automation, Integration, or System
    only needs a workflow export, configuration, contract, infrastructure,
    architecture decision, or runbook.
 
@@ -47,6 +48,7 @@ Valid vertical slices include:
 
 - an Application journey or Service contract and domain behavior
 - a versioned Automation workflow or Integration delivery path
+- a Library interface, consumer example, and compatibility check
 - infrastructure-as-code, VPS configuration, or desired-state validation
 - architecture, topology, a decision record, or an executable runbook
 - project-local agents and skills with observable acceptance evidence

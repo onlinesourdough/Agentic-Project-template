@@ -30,6 +30,9 @@ Review these gates:
   not duplicated or blurred; project truth has one canonical owner.
 - **Lifecycle:** the repository still merits independent ownership, and it does
   not duplicate a smaller existing owner without justification.
+- **Technology:** each added layer owns a required capability, follows current
+  project evidence and `TECHNOLOGY.md`, and has an understandable replacement
+  path.
 - **Security:** trust, authorization, secrets, private data, dependencies, and
   external side effects are handled proportionally.
 - **Operation:** important failure is visible and rollback, replay, disable,
