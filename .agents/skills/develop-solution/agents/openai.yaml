@@ -1,4 +1,4 @@
 interface:
   display_name: "Develop Solution"
-  short_description: "Build, check, deploy, and operate a solution"
-  default_prompt: "Use $develop-solution to build or check the smallest complete technical solution in this repository."
+  short_description: "Route work through focused solution skills"
+  default_prompt: "Use $develop-solution to route this work through the smallest relevant set of project skills."

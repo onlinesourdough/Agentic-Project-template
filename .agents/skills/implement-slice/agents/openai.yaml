@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Slice"
+  short_description: "Build one minimal vertical slice safely"
+  default_prompt: "Use $implement-slice to build the smallest complete vertical slice in this repository."

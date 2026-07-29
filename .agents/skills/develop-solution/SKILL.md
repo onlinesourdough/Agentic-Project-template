@@ -1,110 +1,65 @@
 ---
 name: develop-solution
-description: Build, change, check, deploy, recover, or maintain the technical solution in the current repository. Use when a user asks to set up or architect a solution, implement a slice, review technical readiness, prepare or perform a deployment, diagnose operational gaps, or simplify an existing application, service, automation, integration, or system.
+description: Route broad software work through the smallest relevant project skills. Use when setting up, building, changing, checking, deploying, recovering, or maintaining an Application, Service, Automation, Integration, or System and the task spans more than one specialist area.
 ---
 
 # Develop Solution
 
-Operate this repository as a complete technical project. Do not require AIOS,
-a particular planning system, a specific harness, or runtime AI.
+Operate this repository as a self-contained technical project. AIOS, a specific
+agent harness, runtime AI, and any particular framework are optional.
 
 ## Start
 
-1. Read the repository's existing instructions and project context.
-2. Read `docs/solution-template/SHAPE.md`.
-3. Read `docs/solution-template/PROFILE.md` when present.
-4. Inspect `.solution-template.json`, manifests, commands, workflows, and the
+1. Read repository instructions and the existing project context.
+2. Read `docs/solution-template/SHAPE.md` and, for an Application,
+   `docs/solution-template/PROFILE.md`.
+3. Inspect `.solution-template.json`, manifests, commands, workflows, and the
    implementation relevant to the request.
-5. Identify the requested outcome, current technical state, and evidence of
-   completion.
+4. Identify the smallest skill set that can complete the requested outcome.
 
-Use context from any trustworthy source. Link to upstream business context when
-useful; do not copy it into the project without a project-specific reason. If
-one missing input would materially change the technical solution, ask one
-precise question.
+Do not load every skill for every task.
 
-## Choose the workflow
+## Route
 
-Choose without presenting a menu unless the request is genuinely ambiguous:
+| Need                                                                      | Skill                |
+| ------------------------------------------------------------------------- | -------------------- |
+| Missing intent, scope, shape, owner, or acceptance                        | `clarify-solution`   |
+| Boundaries, stack, data, API, integration, or architecture                | `architect-solution` |
+| One complete code or configuration increment                              | `implement-slice`    |
+| TDD, regression, contract, integration, or runtime tests                  | `test-solution`      |
+| Trust, identity, authorization, secrets, privacy, or supply chain         | `secure-solution`    |
+| README, ADR, OpenAPI, diagram, runbook, or handover truth                 | `document-solution`  |
+| CI, release, migration, deployment, activation, or rollback               | `deliver-solution`   |
+| Logging, health, metrics, performance, resilience, incidents, or recovery | `operate-solution`   |
+| Code review, technical readiness, or completion evidence                  | `review-solution`    |
 
-- **Set up** when technical ownership, stack, boundaries, or commands are not
-  yet established.
-- **Build** when implementing or changing a defined slice.
-- **Check** when auditing readiness, architecture, security, operations, or an
-  existing solution.
-- **Deploy** when preparing, releasing, verifying, rolling back, replaying, or
-  disabling a change.
+Invoke a specialist directly when the task is already narrow. For a larger
+slice, use this default order and skip irrelevant steps:
 
-For Set up, Check, or Deploy, read
-`references/technical-readiness.md`. For Build, read only the sections needed
-by the current change.
+```text
+Clarify → Architect → Test + Implement → Secure/Document → Review
+                                                ↓
+                                      Deliver → Operate
+```
 
-## Set up
+`Test + Implement` is a short Red–Green–Refactor loop, not two separate project
+phases. Delivery and operations are included only when the request or current
+risk reaches them.
 
-1. Confirm the selected shape and optional Application profile still fit.
-2. Identify what this repository owns, consumes, and does not own.
-3. Choose the current official scaffold, runtime, and dependencies only after
-   responsibilities are clear.
-4. Establish the smallest architecture, commands, tests, environment model,
-   deployment path, observability, and recovery needed now.
-5. Record project-specific technical truth in the shortest existing canonical
-   artifact. Create a README section, ADR, contract, or runbook only when no
-   suitable owner exists.
-6. Classify every readiness area as **Ready**, **Not applicable**, **Missing**,
-   or **Blocked**. Give a reason and evidence for Ready or Not applicable.
+## Keep the route small
 
-Do not create placeholder layers, fake workflows, or empty documentation merely
-to complete the matrix.
-
-## Build
-
-1. Reuse existing owners, contracts, and working systems.
-2. Define the smallest boundary or behavior under change.
-3. Add or update a failing test first for deterministic behavior when
-   practical.
-4. Implement only the required capability and keep framework code at the edge.
-5. Validate success, relevant failure paths, authorization, and recovery.
-6. Run the repository's real checks and exercise the real runtime when mocks
-   cannot prove the outcome.
-7. Update only technical documentation made stale by the change.
-
-## Check
-
-1. Evaluate all areas in `references/technical-readiness.md`.
-2. Inspect evidence rather than inferring readiness from file names.
-3. Fix safe, local, unambiguous technical gaps when the request authorizes
-   changes.
-4. Do not invent owners, authority, business requirements, credentials, or
-   production state.
-5. Return the readiness classification, evidence, material gaps, and smallest
-   next action.
-
-## Deploy
-
-1. Identify the exact commit, artifact, environment, platform owner, and
-   operational owner.
-2. Confirm checks, configuration, secrets, migrations, backups, and rollback or
-   disable behavior.
-3. Use the selected profile workflow when it fits. Otherwise implement or
-   follow the target runtime's official deployment path; never fabricate a
-   universal deploy.
-4. Require explicit authority for production release or another consequential
-   external action.
-5. Read the deployment result, verify health and the critical journey, and
-   confirm failure visibility.
-6. Roll back, replay, disable, or stop when the release gate fails.
-
-Never claim a deployment succeeded from a green build alone.
+- Do not run clarification when the outcome and technical boundary are already
+  explicit.
+- Do not produce an architecture report for a local mechanical change.
+- Do not add auth, persistence, containers, queues, observability platforms, or
+  runtime AI without a demonstrated responsibility.
+- Do not require a task document, branch model, ceremony, or artifact merely
+  because a skill mentions it.
+- Ask one precise question when one missing decision would materially change
+  the result.
 
 ## Return
 
-Report:
-
-- selected workflow, shape, profile, and slice
-- changed technical responsibilities and owners
-- evidence from checks and runtime verification
-- deployment and recovery status when relevant
-- missing input or remaining risk
-
-Keep the response proportional to the change. Do not turn every task into a
-full architecture report.
+Report the selected shape, profile, slice, skills used, changed responsibilities,
+verification evidence, and any remaining risk. Never claim deployment or
+runtime success from build output alone.

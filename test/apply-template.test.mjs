@@ -1,5 +1,12 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  readdir,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -11,6 +18,51 @@ const repositoryRoot = path.resolve(
   "..",
 );
 const applicator = path.join(repositoryRoot, "bin/apply-template.mjs");
+const expectedSkills = [
+  "architect-solution",
+  "clarify-solution",
+  "deliver-solution",
+  "develop-solution",
+  "document-solution",
+  "implement-slice",
+  "operate-solution",
+  "review-solution",
+  "secure-solution",
+  "test-solution",
+];
+
+async function collectFiles(root, relative = "") {
+  const entries = await readdir(path.join(root, relative), {
+    withFileTypes: true,
+  });
+  const files = [];
+
+  for (const entry of entries.sort((left, right) =>
+    left.name.localeCompare(right.name),
+  )) {
+    const relativePath = path.posix.join(relative, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await collectFiles(root, relativePath)));
+    } else if (entry.isFile()) {
+      files.push(relativePath);
+    }
+  }
+
+  return files;
+}
+
+const canonicalSkillFiles = (
+  await collectFiles(path.join(repositoryRoot, ".agents/skills"))
+).map((file) => `.agents/skills/${file}`);
+const claudeSkillFiles = (
+  await collectFiles(path.join(repositoryRoot, ".claude/skills"))
+).map((file) => `.claude/skills/${file}`);
+const commonTemplateFiles = [
+  "AGENTS.md",
+  "CLAUDE.md",
+  ...canonicalSkillFiles,
+  ...claudeSkillFiles,
+];
 
 async function createTarget({
   marker = "package.json",
@@ -76,24 +128,7 @@ async function assertStandaloneCore(target, manifest, shape) {
   assert.equal(manifest.templateVersion, templatePackage.version);
 
   for (const [source, destination] of [
-    ["AGENTS.md", "AGENTS.md"],
-    ["CLAUDE.md", "CLAUDE.md"],
-    [
-      ".agents/skills/develop-solution/SKILL.md",
-      ".agents/skills/develop-solution/SKILL.md",
-    ],
-    [
-      ".agents/skills/develop-solution/agents/openai.yaml",
-      ".agents/skills/develop-solution/agents/openai.yaml",
-    ],
-    [
-      ".agents/skills/develop-solution/references/technical-readiness.md",
-      ".agents/skills/develop-solution/references/technical-readiness.md",
-    ],
-    [
-      ".claude/skills/develop-solution/SKILL.md",
-      ".claude/skills/develop-solution/SKILL.md",
-    ],
+    ...commonTemplateFiles.map((file) => [file, file]),
     [`shapes/${shape}/SHAPE.md`, "docs/solution-template/SHAPE.md"],
   ]) {
     assert.equal(
@@ -121,14 +156,18 @@ async function assertStandaloneCore(target, manifest, shape) {
     "utf8",
   );
   assert.match(skill, /name: develop-solution/);
-  assert.match(skill, /Do not require AIOS/);
-  assert.match(skill, /## Deploy/);
+  for (const skillName of expectedSkills.filter(
+    (name) => name !== "develop-solution",
+  )) {
+    assert.match(skill, new RegExp(`\\\`${skillName}\\\``));
+  }
+  assert.match(skill, /Clarify → Architect → Test \+ Implement/);
   assert.doesNotMatch(skill, /projects\//);
 
   const readiness = await readFile(
     path.join(
       target,
-      ".agents/skills/develop-solution/references/technical-readiness.md",
+      ".agents/skills/review-solution/references/technical-readiness.md",
     ),
     "utf8",
   );
@@ -138,10 +177,12 @@ async function assertStandaloneCore(target, manifest, shape) {
     "Runtime and stack",
     "Architecture",
     "Contracts and data",
+    "Implementation",
     "Identity and trust",
     "Security and privacy",
     "AI and autonomy",
     "Quality",
+    "Documentation",
     "Delivery",
     "Deployment",
     "Observability",
@@ -171,24 +212,99 @@ async function assertStandaloneCore(target, manifest, shape) {
     assert.match(readiness, new RegExp(`\\*\\*${shapeName}:\\*\\*`));
   }
 
+  const clarification = await readFile(
+    path.join(target, ".agents/skills/clarify-solution/SKILL.md"),
+    "utf8",
+  );
+  assert.match(clarification, /Ask exactly one question/);
+  assert.match(clarification, /Do not require a formal brief/);
+
+  const shapeSelection = await readFile(
+    path.join(
+      target,
+      ".agents/skills/clarify-solution/references/shape-selection.md",
+    ),
+    "utf8",
+  );
+  assert.match(shapeSelection, /AIOS agent work versus technical automation/);
+  assert.match(shapeSelection, /n8n orchestration/);
+  assert.match(shapeSelection, /small Service/);
+
+  const apiDesign = await readFile(
+    path.join(
+      target,
+      ".agents/skills/architect-solution/references/api-design.md",
+    ),
+    "utf8",
+  );
+  for (const contractTerm of [
+    "HTTP/REST",
+    "OpenAPI",
+    "idempotent",
+    "Paginate",
+    "authorization",
+  ]) {
+    assert.match(apiDesign, new RegExp(contractTerm));
+  }
+
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/test-solution/SKILL.md"),
+      "utf8",
+    ),
+    /Red–Green–Refactor/,
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/document-solution/SKILL.md"),
+      "utf8",
+    ),
+    /README\.md[\s\S]*OpenAPI[\s\S]*Runbook/,
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/operate-solution/SKILL.md"),
+      "utf8",
+    ),
+    /structured events[\s\S]*traffic, errors, latency, and saturation/,
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/deliver-solution/SKILL.md"),
+      "utf8",
+    ),
+    /full commit SHAs[\s\S]*Deploy/,
+  );
+  assert.match(
+    await readFile(
+      path.join(target, ".agents/skills/secure-solution/SKILL.md"),
+      "utf8",
+    ),
+    /authentication from authorization[\s\S]*server-side/,
+  );
+
   assert.equal(
     await readFile(path.join(target, "CLAUDE.md"), "utf8"),
     "@AGENTS.md\n",
   );
-  assert.match(
-    await readFile(
-      path.join(target, ".claude/skills/develop-solution/SKILL.md"),
-      "utf8",
-    ),
-    /\.\.\/\.\.\/\.\.\/\.agents\/skills\/develop-solution\/SKILL\.md/,
-  );
-  assert.match(
-    await readFile(
-      path.join(target, ".agents/skills/develop-solution/agents/openai.yaml"),
-      "utf8",
-    ),
-    /\$develop-solution/,
-  );
+  for (const skillName of expectedSkills) {
+    assert.match(
+      await readFile(
+        path.join(target, `.claude/skills/${skillName}/SKILL.md`),
+        "utf8",
+      ),
+      new RegExp(
+        `\\.\\.\\/\\.\\.\\/\\.\\.\\/\\.agents\\/skills\\/${skillName}\\/SKILL\\.md`,
+      ),
+    );
+    assert.match(
+      await readFile(
+        path.join(target, `.agents/skills/${skillName}/agents/openai.yaml`),
+        "utf8",
+      ),
+      new RegExp(`\\$${skillName}`),
+    );
+  }
 }
 
 for (const [profile, deployment] of [
@@ -227,7 +343,10 @@ for (const [profile, deployment] of [
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         true,
       );
-      assert.equal(manifest.appliedFiles.length, 10);
+      assert.equal(
+        manifest.appliedFiles.length,
+        commonTemplateFiles.length + 4,
+      );
       assert.match(
         await readFile(
           path.join(target, "docs/solution-template/PROFILE.md"),
@@ -260,7 +379,7 @@ test("external application copies CI without a deployment workflow", async () =>
       true,
     );
     await assertStandaloneCore(target, manifest, "application");
-    assert.equal(manifest.appliedFiles.length, 9);
+    assert.equal(manifest.appliedFiles.length, commonTemplateFiles.length + 3);
     assert.match(
       await readFile(
         path.join(target, "docs/solution-template/PROFILE.md"),
@@ -300,7 +419,10 @@ for (const [shape, marker] of [
         manifest.appliedFiles.includes("docs/solution-template/PROFILE.md"),
         false,
       );
-      assert.equal(manifest.appliedFiles.length, 7);
+      assert.equal(
+        manifest.appliedFiles.length,
+        commonTemplateFiles.length + 1,
+      );
       await assertStandaloneCore(target, manifest, shape);
     } finally {
       await rm(target, { recursive: true, force: true });

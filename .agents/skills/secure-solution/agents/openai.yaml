@@ -1,0 +1,4 @@
+interface:
+  display_name: "Secure Solution"
+  short_description: "Protect trust boundaries and sensitive data"
+  default_prompt: "Use $secure-solution to review and harden the current trust boundaries proportionally."

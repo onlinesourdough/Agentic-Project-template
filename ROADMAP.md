@@ -3,7 +3,7 @@
 The MIT core stays deliberately small:
 
 - one zero-dependency applicator
-- one canonical project-local technical skill
+- one focused project-local software skill suite
 - five solution shapes
 - four Application profiles
 - only workflows that can be honest without knowing the target runtime

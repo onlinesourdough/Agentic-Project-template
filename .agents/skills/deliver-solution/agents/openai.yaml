@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver Solution"
+  short_description: "Build, release, deploy, and recover safely"
+  default_prompt: "Use $deliver-solution to prepare or perform a verified, recoverable delivery."

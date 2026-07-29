@@ -17,7 +17,9 @@ upstream data, caller workflows, and infrastructure with their existing owners.
 - Make health, configuration failure, and dependency failure observable.
 
 Use the language and current official scaffold that fit the responsibility.
-TypeScript is not required.
+Prefer TypeScript for web contracts and integrations when its ecosystem fits.
+Prefer Python for data, scientific, image, ML, or existing Python workloads.
+Existing ownership and operator capability outrank either default.
 
 ## Deployment
 
