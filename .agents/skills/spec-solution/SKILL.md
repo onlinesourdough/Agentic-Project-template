@@ -33,8 +33,8 @@ When a consequential decision is missing:
 4. Wait for the answer before continuing.
 
 Do not send a questionnaire. Stop when the outcome, user or caller, success
-signal and its measurement owner, constraint, ownership, smallest slice, and
-non-goals are clear enough to proceed.
+signal and its measurement owner, constraint, ownership, smallest complete
+result, and non-goals are clear enough to proceed.
 
 ## Choose the solution shape
 
@@ -98,8 +98,8 @@ State:
   including the current source for consequential external-service decisions
 - what the repository owns, consumes, and does not own
 - interfaces, data authority, trust boundaries, and deployment unit
-- smallest valuable slice and explicit non-goals
-- ordered vertical slices with a verification point for each
+- smallest complete result and explicit non-goals
+- ordered complete results with a verification point for each
 - material risks, open decisions, and recovery expectation
 
 Keep one canonical Product Brief or equivalent source. Move it once when the
@@ -107,7 +107,13 @@ project is its natural owner; otherwise link to the external owner.
 
 Before Build in a fresh repository, replace the template guide with a
 project-specific README. Preserve a useful README in an adopted repository.
-Record the outcome, status and current slice, canonical context link, ownership
-and boundaries, architecture and dependencies, working commands, delivery,
-operation, and recovery as those facts become known. If context exists only in
-conversation, write the durable decisions there.
+Record the outcome, status and current result, canonical context link,
+ownership and boundaries, architecture and dependencies, working commands,
+delivery, operation, and recovery as those facts become known. If context
+exists only in conversation, write the durable decisions there.
+
+For a planning or specification request, return the compact spec and stop. For
+an implementation request, update the repository truth, use the plan as the
+agent's internal execution order, and continue directly with `build-solution`
+unless a consequential decision is still missing. Do not require the user to
+prompt each lifecycle phase or create an issue for every result.

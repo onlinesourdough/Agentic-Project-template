@@ -1,6 +1,6 @@
-![Solution Template overview](assets/solution-template-overview.png)
-
 # Solution Template
+
+![Solution Template overview](assets/solution-template-overview.png)
 
 **Solution Template** is a minimal AI-native foundation for building the
 smallest useful technical solution.
@@ -17,43 +17,90 @@ code and frameworks.
 | Step   | Purpose                                                 |
 | ------ | ------------------------------------------------------- |
 | Spec   | Understand the outcome and choose the smallest solution |
-| Build  | Create one complete, testable slice                     |
+| Build  | Create complete, testable results                       |
 | Review | Check the result and remove unnecessary complexity      |
 | Ship   | Release, verify, and preserve a recovery path           |
 
 Natural language is the interface. The repository instructions make the
 workflow repeatable without requiring a specific coding agent or platform.
 
-## Start
+Give the agent the outcome once. When implementation is authorized, it owns the
+ordinary planning, technical decisions, implementation, testing, and review
+needed to complete that outcome. It may divide a large solution into many
+internal work steps, but you should not have to manage them one by one.
 
-1. Create a repository from this template, or open an existing project.
-2. Add or link the context that explains the intended outcome.
-3. Open the repository in a coding agent that reads `AGENTS.md`.
-4. Ask:
+## Two ways to start
 
-> Spec the smallest useful solution for this outcome.
+Both paths lead to the same independent Solution repository. AIOS can provide
+understanding and routing, but it is never a dependency of the solution.
 
-Continue naturally with:
+### From AIOS
 
-> Build the first slice.
+Use this path when work in AIOS reveals that an application, service,
+automation, integration, library, or system needs its own durable lifecycle.
 
-> Review and simplify it.
+1. Open or create the relevant Solution repository.
+2. Give the agent only the relevant AIOS context and links to canonical sources.
+3. Let the project README become the current technical and operational truth.
+4. Build and verify the outcome, then bring the measured result back to AIOS.
 
-> Ship it when the evidence passes.
+Ask:
 
-Before Build, make the README specific to the project and link to the canonical
-Product Brief, issue, or other context source.
+> Build the smallest useful solution that creates this outcome: [...]. Use
+> [AIOS context, link, or file] as the canonical context.
+
+### From existing context
+
+AIOS is optional. Start with whatever explains the need: a chatbot conversation,
+notes from a meeting with a customer, friend, colleague, or manager, a
+brainstorm, email, issue, analysis, Product Brief, existing README, or a system
+that needs to change.
+
+The context does not need a required format or need to be complete. Before
+Build, the agent finds or clarifies:
+
+- what should change and who the result is for
+- the intended outcome and evidence that would prove it
+- relevant ownership, constraints, and existing systems
+- what should deliberately not be built yet
+
+If one missing decision would materially change the solution, the agent asks
+one precise question. It records durable decisions in the project README and
+links to canonical sources instead of copying them.
+
+Ask:
+
+> Use [conversation, notes, link, file, or repository] as context. Build the
+> smallest useful solution that creates [...]. Ask one precise question if a
+> consequential decision is missing.
+
+### Let the agent own the execution
+
+For substantial work, one lead session owns the outcome and may use native
+goals or independent workers. The agent handles the internal work steps; the
+user does not need to create or manage an issue for each one.
+
+Ask for a plan when you only want a plan. Ask explicitly for release,
+publication, activation, or production deployment when Ship should be included.
+Otherwise, the agent stops after the solution is implemented, reviewed, and
+verified locally.
+
+Native goal or session state is preferred. A short, temporary `TASK.md` is
+useful only when work must survive several sessions, harnesses, or restarts. It
+records the outcome, active responsibilities, verified status, and real
+blockers, not a backlog of minor tasks. Remove it when durable truth has been
+recorded in the README, decisions, or runbooks.
 
 ## Solution shapes
 
-| Shape       | Examples                                                          |
-| ----------- | ----------------------------------------------------------------- |
-| Application | Website, product UI, mobile or desktop app, internal tool, or CLI |
-| Service     | API, calculation, model, renderer, or bounded domain capability   |
-| Automation  | n8n workflow, scheduled job, or event-driven process              |
-| Integration | Webhook, adapter, proxy, bot boundary, or system connection       |
-| Library     | Package, SDK, template, shared module, or reusable capability     |
-| System      | Infrastructure, architecture, ownership, or operations repository |
+| Shape       | Examples                                         |
+| ----------- | ------------------------------------------------ |
+| Application | Website, UI, app, internal tool, or CLI          |
+| Service     | API, calculation, model, or domain capability    |
+| Automation  | Workflow, scheduled job, or event-driven process |
+| Integration | Webhook, adapter, proxy, bot, or connection      |
+| Library     | Package, SDK, template, or shared module         |
+| System      | Infrastructure, architecture, or operations      |
 
 Choose the primary responsibility of the repository. Supporting parts may use
 other shapes without becoming separate projects.
@@ -93,5 +140,5 @@ Solution Template
 └── README.md
 ```
 
-Start with one outcome, one owner, one repository, and one complete slice. Add
-another layer only when the solution has a clear responsibility for it.
+Start with one outcome, one owner, and one repository. Add another layer only
+when the solution has a clear responsibility for it.
