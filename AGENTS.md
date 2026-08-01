@@ -9,7 +9,8 @@ operable, and owned.
 1. Read the request, this guide, and the canonical project context.
 2. Confirm that the work needs its own durable repository and lifecycle.
 3. Identify the primary solution shape and what the repository owns.
-4. Choose the smallest valuable vertical slice.
+4. Choose the smallest complete result that moves the solution toward the
+   intended outcome.
 
 Ask exactly one question, with a best guess, when one missing decision would
 materially change the solution. Inspect the repository instead of asking for
@@ -44,6 +45,42 @@ audience, outcome, and direction. Link to it instead of duplicating it.
 
 Use only the relevant skill. Small mechanical changes do not need the complete
 workflow.
+
+## Execution
+
+When the user authorizes implementation, own the work from the agreed outcome
+to verified completion. Make ordinary technical decisions autonomously and use
+creative discretion within the repository's scope, boundaries, instructions,
+and granted authority. Do not wait for the user to direct routine work or ask
+for feedback unless one missing decision would materially change the result.
+
+Apply Spec, Build, and Review as one continuous workflow. Divide a large goal
+into complete, verifiable results internally, finish them in dependency order,
+and continue until the whole requested outcome passes its acceptance evidence.
+If Review finds a correctable gap inside the authorized scope, return to Build,
+fix it, and review again.
+
+Keep internal decomposition internal. Do not stop after the first result or
+create issues, tickets, or user-facing checklists merely to expose work steps.
+
+Use the current task or session by default. Use native goal or task state when
+it is already active or the user explicitly requests it. Start a separate task,
+thread, or session only when the user asks, or ask once when isolation would
+materially improve the work. Runtime features supplement these repository
+instructions; never assume that instructions alone activate a harness command.
+
+Prefer the harness's native task, goal, session, or plan state. Create a root
+`TASK.md` only when current execution state must survive multiple sessions or
+harnesses and no existing tracker owns it. Keep only the goal and evidence,
+current verified state, next useful action, and material decisions or blockers.
+Do not copy the Product Brief, README, or every work step. Update it before a
+handoff or context reset; at completion, move durable truth to README, decision
+records, or runbooks, then remove `TASK.md`.
+
+Use Ship only when the user has authorized the consequential release,
+publication, activation, deployment, or migration. Pause only for missing
+product direction, unavailable authority, an unsafe or irreversible action,
+external access the user must provide, or evidence that cannot be obtained.
 
 ## Technology policy
 
@@ -99,7 +136,7 @@ workflow.
 - Emit structured, redacted logs where runtime failure matters.
 - Add dependencies and infrastructure only for a demonstrated responsibility.
 - Split a microservice only for justified independent ownership, deployment,
-  scaling, isolation, or recovery—not merely code organization.
+  scaling, isolation, or recovery, not merely code organization.
 - Reuse working systems and owners instead of rebuilding for symmetry.
 - Preserve rollback, replay, disable, restore, reconciliation, or export as
   appropriate.

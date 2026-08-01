@@ -1,6 +1,6 @@
 ---
 name: build-solution
-description: Build and test one complete vertical slice of a specified technical solution. Use when implementing or changing Application, Service, Automation, Integration, Library, or System behavior after outcome, ownership, boundaries, and acceptance are sufficiently clear.
+description: Build and test complete results for a specified technical solution. Use when implementing or changing Application, Service, Automation, Integration, Library, or System behavior after outcome, ownership, boundaries, and acceptance are sufficiently clear.
 ---
 
 # Build Solution
@@ -28,9 +28,9 @@ For a fresh repository:
 Adopt existing repositories in place without overwriting working structure or
 technical truth.
 
-## Work in vertical slices
+## Work through complete results
 
-For each slice:
+For each result:
 
 1. Name the behavior and the evidence that will prove it.
 2. Write one focused failing test for deterministic behavior when practical.
@@ -49,7 +49,7 @@ for deterministic rules, fewer dependency tests, and only the end-to-end tests
 needed to protect critical journeys. Change that balance when risk or the
 solution shape demands different evidence.
 
-Valid vertical slices include:
+Valid complete results include:
 
 - an Application journey or Service contract and domain behavior
 - a versioned Automation workflow or Integration delivery path
@@ -62,7 +62,13 @@ Choose evidence by risk: unit tests for deterministic rules, contract tests for
 boundaries, integration tests for dependencies, end-to-end tests for critical
 journeys, validators and dry-runs for workflows or infrastructure, and health,
 drift, replay, rebuild, or restore checks for operational solutions. Do not add
-every test type to every slice.
+every test type to every result.
+
+Continue through the required results until the whole requested outcome is
+implemented and verified. Review each risky result at the useful checkpoint and
+run the final repository-wide review. When an authorized implementation review
+fails, fix the finding and repeat the affected checks instead of returning
+routine repair work to the user.
 
 ## Create artifacts agents and humans can change
 
@@ -124,5 +130,6 @@ Emit structured, redacted logs at meaningful boundaries. Include an execution
 or request identifier, outcome, duration, and safe failure information when
 useful. Never log secrets or unnecessary private payloads.
 
-Finish with a working repository, the smallest complete slice, updated local
-truth in README, and the exact evidence that proves it.
+Finish with a working repository, the requested outcome, updated local truth in
+README, and the exact evidence that proves it. Do not stop merely because one
+complete result passed if more work is required by the agreed goal.

@@ -20,7 +20,8 @@ responsibility instead of choosing one model for the whole solution.
    convenience.
 6. Self-host third-party software only when its license permits the use and
    someone owns updates, security, observability, backup, and recovery.
-7. Choose the smallest runtime that can deliver and recover the first slice.
+7. Choose the smallest runtime that can deliver and recover the first complete
+   result.
 8. Prefer fast feedback through types, schemas, validators, tests, and local
    tooling.
 9. Record why each operational layer is needed.
@@ -63,8 +64,8 @@ Use current official documentation instead of remembered pricing or a free
 starter plan. Before recommending a managed service or self-hosted product,
 check:
 
-- the billing unit and realistic usage at the first slice and a plausible
-  growth level;
+- the billing unit and realistic usage at the first complete result and a
+  plausible growth level;
 - plan limits for executions, requests, bandwidth, storage, retention,
   concurrency, environments, and users as relevant;
 - which plan contains the required feature;

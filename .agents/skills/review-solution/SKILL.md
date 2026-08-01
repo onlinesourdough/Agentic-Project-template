@@ -68,4 +68,7 @@ Lead with findings by severity and exact location:
 
 End with **PASS** or **FAIL**, checks performed, evidence that was unavailable,
 and the smallest next action. A Critical or Required finding fails the gate.
-Fix findings only when the request authorizes changes.
+For a review-only request, report findings without changing the solution. When
+Review is part of an authorized implementation, fix in-scope Critical and
+Required findings through Build, rerun the affected evidence, and repeat Review
+until it passes or a real stop condition in `AGENTS.md` is reached.
