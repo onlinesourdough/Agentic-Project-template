@@ -54,20 +54,24 @@ creative discretion within the repository's scope, boundaries, instructions,
 and granted authority. Do not wait for the user to direct routine work or ask
 for feedback unless one missing decision would materially change the result.
 
-Apply Spec, Build, and Review as one continuous workflow. Divide a large goal
-into complete, verifiable results internally, finish them in dependency order,
-and continue until the whole requested outcome passes its acceptance evidence.
-If Review finds a correctable gap inside the authorized scope, return to Build,
-fix it, and review again.
+For substantive execution, keep one persistent lifecycle goal around the whole
+requested outcome. In Codex use `/goal`; elsewhere use native goal/task state or
+the same explicit outcome contract. Include outcome, constraints, verification,
+and requested Ship scope. Spec, Build, Review, REVISE loops, and authorized Ship
+are states inside this goal, not separate goals.
+
+Divide a large goal into complete, verifiable results internally and finish
+them in dependency order. If Review finds a correctable in-scope gap, return to
+Build inside the same goal, fix it, and review again. Complete the goal only
+when the full requested outcome and final evidence pass.
 
 Keep internal decomposition internal. Do not stop after the first result or
 create issues, tickets, or user-facing checklists merely to expose work steps.
 
-Use the current task or session by default. Use native goal or task state when
-it is already active or the user explicitly requests it. Start a separate task,
+Use the current task and matching active goal by default. Start a separate task,
 thread, or session only when the user asks, or ask once when isolation would
-materially improve the work. Runtime features supplement these repository
-instructions; never assume that instructions alone activate a harness command.
+materially improve the work. Runtime features supplement these instructions;
+invoke the supported command rather than assuming text activates it.
 
 Prefer the harness's native task, goal, session, or plan state. Create a root
 `TASK.md` only when current execution state must survive multiple sessions or

@@ -8,6 +8,10 @@ description: Review and simplify a technical change against its intended outcome
 Review the actual change against the intended behavior and repository
 responsibility, not an imaginary ideal architecture.
 
+Treat Review as a gate inside the active lifecycle goal, not a new goal. For an
+AIOS-originated worker, pause its bounded goal while the AIOS lead reviews and
+resume that same goal for any required revision or authorized Ship.
+
 ## Inspect
 
 1. Establish the comparison point and intended outcome.
@@ -70,5 +74,9 @@ End with **PASS** or **FAIL**, checks performed, evidence that was unavailable,
 and the smallest next action. A Critical or Required finding fails the gate.
 For a review-only request, report findings without changing the solution. When
 Review is part of an authorized implementation, fix in-scope Critical and
-Required findings through Build, rerun the affected evidence, and repeat Review
-until it passes or a real stop condition in `AGENTS.md` is reached.
+Required findings through Build inside the same goal, rerun the affected
+evidence, and repeat Review until it passes or a real stop condition in
+`AGENTS.md` is reached. Review PASS does not complete a goal while requested
+Ship or final evidence remains. For an AIOS-originated worker, return PASS to
+that same worker so it can complete its bounded goal when no Ship remains or
+resume it for authorized Ship.

@@ -7,6 +7,10 @@ description: Prepare, release, deploy, activate, and verify a technical solution
 
 Ship only reviewed work. A green build is not a deployment result.
 
+Resume the active lifecycle goal after Review PASS; do not create a Ship goal.
+For AIOS-originated work, resume the same project-worker goal and return final
+evidence to the AIOS lead.
+
 ## Establish the release unit
 
 Identify:
@@ -86,4 +90,6 @@ artifacts, and ordinary backups.
 
 Do not call a solution production-ready when required recovery evidence is
 missing. Report the commit, artifact, environment, platform result, smoke
-evidence, all three statuses, and any remaining operational risk.
+evidence, all three statuses, and any remaining operational risk. Complete the
+project goal only after its delivery, recovery, outcome obligations, and
+handoff pass; the owning lead completes its goal after all final evidence.

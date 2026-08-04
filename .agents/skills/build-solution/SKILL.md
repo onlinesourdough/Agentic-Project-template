@@ -11,6 +11,12 @@ its real interface, validator, plan, health check, or rehearsal.
 If the intended behavior, boundary, or independent lifecycle is still
 consequentially unclear, use `spec-solution` first.
 
+Work inside the existing lifecycle goal. In Codex use `/goal`; elsewhere use
+the matching persistent goal/task state or explicit outcome contract. For an
+AIOS-originated worker, keep its one bounded goal active across Build, Review
+feedback, permitted revisions, and requested authorized Ship. Never open or
+complete a goal merely because the lifecycle phase changed.
+
 ## Initialize without inventing a stack
 
 For a fresh repository:
@@ -130,6 +136,7 @@ Emit structured, redacted logs at meaningful boundaries. Include an execution
 or request identifier, outcome, duration, and safe failure information when
 useful. Never log secrets or unnecessary private payloads.
 
-Finish with a working repository, the requested outcome, updated local truth in
-README, and the exact evidence that proves it. Do not stop merely because one
-complete result passed if more work is required by the agreed goal.
+Finish Build with a working repository, updated local truth, and exact evidence.
+Do not stop because one result passed if more work remains. Keep the lifecycle
+goal active or paused for Review; complete it only after the full requested
+outcome, including authorized Ship when requested, has passed.

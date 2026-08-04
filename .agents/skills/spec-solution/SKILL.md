@@ -7,6 +7,19 @@ description: Clarify and plan the smallest technical solution one question at a 
 
 Understand the problem before choosing code or framework.
 
+## Keep one lifecycle goal
+
+For substantive implementation, reuse the current task's matching goal or
+create one containing the outcome, constraints, verification, and requested
+Ship scope. In Codex use `/goal`; elsewhere use native persistent goal/task
+state or the same contract in the current session. Spec, Build, Review, REVISE
+loops, and authorized Ship are states in this goal, not separate goals. Do not
+complete it at a phase boundary or narrow it to match partial progress.
+
+When an AIOS handoff says its lead owns Spec and Review, do not create a second
+Spec. Accept that Spec and let the project worker's bounded goal start at Build,
+cover Review revisions, and include Ship only when requested and authorized.
+
 ## Inspect first
 
 Read the request, repository instructions, current code, existing owners, and
@@ -116,4 +129,5 @@ For a planning or specification request, return the compact spec and stop. For
 an implementation request, update the repository truth, use the plan as the
 agent's internal execution order, and continue directly with `build-solution`
 unless a consequential decision is still missing. Do not require the user to
-prompt each lifecycle phase or create an issue for every result.
+prompt each lifecycle phase, create a goal per phase, or create an issue for
+every result.

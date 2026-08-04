@@ -29,6 +29,43 @@ ordinary planning, technical decisions, implementation, testing, and review
 needed to complete that outcome. It may divide a large solution into many
 internal work steps, but you should not have to manage them one by one.
 
+## Philosophy
+
+Solution Template covers the independent project and solution layer of modern
+AI engineering. Start with prompt and intent: a clear outcome, audience,
+constraints, and evidence of success. [Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering)
+turns that intent into useful instructions, while [context engineering](https://www.langchain.com/blog/context-engineering-for-agents)
+supplies the business, repository, and runtime context an agent needs. README
+truth, canonical sources, legible structure, instructions, skills, and tools
+make that context findable. The instructions and tools stay harness-neutral: a
+harness can provide native goals and sessions, but the repository retains an
+explicit contract that remains usable elsewhere.
+
+Build and Review form a persistent feedback loop. Build creates a complete
+result; Review evaluates it against the intended outcome, removes unnecessary
+complexity, and supplies the next correction when needed. [Harness engineering](https://openai.com/index/harness-engineering/)
+makes the repository and environment legible and steerable for agents, while
+[loop engineering](https://www.langchain.com/blog/the-art-of-loop-engineering)
+makes repeated Build, Review, and revision dependable. Evaluation and proof
+come from the real interface and the evidence appropriate to the risk:
+tests, validators, checks, logs, rehearsals, and recovery exercises.
+
+Architecture boundaries keep responsibilities and sources of truth explicit.
+Security, reliability, observability, operations, and recovery make the result
+safe to run and hand over; Ship releases and verifies it while preserving
+rollback, replay, restore, export, or disable paths where they matter. These
+are complementary disciplines, not successive replacements.
+
+The repository supports both starting modes:
+
+- **Standalone:** the repository owns the complete lifecycle from intent and
+  context through Spec, Build, Review, Ship, and recovery, and remains
+  independently operable.
+- **AIOS-originated:** AIOS supplies business context and lead routing, while
+  this project owns the independent solution layer: technical truth, bounded
+  implementation, proof, operations, and recovery. The project remains
+  independently operable; AIOS coordination is not a runtime dependency.
+
 ## Two ways to start
 
 Both paths lead to the same independent Solution repository. AIOS can provide
@@ -39,10 +76,19 @@ understanding and routing, but it is never a dependency of the solution.
 Use this path when work in AIOS reveals that an application, service,
 automation, integration, library, or system needs its own durable lifecycle.
 
+When work originates in AIOS, the existing AIOS lead owns the canonical Spec
+and its end-to-end lifecycle goal. A separate first-class worker task starts in
+this project root at Build with one bounded goal derived from the lead goal. In
+Codex use `/goal`; elsewhere use the harness equivalent. Pause that worker goal
+for lead Review, then resume the same goal for REVISE or authorized Ship.
+
 1. Open or create the relevant Solution repository.
-2. Give the agent only the relevant AIOS context and links to canonical sources.
+2. Start the separate first-class worker task and bounded goal in this project
+   root at Build. Give it only relevant AIOS context and canonical-source links.
 3. Let the project README become the current technical and operational truth.
-4. Build and verify the outcome, then bring the measured result back to AIOS.
+4. After Build, pause the worker goal for AIOS lead Review. Resume that same
+   goal for REVISE or, after PASS, Ship when authorized.
+5. Bring the measured result back to AIOS.
 
 Ask:
 
@@ -77,8 +123,10 @@ Ask:
 ### Let the agent own the execution
 
 For substantial work, one lead session owns the outcome and may use native
-goals or independent workers. The agent handles the internal work steps; the
-user does not need to create or manage an issue for each one.
+goals or independent workers. Keep one persistent goal around the full
+lifecycle rather than one goal per phase. In Codex use `/goal`; another harness
+uses its equivalent or the same explicit outcome contract. The agent handles
+the internal work steps; the user does not manage each one.
 
 Ask for a plan when you only want a plan. Ask explicitly for release,
 publication, activation, or production deployment when Ship should be included.
