@@ -1,13 +1,14 @@
 ---
 name: spec-solution
-description: Audit source material of any maturity for the smallest build-ready technical solution. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and readiness, ownership, boundaries, acceptance, or implementation order must be established without rewriting resolved context.
+description: Audit technical specifications of any maturity or construct the missing contract from rough input for the smallest build-ready technical solution. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and readiness, ownership, boundaries, acceptance, or implementation order must be established without rewriting resolved context.
 ---
 
 # Spec Solution
 
-Audit the available truth for build readiness. Preserve useful source material;
-do not turn every request into a new Product Brief or rewrite facts that are
-already clear.
+Audit the available truth for build readiness and, when no usable technical
+specification exists, construct the smallest build-ready contract from the
+available evidence. Preserve useful source material; do not turn every request
+into a new Product Brief or rewrite facts that are already clear.
 
 ## Keep one lifecycle goal
 
@@ -23,7 +24,9 @@ it at a phase boundary or narrow it to match partial progress.
 Accept source material at any maturity:
 
 - **Rough idea:** establish the few decisions needed to define the first
-  complete result; do not demand a polished brief.
+  complete result; do not demand a polished brief. When authoritative context
+  and repository evidence resolve the material dimensions, construct the
+  missing compact Build contract and label any low-risk inferences.
 - **Developed brief:** preserve its structure and resolved decisions, then
   identify only material gaps or conflicts.
 - **Near-complete specification:** verify claims against canonical sources and
@@ -140,6 +143,11 @@ a compact technical Build contract:
   operation, recovery, and Ship scope
 - ordered complete results with one verification point each
 - labeled low-risk inferences and material residual risks
+
+When the input is rough and no technical specification exists, this compact
+Build contract is the constructed project-local specification. Cite the rough
+input and canonical evidence, preserve resolved decisions, and do not ask for a
+formal specification merely because the source is incomplete.
 
 For an implementation request, continue into `build-solution` inside the same
 goal. Before Build in a fresh repository, replace template guidance with a

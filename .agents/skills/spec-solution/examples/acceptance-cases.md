@@ -22,6 +22,30 @@ the usage problem.
 - The only gate is BLOCKED, naming the missing owner decision. It does not
   choose a stack or invent a repository.
 
+## Rough idea — READY by construction
+
+**Input:** “Give support agents a fast way to find and download a customer's
+audit events.” The existing repository shows that the support console owns the
+interface, the audit service owns event data and retention, the authenticated
+API defines the access boundary, and the support operations runbook defines the
+search-and-download acceptance journey, handling-time signal and measurement
+owner, deployment, alerts, recovery, and local Ship scope.
+
+**Expected audit:**
+
+- The rough request is accepted without requesting a formal brief.
+- The request and repository evidence resolve the intended delta, served party,
+  acceptance evidence, outcome signal and measurement owner, repository
+  boundary, data authority, trust boundary, non-goal of changing event
+  retention, and local lifecycle; an internal module name is INFERRED as
+  reversible technical discretion.
+- The missing technical specification is constructed as a compact
+  project-local Build contract that cites the request and repository sources,
+  preserves those resolved decisions, and lists ordered results with a
+  verification point for each.
+- The only gate is READY. It does not invent a new data store, authentication
+  system, or repository.
+
 ## Developed brief — REVISE
 
 **Input:** A brief resolves every required dimension, including the measurement

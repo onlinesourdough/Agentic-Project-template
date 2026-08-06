@@ -126,6 +126,12 @@ returning READY, REVISE, or BLOCKED. The agent finds or clarifies:
 - relevant ownership, constraints, and existing systems
 - what should deliberately not be built yet
 
+When rough input and canonical context resolve the material dimensions,
+`spec-solution` constructs the missing project-local technical specification as
+the compact Build contract. When an existing source needs only a non-blocking
+correction, it returns or applies a minimal REVISE patch; it does not demand a
+formal brief merely because the input is rough.
+
 If one missing decision would materially change the solution, the agent asks
 one precise question. It records durable decisions in the project README and
 links to canonical sources instead of copying them.

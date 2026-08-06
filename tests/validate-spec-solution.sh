@@ -43,11 +43,18 @@ for gate in "### READY" "### REVISE" "### BLOCKED"; do
 done
 
 require_literal "Return exactly one gate" "$spec"
+require_literal "Audit technical specifications of any maturity or construct the missing contract from rough input" "$spec"
+require_literal "construct the smallest build-ready contract" "$spec"
+require_literal "constructed project-local specification" "$spec"
 require_literal "measurement owner" "$spec"
 require_literal "requested Ship scope" "$spec"
 require_literal "audit only project-local technical truth" "$spec"
+require_literal "Rough idea — READY by construction" "$cases"
+require_literal "missing technical specification is constructed" "$cases"
+require_literal "minimal target patch" "$cases"
 require_literal "Upstream business decisions remain RESOLVED" "$cases"
 require_literal "not introduced as a runtime dependency" "$cases"
+require_literal "constructs the missing project-local technical specification" "$readme"
 
 for heading in "## Fit conditions" "## Responsibilities added" "## Operator burden" "## Verification" "## Update path" "## Exit path"; do
   require_literal "$heading" "$profile"
