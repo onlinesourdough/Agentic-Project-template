@@ -11,11 +11,11 @@ its real interface, validator, plan, health check, or rehearsal.
 If the intended behavior, boundary, or independent lifecycle is still
 consequentially unclear, use `spec-solution` first.
 
-Work inside the existing lifecycle goal. In Codex use `/goal`; elsewhere use
-the matching persistent goal/task state or explicit outcome contract. For an
-AIOS-originated worker, keep its one bounded goal active across Build, Review
-feedback, permitted revisions, and requested authorized Ship. Never open or
-complete a goal merely because the lifecycle phase changed.
+Work inside the existing lifecycle goal. Use the harness's matching persistent
+goal/task state or explicit outcome contract. For an AIOS-originated worker,
+keep its one bounded goal active across Build, Review feedback, permitted
+revisions, and requested authorized Ship. Never open or complete a goal merely
+because the lifecycle phase changed.
 
 ## Initialize without inventing a stack
 
@@ -33,6 +33,17 @@ For a fresh repository:
 
 Adopt existing repositories in place without overwriting working structure or
 technical truth.
+
+## Keep documentation current
+
+Documentation is part of every implementation result. Identify the README,
+runbooks, instructions, skills, contracts, commands, configuration, operation,
+recovery, and proof affected by the change. Update the canonical local source
+in the same result when its truth changes; do not defer it to `audit-solution`.
+Verify local links and skill routes, and verify documented commands,
+configuration, and interfaces against the repository and the checks that prove
+them. If no documentation is affected, state why and confirm the current
+documentation remains true.
 
 ## Work through complete results
 
@@ -136,7 +147,8 @@ Emit structured, redacted logs at meaningful boundaries. Include an execution
 or request identifier, outcome, duration, and safe failure information when
 useful. Never log secrets or unnecessary private payloads.
 
-Finish Build with a working repository, updated local truth, and exact evidence.
-Do not stop because one result passed if more work remains. Keep the lifecycle
-goal active or paused for Review; complete it only after the full requested
-outcome, including authorized Ship when requested, has passed.
+Finish Build with a working repository, updated local truth, and exact evidence
+for both behavior and affected documentation. Do not stop because one result
+passed if more work remains. Keep the lifecycle goal active or paused for
+Review; complete it only after the full requested outcome, including
+authorized Ship when requested, has passed.

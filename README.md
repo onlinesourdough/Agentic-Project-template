@@ -24,6 +24,12 @@ code and frameworks.
 Natural language is the interface. The repository instructions make the
 workflow repeatable without requiring a specific coding agent or platform.
 
+After many iterations, at a milestone, before handoff, or when drift is
+suspected, use [audit-solution](.agents/skills/audit-solution/SKILL.md) as a
+periodic holistic backstop. It checks the evolved project's current outcome
+and canonical truth; it is not a lifecycle phase or a required step after
+every trivial change.
+
 Give the agent the outcome once. When implementation is authorized, it owns the
 ordinary planning, technical decisions, implementation, testing, and review
 needed to complete that outcome. It may divide a large solution into many
@@ -76,24 +82,30 @@ understanding and routing, but it is never a dependency of the solution.
 Use this path when work in AIOS reveals that an application, service,
 automation, integration, library, or system needs its own durable lifecycle.
 
-When work originates in AIOS, the existing AIOS lead owns the canonical Spec
-and its end-to-end lifecycle goal. A separate first-class worker task starts in
-this project root at Build with one bounded goal derived from the lead goal. In
-Codex use `/goal`; elsewhere use the harness equivalent. Pause that worker goal
-for lead Review, then resume the same goal for REVISE or authorized Ship.
+When work originates in AIOS, the existing AIOS lead remains the canonical
+source for resolved intent, outcome, scope, proof, and authority, and may own
+the upstream business Spec and lifecycle routing. The project worker accepts
+those decisions without duplicating discovery or reopening them, then runs
+`spec-solution` for a compact project-local technical Spec using this
+repository's instructions, README, technology guidance, current code,
+interfaces, operations, recovery, and relevant skills before Build. Use one
+bounded worker goal for that Spec, Build, lead Review revisions, and authorized
+Ship; pause it for lead Review and resume the same goal when directed.
 
 1. Open or create the relevant Solution repository.
-2. Start the separate first-class worker task and bounded goal in this project
-   root at Build. Give it only relevant AIOS context and canonical-source links.
-3. Let the project README become the current technical and operational truth.
+2. Start the separate first-class worker task and one bounded goal in this
+   project root. Give it only relevant AIOS context and canonical-source links;
+   run the compact project-local Spec before implementation.
+3. Make the project README the current technical and operational truth.
 4. After Build, pause the worker goal for AIOS lead Review. Resume that same
    goal for REVISE or, after PASS, Ship when authorized.
 5. Bring the measured result back to AIOS.
 
 Ask:
 
-> Build the smallest useful solution that creates this outcome: [...]. Use
-> [AIOS context, link, or file] as the canonical context.
+> Use [AIOS context, link, or file] as the canonical context. Accept the
+> resolved intent, outcome, scope, proof, and authority; run the compact
+> project-local Spec, then build the smallest useful solution.
 
 ### From existing context
 
@@ -102,8 +114,9 @@ notes from a meeting with a customer, friend, colleague, or manager, a
 brainstorm, email, issue, analysis, Product Brief, existing README, or a system
 that needs to change.
 
-The context does not need a required format or need to be complete. Before
-Build, the agent finds or clarifies:
+The context does not need a required format or need to be complete. This
+Standalone path runs the full `spec-solution` before Build. The agent finds or
+clarifies:
 
 - what should change and who the result is for
 - the intended outcome and evidence that would prove it
@@ -116,17 +129,17 @@ links to canonical sources instead of copying them.
 
 Ask:
 
-> Use [conversation, notes, link, file, or repository] as context. Build the
-> smallest useful solution that creates [...]. Ask one precise question if a
-> consequential decision is missing.
+> Use [conversation, notes, link, file, or repository] as context. Run the full
+> `spec-solution`, then build the smallest useful solution that creates [...].
+> Ask one precise question if a consequential decision is missing.
 
 ### Let the agent own the execution
 
 For substantial work, one lead session owns the outcome and may use native
 goals or independent workers. Keep one persistent goal around the full
-lifecycle rather than one goal per phase. In Codex use `/goal`; another harness
-uses its equivalent or the same explicit outcome contract. The agent handles
-the internal work steps; the user does not manage each one.
+lifecycle rather than one goal per phase, using the harness's native goal/task
+state or the same explicit outcome contract. The agent handles the internal
+work steps; the user does not manage each one.
 
 Ask for a plan when you only want a plan. Ask explicitly for release,
 publication, activation, or production deployment when Ship should be included.
@@ -168,8 +181,10 @@ every recommendation.
   creates a smaller and better-owned solution.
 
 See [Technology recommendations](TECHNOLOGY.md) for the full decision guide.
-The four included lifecycle skills are the default workflow. Add a specialist
-skill only for a concrete project need; `manage-skills` handles that safely.
+The four included lifecycle skills are the default workflow. Use
+[`audit-solution`](.agents/skills/audit-solution/SKILL.md) periodically as a
+holistic backstop, not as another lifecycle phase. Add a specialist skill only
+for a concrete project need; `manage-skills` handles that safely.
 
 ## Repository map
 
@@ -181,6 +196,7 @@ Solution Template
 │   ├── build-solution/SKILL.md
 │   ├── manage-skills/SKILL.md
 │   ├── review-solution/SKILL.md
+│   ├── audit-solution/SKILL.md (periodic holistic backstop)
 │   └── ship-solution/SKILL.md
 ├── TECHNOLOGY.md
 ├── CLAUDE.md

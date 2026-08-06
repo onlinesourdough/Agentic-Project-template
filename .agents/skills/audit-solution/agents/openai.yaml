@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Solution"
+  short_description: "Audit current Solution truth and drift"
+  default_prompt: "Use $audit-solution to audit current project truth and report safe repairs or decisions."

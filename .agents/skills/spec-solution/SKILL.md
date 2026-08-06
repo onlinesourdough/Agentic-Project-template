@@ -11,14 +11,21 @@ Understand the problem before choosing code or framework.
 
 For substantive implementation, reuse the current task's matching goal or
 create one containing the outcome, constraints, verification, and requested
-Ship scope. In Codex use `/goal`; elsewhere use native persistent goal/task
-state or the same contract in the current session. Spec, Build, Review, REVISE
-loops, and authorized Ship are states in this goal, not separate goals. Do not
-complete it at a phase boundary or narrow it to match partial progress.
+Ship scope. Use the harness's native persistent goal/task state or the same
+contract in the current session. Spec, Build, Review, REVISE loops, and
+authorized Ship are states in this goal, not separate goals. Do not complete
+it at a phase boundary or narrow it to match partial progress.
 
-When an AIOS handoff says its lead owns Spec and Review, do not create a second
-Spec. Accept that Spec and let the project worker's bounded goal start at Build,
-cover Review revisions, and include Ship only when requested and authorized.
+When AIOS supplies resolved intent, outcome, scope, proof, and authority, accept
+those decisions as upstream truth. Still run this skill for a compact
+project-local technical Spec before Build: read the project's instructions,
+README, TECHNOLOGY.md, current code, interfaces, relevant skills, operations,
+and recovery. Do not duplicate upstream discovery, reopen resolved business
+decisions, or create a second goal. Use the same bounded project-worker goal
+for this Spec, Build, Review revisions, and authorized Ship.
+
+Standalone work performs the full Spec. AIOS-originated work performs this
+project-local technical portion after accepting the upstream business context.
 
 ## Inspect first
 
@@ -127,7 +134,7 @@ exists only in conversation, write the durable decisions there.
 
 For a planning or specification request, return the compact spec and stop. For
 an implementation request, update the repository truth, use the plan as the
-agent's internal execution order, and continue directly with `build-solution`
-unless a consequential decision is still missing. Do not require the user to
-prompt each lifecycle phase, create a goal per phase, or create an issue for
+agent's internal execution order, and continue with `build-solution` after the
+Spec unless a consequential decision is still missing. Do not require the user
+to prompt each lifecycle phase, create a goal per phase, or create an issue for
 every result.

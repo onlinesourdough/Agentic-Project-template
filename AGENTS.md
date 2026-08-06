@@ -44,7 +44,15 @@ audience, outcome, and direction. Link to it instead of duplicating it.
 | Find, review, install, update, or remove a specialist skill | `.agents/skills/manage-skills/SKILL.md`   |
 
 Use only the relevant skill. Small mechanical changes do not need the complete
-workflow.
+workflow. `audit-solution` is a periodic holistic backstop, not a fifth
+lifecycle phase and not a required step after every trivial change.
+
+After many iterations, at a milestone, before handoff, or when drift is
+suspected, use `.agents/skills/audit-solution/SKILL.md` to reconcile the
+evolved project's current truth, documentation, proof, ownership, security,
+operations, and recovery. It may repair only safe, reversible, unambiguous
+local documentation or routing; it escalates semantic conflict, deletion,
+authority, or unclear truth for an owner decision.
 
 ## Execution
 
@@ -55,10 +63,20 @@ and granted authority. Do not wait for the user to direct routine work or ask
 for feedback unless one missing decision would materially change the result.
 
 For substantive execution, keep one persistent lifecycle goal around the whole
-requested outcome. In Codex use `/goal`; elsewhere use native goal/task state or
-the same explicit outcome contract. Include outcome, constraints, verification,
-and requested Ship scope. Spec, Build, Review, REVISE loops, and authorized Ship
+requested outcome. Use the harness's native goal/task state or the same
+explicit outcome contract. Include outcome, constraints, verification, and
+requested Ship scope. Spec, Build, Review, REVISE loops, and authorized Ship
 are states inside this goal, not separate goals.
+
+Every substantive task uses `spec-solution` before Build. Standalone work
+performs the full Spec. For AIOS-originated work, accept resolved AIOS
+intent, outcome, scope, proof, and authority as upstream truth, then perform
+the compact project-local technical Spec against this repository's AGENTS.md,
+README.md, TECHNOLOGY.md, current code, interfaces, relevant skills,
+operations, and recovery. Use the same bounded project-worker goal; do not
+create a second goal, duplicate discovery, or reopen resolved business
+decisions. Continue directly to Build after that compact Spec. Small
+mechanical changes may skip the full lifecycle.
 
 Divide a large goal into complete, verifiable results internally and finish
 them in dependency order. If Review finds a correctable in-scope gap, return to
@@ -80,6 +98,12 @@ current verified state, next useful action, and material decisions or blockers.
 Do not copy the Product Brief, README, or every work step. Update it before a
 handoff or context reset; at completion, move durable truth to README, decision
 records, or runbooks, then remove `TASK.md`.
+
+Build and Review keep changed README and runbook truth current in the same
+iteration: commands, configuration, interfaces, ownership, operation,
+recovery, and proof must match the repository. `audit-solution` checks for
+accumulated drift periodically; it is not a reason to defer documentation
+updates.
 
 Use Ship only when the user has authorized the consequential release,
 publication, activation, deployment, or migration. Pause only for missing

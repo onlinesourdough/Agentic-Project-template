@@ -28,6 +28,10 @@ Review these gates:
   concurrency, and recovery behave as relevant.
 - **Evidence:** tests observe public behavior; mocked or static evidence is not
   claimed as runtime proof.
+- **Documentation truth:** every implementation-affected README, runbook,
+  instruction, skill route, command, configuration, interface, operation,
+  recovery, and proof statement is current or has an explicit no-change reason;
+  links and documented checks agree with the repository.
 - **Simplicity:** names are clear, modules are cohesive, interfaces are small,
   and abstractions earn their cost.
 - **Architecture:** dependencies point toward stable domain or capability
@@ -70,8 +74,10 @@ Lead with findings by severity and exact location:
 - **Required:** material quality, boundary, test, or operational gap.
 - **Improvement:** worthwhile simplification or maintainability improvement.
 
-End with **PASS** or **FAIL**, checks performed, evidence that was unavailable,
-and the smallest next action. A Critical or Required finding fails the gate.
+End with **PASS** or **FAIL**, checks performed, documentation evidence,
+evidence that was unavailable, and the smallest next action. A Critical or
+Required finding fails the gate. `audit-solution` is a later holistic backstop
+for accumulated drift; it does not replace this per-change documentation gate.
 For a review-only request, report findings without changing the solution. When
 Review is part of an authorized implementation, fix in-scope Critical and
 Required findings through Build inside the same goal, rerun the affected
