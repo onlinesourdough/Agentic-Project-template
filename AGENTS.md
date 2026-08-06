@@ -1,187 +1,80 @@
-# Agent Guide
+# Solution-template
 
-Build the smallest technical solution that can create the intended outcome.
-Work from repository evidence and keep the result understandable, testable,
-operable, and owned.
+Build the smallest independent technical solution that creates the intended
+outcome and can be understood, operated, recovered, and handed over by its
+owner.
 
 ## Start
 
-1. Read the request, this guide, and the canonical project context.
-2. Confirm that the work needs its own durable repository and lifecycle.
-3. Identify the primary solution shape and what the repository owns.
-4. Choose the smallest complete result that moves the solution toward the
-   intended outcome.
+1. Read the request, README, and relevant canonical context.
+2. Confirm that this repository should own an independent lifecycle.
+3. Preserve resolved upstream intent. Run `spec-solution` to resolve only the
+   project-local technical contract.
+4. Choose technology last using `TECHNOLOGY.md`.
+5. Build, verify, review, and ship only within the granted authority.
 
-Ask exactly one question, with a best guess, when one missing decision would
-materially change the solution. Inspect the repository instead of asking for
-facts it already contains.
+Ask one question only when a missing decision would materially change the
+solution. Inspect repository truth before asking for facts it already contains.
 
-## Repository gate
+## Route
 
-Create or keep a Solution repository when the work needs independent ownership,
-context, operation, development, or handover.
+| Work | Skill |
+| --- | --- |
+| Technical scope, boundaries, proof, contracts, or stack | `.agents/skills/spec-solution/SKILL.md` |
+| Implementation | `.agents/skills/build-solution/SKILL.md` |
+| Correctness, security, simplicity, and proof review | `.agents/skills/review-solution/SKILL.md` |
+| Authorized delivery, deployment, activation, or recovery | `.agents/skills/ship-solution/SKILL.md` |
+| Periodic repository health | `.agents/skills/audit-solution/SKILL.md` |
+| A concrete specialist capability gap | `.agents/skills/manage-skills/SKILL.md` |
 
-If an existing process, tool, workspace, or project should own the capability,
-work there instead. Stop before scaffolding a new repository unless the user
-explicitly chooses a separate project.
+Keep one persistent goal across Spec, Build, Review, revisions, and authorized
+Ship. Do not create lifecycle ceremony for a small mechanical change.
 
-## Repository truth
+## Inputs
 
-Before Build, make README the project's current technical and operational
-truth. Preserve a useful existing README.
+- AIOS may provide resolved business context, outcome, proof, and authority.
+- Design-template may provide an approved visual handoff.
+- Existing code, a brief, conversation, issue, or README may provide standalone
+  context.
 
-Keep one canonical Product Brief or equivalent source for the problem,
-audience, outcome, and direction. Link to it instead of duplicating it.
-
-## Workflow
-
-| Need                                                        | Skill                                     |
-| ----------------------------------------------------------- | ----------------------------------------- |
-| Audit readiness, choose boundaries or stack, or plan        | `.agents/skills/spec-solution/SKILL.md`   |
-| Implement or change behavior with tests                     | `.agents/skills/build-solution/SKILL.md`  |
-| Review correctness, quality, security, and simplicity       | `.agents/skills/review-solution/SKILL.md` |
-| Release, deploy, activate, verify, or recover               | `.agents/skills/ship-solution/SKILL.md`   |
-| Find, review, install, update, or remove a specialist skill | `.agents/skills/manage-skills/SKILL.md`   |
-
-Use only the relevant skill. Small mechanical changes do not need the complete
-workflow. `audit-solution` is a periodic holistic backstop, not a fifth
-lifecycle phase and not a required step after every trivial change.
-
-After many iterations, at a milestone, before handoff, or when drift is
-suspected, use `.agents/skills/audit-solution/SKILL.md` to reconcile the
-evolved project's current truth, documentation, proof, ownership, security,
-operations, and recovery. It may repair only safe, reversible, unambiguous
-local documentation or routing; it escalates semantic conflict, deletion,
-authority, or unclear truth for an owner decision.
-
-## Execution
-
-When the user authorizes implementation, own the work from the agreed outcome
-to verified completion. Make ordinary technical decisions autonomously and use
-creative discretion within the repository's scope, boundaries, instructions,
-and granted authority. Do not wait for the user to direct routine work or ask
-for feedback unless one missing decision would materially change the result.
-
-For substantive execution, keep one persistent lifecycle goal around the whole
-requested outcome. Use the harness's native goal/task state or the same
-explicit outcome contract. Include outcome, constraints, verification, and
-requested Ship scope. Spec, Build, Review, REVISE loops, and authorized Ship
-are states inside this goal, not separate goals.
-
-Every substantive task uses `spec-solution` before Build. Standalone work
-performs the full Spec. For AIOS-originated work, accept resolved AIOS
-intent, outcome, scope, proof, and authority as upstream truth, then perform
-the compact project-local technical Spec against this repository's AGENTS.md,
-README.md, TECHNOLOGY.md, current code, interfaces, relevant skills,
-operations, and recovery. Use the same bounded project-worker goal; do not
-create a second goal, duplicate discovery, or reopen resolved business
-decisions. Continue directly to Build after that compact Spec. Small
-mechanical changes may skip the full lifecycle.
-
-Divide a large goal into complete, verifiable results internally and finish
-them in dependency order. If Review finds a correctable in-scope gap, return to
-Build inside the same goal, fix it, and review again. Complete the goal only
-when the full requested outcome and final evidence pass.
-
-Keep internal decomposition internal. Do not stop after the first result or
-create issues, tickets, or user-facing checklists merely to expose work steps.
-
-Use the current task and matching active goal by default. Start a separate task,
-thread, or session only when the user asks, or ask once when isolation would
-materially improve the work. Runtime features supplement these instructions;
-invoke the supported command rather than assuming text activates it.
-
-Prefer the harness's native task, goal, session, or plan state. Create a root
-`TASK.md` only when current execution state must survive multiple sessions or
-harnesses and no existing tracker owns it. Keep only the goal and evidence,
-current verified state, next useful action, and material decisions or blockers.
-Do not copy the Product Brief, README, or every work step. Update it before a
-handoff or context reset; at completion, move durable truth to README, decision
-records, or runbooks, then remove `TASK.md`.
-
-Build and Review keep changed README and runbook truth current in the same
-iteration: commands, configuration, interfaces, ownership, operation,
-recovery, and proof must match the repository. `audit-solution` checks for
-accumulated drift periodically; it is not a reason to defer documentation
-updates.
-
-Use Ship only when the user has authorized the consequential release,
-publication, activation, deployment, or migration. Pause only for missing
-product direction, unavailable authority, an unsafe or irreversible action,
-external access the user must provide, or evidence that cannot be obtained.
-
-## Technology policy
-
-- Read `TECHNOLOGY.md` when selecting or changing the stack.
-- Choose technology after outcome, ownership, boundaries, and shape.
-- Decide Build, Buy, Rent, and Self-host per responsibility. Hybrid solutions
-  are valid when their ownership and contracts remain explicit.
-- Before adopting an external capability, read its current official pricing,
-  plan limits, license, operations, and exit path when these can affect the
-  solution.
-- Prefer TypeScript for browser interfaces and ordinary web capabilities.
-- Use React when the solution needs a component-based user interface.
-- Prefer TypeScript for ordinary web Services and Integrations.
-- Choose Python when data, quant, image, scientific, machine-learning, or
-  existing Python ownership materially benefits the capability.
-- Let n8n or another workflow runtime own orchestration. A separate Service
-  owns only substantial reusable or specialist logic.
-- Add data, deployment, and observability layers only for demonstrated
-  responsibilities.
-- Existing ownership and a working system outrank every recommendation.
-- Do not mix languages inside one responsibility without a concrete benefit.
-
-## Skill policy
-
-- Keep Spec, Build, Review, and Ship as the default lifecycle skills.
-- Use `manage-skills` only for a concrete specialist gap. Prefer project-local
-  skills and require review and approval before changing them.
+Copy only the context the project needs. The solution repository becomes
+canonical for its technical truth and never depends on AIOS or Design-template
+at runtime.
 
 ## Engineering rules
 
-- Give every responsibility and source of truth one explicit owner.
+- Give every responsibility and source of truth one owner.
 - Prefer one deployable unit before adding a network boundary.
-- Treat SOLID, DRY, KISS, and YAGNI as design heuristics, not quotas. Remove
-  repetition only when the shared concept is stable and one owner is clearer.
-- Keep modules cohesive, interfaces small, and framework details at the edge.
-- Organize modules around responsibilities and keep dependency direction toward
-  stable domain or capability logic.
-- Put database, API, queue, filesystem, and vendor clients behind boundaries at
-  the system edge.
-- Introduce an interface, repository, adapter, or wrapper only for a real
-  contract, trust boundary, or substitutable dependency.
-- Separate stable capability logic from delivery and infrastructure without
-  forcing a ceremonial layer or folder structure.
-- Keep routes, handlers, components, and workflow triggers thin.
-- Keep secrets, authorization, critical policy, and irreversible effects on
-  the trusted server or worker boundary rather than relying on a client.
-- Runtime-validate external input and keep contracts stable.
-- Keep authorization, critical policy, calculations, and irreversible effects
-  deterministic.
-- Make retried side effects idempotent and bound reads, timeouts, retries, and
-  concurrency.
+- Keep framework and vendor details at the edges of stable capability logic.
+- Validate external input and enforce authorization and irreversible policy on
+  a trusted server or worker boundary.
+- Make retried effects idempotent; bound reads, timeouts, retries, concurrency,
+  and cost.
 - Keep secrets and private data out of code, logs, exports, and client builds.
-- Emit structured, redacted logs where runtime failure matters.
-- Add dependencies and infrastructure only for a demonstrated responsibility.
-- Split a microservice only for justified independent ownership, deployment,
-  scaling, isolation, or recovery, not merely code organization.
-- Reuse working systems and owners instead of rebuilding for symmetry.
-- Preserve rollback, replay, disable, restore, reconciliation, or export as
-  appropriate.
-- Treat code, configuration, workflow exports, infrastructure, architecture,
-  runbooks, and project-local agents or skills as valid solution artifacts.
-- For infrastructure, document desired state, access and secret ownership,
-  health, patching, drift, and a reproducible rebuild or tested restore path.
+- Add dependencies, databases, queues, containers, observability, and runtime AI
+  only for demonstrated responsibilities.
+- Preserve rollback, replay, disable, restore, reconciliation, or export as the
+  risk requires.
+- Keep README and operational truth current with behavior.
+
+## Technology rules
+
+- Existing ownership and a working system outrank template recommendations.
+- Prefer TypeScript for browser interfaces and ordinary web capabilities.
+- Prefer Python for data, scientific, image, quant, ML, or existing Python
+  ownership.
+- Let a workflow runtime own orchestration; keep substantial reusable logic in
+  a small service.
+- Do not adopt the Full Stack FastAPI Template unless every fit condition in
+  `TECHNOLOGY.md` is independently justified and operated.
 
 ## Before completion
 
-- verify the intended behavior through its real interface
-- run the repository's actual format, lint, type, test, build, and contract
-  checks that the change affects
-- check relevant failure, denial, duplicate, and recovery behavior
-- update only technical truth made stale by the change
-- review and simplify the changed responsibility
-- state unavailable evidence and remaining risk
+- Verify intended behavior through its real interface.
+- Run affected format, lint, type, test, build, contract, and security checks.
+- Check relevant failure, denial, duplicate, and recovery behavior.
+- Review the diff for accidental complexity and stale truth.
+- State unavailable evidence and remaining risk.
 
-Never claim that a test, deployment, migration, or runtime path succeeded
-without reading its result.
+Never claim a test, deployment, migration, or runtime path passed without
+reading its result.

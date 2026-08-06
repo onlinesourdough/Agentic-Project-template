@@ -1,145 +1,108 @@
 # Technology recommendations
 
-These are preferred starting points, not requirements. Choose technology from
-the solution's responsibilities, risks, operators, and existing ownership.
-
-A strong default is understandable, well documented, easy to verify, and
-replaceable without rewriting the product.
+Choose technology from the solution's responsibilities, risks, operator, and
+existing ownership. These are starting points, not requirements.
 
 ## Choose what to own
 
-Build, buy, rent, and self-host are not mutually exclusive. Decide them per
-responsibility instead of choosing one model for the whole solution.
-
-1. Identify the capability and its owner.
-2. Reuse a working system when it already owns the responsibility.
-3. Build the smallest differentiating or ownership-critical part.
-4. Buy a managed capability when reduced operation justifies its cost and
-   dependency.
-5. Rent generic infrastructure when control and portability matter more than
-   convenience.
-6. Self-host third-party software only when its license permits the use and
-   someone owns updates, security, observability, backup, and recovery.
-7. Choose the smallest runtime that can deliver and recover the first complete
+1. Name the capability and owner.
+2. Reuse a working system that already owns the responsibility.
+3. Build only the differentiating or ownership-critical part.
+4. Buy or rent generic capabilities when reduced operation justifies the
+   dependency and exit path.
+5. Self-host only when license, updates, security, observability, backup, and
+   recovery have an owner.
+6. Choose the smallest runtime that can deliver and recover the first complete
    result.
-8. Prefer fast feedback through types, schemas, validators, tests, and local
-   tooling.
-9. Record why each operational layer is needed.
-
-A small owned Service can, for example, keep domain logic and contracts while
-an n8n instance owns orchestration and a rented VPS owns the runtime boundary.
-Keep these responsibilities explicit so one choice can change without
-rewriting the whole solution.
 
 ## Preferred starting points
 
-| Layer                   | Preferred starting point                                                                                                                                                         |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Browser interface       | TypeScript and React. Use Vite for a simple browser app and add routing or a full-stack framework only when needed.                                                              |
-| Web capability          | TypeScript when one language keeps interfaces, contracts, and operations simpler.                                                                                                |
-| Specialist logic        | Python for data, scientific, image, quant, and machine-learning ecosystems.                                                                                                      |
-| Orchestration           | n8n or the existing workflow runtime for visible integrations, schedules, and approvals. Keep substantial reusable logic in a small Service.                                     |
-| Local data              | Files or SQLite when one process or device owns the state.                                                                                                                       |
-| Shared data             | PostgreSQL when a durable relational source of truth should remain portable.                                                                                                     |
-| Realtime product        | Convex when a TypeScript product benefits from reactive data and accepts an integrated backend platform.                                                                         |
-| CI                      | The repository host's native CI; GitHub Actions when GitHub owns the repository workflow.                                                                                        |
-| Public static delivery  | GitHub Pages for public static repository content; Cloudflare Pages when edge delivery or a wider web platform is useful.                                                        |
-| Web and edge deployment | Cloudflare Pages or Workers for web-standard edge systems. Vercel or Netlify are valid when their framework integration and managed workflow justify the platform dependency.    |
-| Portable deployment     | An OCI container on a managed platform or VPS for long-lived or runtime-specific workloads.                                                                                      |
-| VPS                     | Hetzner when the operator can own Linux and recovery. Consider Hostinger when its assisted dashboard reduces friction, while keeping the same explicit self-managed obligations. |
-| Observability           | Health checks and structured logs first; existing platform signals next; Grafana for useful dashboards and alerts; OpenTelemetry for portable cross-component telemetry.         |
-| Infrastructure          | Versioned configuration; add Docker, OpenTofu, or Terraform when reproducible deployment or handover requires it.                                                                |
+| Responsibility | Starting point |
+| --- | --- |
+| Browser interface | TypeScript and React; Vite before a larger framework |
+| Ordinary web capability | TypeScript when one language simplifies contracts and operation |
+| Data, scientific, image, quant, or ML logic | Python |
+| Visible orchestration and approvals | Existing workflow runtime or n8n |
+| Local single-owner state | Files or SQLite |
+| Shared relational truth | PostgreSQL |
+| CI | Repository host's native CI |
+| Static public delivery | GitHub Pages or an already-owned web platform |
+| Portable runtime | OCI container only when deployment or handover needs it |
+| Observability | Health checks and structured logs before a vendor platform |
+| Infrastructure | Versioned configuration; IaC only when reproducibility needs it |
 
-Convex is an application backend, not a drop-in PostgreSQL replacement. Choose
-it for its TypeScript, transaction, and realtime model—not merely to avoid
-operating a database.
+Do not add authentication, a database, queue, container platform,
+observability vendor, or runtime AI because a starter includes it. Each layer
+needs one responsibility and owner.
 
-Do not add authentication, a database, a queue, a container platform, an
-observability vendor, or runtime AI because a starter stack includes it. Each
-layer needs one concrete responsibility and owner.
+## Full Stack FastAPI Template
 
-## Optional capability profiles
+**Status:** Optional sourced option. It is not a default stack.
 
-A capability profile is a sourced reference for a recurring combination of
-responsibilities. It is not a default stack, scaffold mandate, or catalog of
-tools. Use one only after `spec-solution` has independently resolved its fit
-conditions and named an owner for its operational cost. If only some conditions
-fit, choose those individual capabilities instead.
+Official sources:
 
-Each profile must stay lean and state:
+- [Full Stack FastAPI Template](https://github.com/fastapi/full-stack-fastapi-template)
+- [FastAPI project generation](https://fastapi.tiangolo.com/project-generation/)
 
-- fit conditions;
-- responsibilities added;
-- operator burden;
-- verification;
-- update path; and
-- exit path.
+Do not copy or vendor the upstream into Solution-template. Review the current
+upstream revision when a real project selects it.
 
-The optional
-[advanced-full-stack-python profile](capability-profiles/advanced-full-stack-python.md)
-uses the official Full Stack FastAPI Template as a sourced reference. It fits
-only when Python domain logic, a React UI, PostgreSQL, authentication, Docker,
-and an operated deployment are all genuinely justified. It does not change the
-preferred starting points above.
+### Fit conditions
 
-## Understand an external capability before adopting it
+All are required:
 
-Use current official documentation instead of remembered pricing or a free
-starter plan. Before recommending a managed service or self-hosted product,
-check:
+- Python materially benefits owned domain logic or already has an owner;
+- a component-based React interface is needed;
+- PostgreSQL is justified as shared relational authority;
+- authentication and server-enforced authorization are required;
+- Docker is justified for reproducible build, deployment, or handover; and
+- an operated deployment has a named owner for application, data, secrets,
+  updates, monitoring, backup, and recovery.
 
-- the billing unit and realistic usage at the first complete result and a
-  plausible growth level;
-- plan limits for executions, requests, bandwidth, storage, retention,
-  concurrency, environments, and users as relevant;
-- which plan contains the required feature;
-- license terms and whether the intended commercial use is permitted;
-- data ownership, export, migration, cancellation, downgrade, and exit paths;
-- security, secret handling, data location, support, and incident ownership;
-- backup, restore, upgrades, monitoring, and the operator time added by
-  self-hosting.
+If any condition is missing or supplied only by the template, choose a smaller
+stack.
 
-Record the material decision and its source in the project's technical truth.
-Explain it in plain language before implementation when it can materially
-change architecture, cost, ownership, or handover.
+### Responsibilities added
 
-## AI-native selection test
+The selection adds a Python/FastAPI backend, React interface and API contract,
+PostgreSQL schema and recovery, authentication and authorization, Docker
+artifacts, and operated deployment. Keep domain logic separate from framework
+delivery and trust decisions on the server boundary.
 
-Before accepting a technology, verify:
+### Operator burden
+
+The operator owns two dependency ecosystems, container images, PostgreSQL,
+secrets, security updates, deployment configuration, monitoring, backups, and
+recovery exercises. Reject the option when that work has no owner.
+
+### Verification
+
+Require backend domain/API tests including denial, frontend build and critical
+browser journey, migration compatibility, container build/startup, deployment
+health and failure visibility, secret isolation, exercised restore, and
+application rollback or forward recovery.
+
+### Update path
+
+Compare the selected project with a named upstream revision. Apply only changes
+whose responsibilities still fit, then repeat build, contract, migration,
+security, and recovery checks. Never update automatically.
+
+### Exit path
+
+Keep application code, contracts, schema and exports, deployment configuration,
+and recovery instructions under project ownership. Preserve the public contract
+and data authority while replacing each responsibility explicitly.
+
+## Selection check
+
+Before accepting any technology, verify that:
 
 - its role and source of truth are explicit;
-- humans and agents can find current official documentation;
-- contracts can be checked by a compiler, schema, validator, or test;
-- build, test, deploy, and recovery commands are observable;
-- secrets and operational state stay outside source code;
-- the replacement or exit path is understood;
-- the operator can maintain it after handover.
+- current official documentation and material cost or license terms were read;
+- contracts can be checked by types, schemas, validators, or tests;
+- build, operation, failure, and recovery are observable;
+- secrets and operational state remain outside source code; and
+- the operator can maintain or replace it after handover.
 
-Language popularity alone is not proof of fit. TypeScript and Python are strong
-starting points because they combine large ecosystems, mature tooling, and fast
-verification loops. Go, Rust, Java, C#, or another language remains the better
-choice when an existing system, operator, runtime, or specialist requirement
-justifies it.
-
-## Official references
-
-- [TypeScript documentation](https://www.typescriptlang.org/docs/)
-- [React documentation](https://react.dev/)
-- [Vite documentation](https://vite.dev/guide/)
-- [Python documentation](https://docs.python.org/3/)
-- [PostgreSQL documentation](https://www.postgresql.org/docs/)
-- [SQLite: appropriate uses](https://www.sqlite.org/whentouse.html)
-- [Convex documentation](https://docs.convex.dev/)
-- [n8n documentation](https://docs.n8n.io/)
-- [n8n pricing](https://n8n.io/pricing/)
-- [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/)
-- [GitHub Pages documentation](https://docs.github.com/en/pages)
-- [Vercel documentation](https://vercel.com/docs)
-- [Netlify documentation](https://docs.netlify.com/)
-- [Hetzner Cloud documentation](https://docs.hetzner.com/cloud/)
-- [Hostinger VPS documentation](https://www.hostinger.com/support/vps/)
-- [Grafana documentation](https://grafana.com/docs/)
-- [OpenTelemetry documentation](https://opentelemetry.io/docs/)
-- [OpenTofu documentation](https://opentofu.org/docs/)
-- [GitHub Actions documentation](https://docs.github.com/en/actions)
-- [GitHub Octoverse 2025](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/)
+Language popularity is not proof of fit. Existing systems and owners win.
