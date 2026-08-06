@@ -1,8 +1,10 @@
-# Solution Template
+# Solution-template
 
-![Solution Template overview](assets/solution-template-overview.png)
+![Solution-template overview](assets/solution-template-overview.svg)
 
-**Solution Template** is a minimal AI-native foundation for building the
+Published by [onlinesourdough](https://github.com/onlinesourdough).
+
+**Solution-template** is a minimal AI-native foundation for building the
 smallest useful technical solution.
 
 Use it when an application, service, automation, integration, library, or
@@ -37,7 +39,7 @@ internal work steps, but you should not have to manage them one by one.
 
 ## Philosophy
 
-Solution Template covers the independent project and solution layer of modern
+Solution-template covers the independent project and solution layer of modern
 AI engineering. Start with prompt and intent: a clear outcome, audience,
 constraints, and evidence of success. [Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering)
 turns that intent into useful instructions, while [context engineering](https://www.langchain.com/blog/context-engineering-for-agents)
@@ -202,7 +204,7 @@ for a concrete project need; `manage-skills` handles that safely.
 ## Repository map
 
 ```text
-Solution Template
+Solution-template
 ├── AGENTS.md
 ├── .agents/skills/
 │   ├── spec-solution/
@@ -219,7 +221,10 @@ Solution Template
 │   └── validate-spec-solution.sh
 ├── TECHNOLOGY.md
 ├── CLAUDE.md
-├── assets/solution-template-overview.png
+├── assets/
+│   ├── solution-template-overview.svg
+│   └── solution-template-overview.png (previous visual)
+├── LICENSE
 └── README.md
 ```
 

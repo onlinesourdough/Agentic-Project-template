@@ -4,7 +4,7 @@
 
 Use the official Full Stack FastAPI Template as a starting reference only when
 every fit condition below is resolved. Do not copy or vendor the upstream
-template into Solution Template.
+template into Solution-template.
 
 ## Official sources
 
