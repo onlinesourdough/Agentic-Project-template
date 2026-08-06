@@ -16,7 +16,7 @@ code and frameworks.
 
 | Step   | Purpose                                                 |
 | ------ | ------------------------------------------------------- |
-| Spec   | Understand the outcome and choose the smallest solution |
+| Spec   | Audit readiness and define the smallest Build contract  |
 | Build  | Create complete, testable results                       |
 | Review | Check the result and remove unnecessary complexity      |
 | Ship   | Release, verify, and preserve a recovery path           |
@@ -114,9 +114,12 @@ notes from a meeting with a customer, friend, colleague, or manager, a
 brainstorm, email, issue, analysis, Product Brief, existing README, or a system
 that needs to change.
 
-The context does not need a required format or need to be complete. This
-Standalone path runs the full `spec-solution` before Build. The agent finds or
-clarifies:
+The context does not need a required format or need to be complete. A rough
+idea, developed brief, near-complete specification, or existing-system change
+request can all enter the same Standalone path. `spec-solution` audits the
+source at its current maturity, preserves resolved material, and classifies
+material dimensions as resolved, inferred, missing, or conflicting before
+returning READY, REVISE, or BLOCKED. The agent finds or clarifies:
 
 - what should change and who the result is for
 - the intended outcome and evidence that would prove it
@@ -181,6 +184,10 @@ every recommendation.
   creates a smaller and better-owned solution.
 
 See [Technology recommendations](TECHNOLOGY.md) for the full decision guide.
+Its [optional capability profiles](TECHNOLOGY.md#optional-capability-profiles)
+are sourced decision aids for combinations of justified responsibilities, not
+default stacks. The advanced full-stack Python profile is selected only when
+all of its fit conditions and operator responsibilities are resolved.
 The four included lifecycle skills are the default workflow. Use
 [`audit-solution`](.agents/skills/audit-solution/SKILL.md) periodically as a
 holistic backstop, not as another lifecycle phase. Add a specialist skill only
@@ -192,12 +199,18 @@ for a concrete project need; `manage-skills` handles that safely.
 Solution Template
 ├── AGENTS.md
 ├── .agents/skills/
-│   ├── spec-solution/SKILL.md
+│   ├── spec-solution/
+│   │   ├── SKILL.md
+│   │   └── examples/acceptance-cases.md
 │   ├── build-solution/SKILL.md
 │   ├── manage-skills/SKILL.md
 │   ├── review-solution/SKILL.md
 │   ├── audit-solution/SKILL.md (periodic holistic backstop)
 │   └── ship-solution/SKILL.md
+├── capability-profiles/
+│   └── advanced-full-stack-python.md
+├── tests/
+│   └── validate-spec-solution.sh
 ├── TECHNOLOGY.md
 ├── CLAUDE.md
 ├── assets/solution-template-overview.png
@@ -206,3 +219,10 @@ Solution Template
 
 Start with one outcome, one owner, and one repository. Add another layer only
 when the solution has a clear responsibility for it.
+
+Validate the maturity audit, readiness gates, AIOS preservation, and optional
+profile contract with:
+
+```sh
+bash tests/validate-spec-solution.sh
+```

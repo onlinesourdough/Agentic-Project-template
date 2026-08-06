@@ -37,7 +37,7 @@ audience, outcome, and direction. Link to it instead of duplicating it.
 
 | Need                                                        | Skill                                     |
 | ----------------------------------------------------------- | ----------------------------------------- |
-| Clarify, choose shape or stack, define boundaries, or plan  | `.agents/skills/spec-solution/SKILL.md`   |
+| Audit readiness, choose boundaries or stack, or plan        | `.agents/skills/spec-solution/SKILL.md`   |
 | Implement or change behavior with tests                     | `.agents/skills/build-solution/SKILL.md`  |
 | Review correctness, quality, security, and simplicity       | `.agents/skills/review-solution/SKILL.md` |
 | Release, deploy, activate, verify, or recover               | `.agents/skills/ship-solution/SKILL.md`   |

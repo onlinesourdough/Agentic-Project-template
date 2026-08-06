@@ -1,11 +1,13 @@
 ---
 name: spec-solution
-description: Clarify and plan the smallest technical solution one question at a time. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and the outcome, ownership, shape, technology, boundaries, acceptance, or implementation order is not yet explicit.
+description: Audit source material of any maturity for the smallest build-ready technical solution. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and readiness, ownership, boundaries, acceptance, or implementation order must be established without rewriting resolved context.
 ---
 
 # Spec Solution
 
-Understand the problem before choosing code or framework.
+Audit the available truth for build readiness. Preserve useful source material;
+do not turn every request into a new Product Brief or rewrite facts that are
+already clear.
 
 ## Keep one lifecycle goal
 
@@ -16,125 +18,150 @@ contract in the current session. Spec, Build, Review, REVISE loops, and
 authorized Ship are states in this goal, not separate goals. Do not complete
 it at a phase boundary or narrow it to match partial progress.
 
-When AIOS supplies resolved intent, outcome, scope, proof, and authority, accept
-those decisions as upstream truth. Still run this skill for a compact
-project-local technical Spec before Build: read the project's instructions,
-README, TECHNOLOGY.md, current code, interfaces, relevant skills, operations,
-and recovery. Do not duplicate upstream discovery, reopen resolved business
-decisions, or create a second goal. Use the same bounded project-worker goal
-for this Spec, Build, Review revisions, and authorized Ship.
+## Set the audit depth from the starting mode
 
-Standalone work performs the full Spec. AIOS-originated work performs this
-project-local technical portion after accepting the upstream business context.
+Accept source material at any maturity:
 
-## Inspect first
+- **Rough idea:** establish the few decisions needed to define the first
+  complete result; do not demand a polished brief.
+- **Developed brief:** preserve its structure and resolved decisions, then
+  identify only material gaps or conflicts.
+- **Near-complete specification:** verify claims against canonical sources and
+  return only corrections that affect readiness.
+- **Existing-system change request:** treat the repository, current interfaces,
+  operations, and recovery behavior as primary evidence; specify the delta,
+  not the whole system again.
 
-Read the request, repository instructions, current code, existing owners, and
-any supplied context. Identify the canonical context source and link to it
-instead of copying it. Resolve facts from the repository instead of asking the
-user.
+Maturity controls audit effort, not the readiness standard. Do not reward
+document length or lower the bar for a concise source that resolves the needed
+dimensions.
 
-## Confirm the repository
+Standalone work audits both business and project-local technical readiness.
+For AIOS-originated work, accept resolved AIOS intent, outcome, scope, proof,
+and authority as upstream truth. Cite the upstream source, preserve those
+decisions, and audit only project-local technical truth against this
+repository's instructions, README, `TECHNOLOGY.md`, current code, interfaces,
+relevant skills, operations, and recovery. Do not duplicate discovery, reopen
+resolved business decisions, or create another goal.
 
-Before scaffolding, find the smallest valid owner for the work.
+## Inspect before asking
 
-Use a Solution repository when the capability needs its own durable context,
-ownership, development, operation, or handover. Otherwise recommend the
-existing process, tool, workspace, or project that should own it. Stop before
-scaffolding unless the user explicitly chooses a separate project.
+Read the request, canonical source material, repository instructions, current
+code, interfaces, existing owners, operating evidence, and recovery paths.
+Link to canonical sources instead of copying them. Resolve facts through
+inspection; never ask an owner to restate discoverable repository or source
+truth.
 
-## Ask one question at a time
+For every required dimension, record one evidence state:
 
-When a consequential decision is missing:
+- **RESOLVED:** stated by an authoritative source or verified in the
+  repository; cite the source.
+- **INFERRED:** the best interpretation supported by evidence but not an owner
+  decision; state the inference and why it is safe or needs confirmation.
+- **MISSING:** no adequate evidence exists; name what is absent and whether it
+  materially changes the solution.
+- **CONFLICTING:** authoritative sources disagree; cite both and identify who
+  can resolve the conflict.
 
-1. State the current best interpretation briefly.
-2. Ask exactly one question.
-3. Include the best guess and why it matters.
-4. Wait for the answer before continuing.
+An inference may enter a READY Build contract only when it is reversible,
+low-risk, and inside the implementer's ordinary technical authority. Never
+infer product direction, external authority, trust policy, irreversible
+effects, or an outcome measurement owner.
 
-Do not send a questionnaire. Stop when the outcome, user or caller, success
-signal and its measurement owner, constraint, ownership, smallest complete
-result, and non-goals are clear enough to proceed.
+## Audit the required dimensions
 
-## Choose the solution shape
+| Dimension | Evidence needed |
+| --- | --- |
+| Intended change and constraints | The observable delta, invariant, deadline, compatibility need, or other constraint that shapes it |
+| Served party | The user, caller, or operator whose behavior or responsibility changes |
+| Proof | Observable acceptance evidence, the outcome signal, and the person or system that owns measurement |
+| Result boundary | The smallest complete result and explicit non-goals |
+| Canonical truth | Source links, existing systems, current repository behavior, and ownership of each material fact |
+| Repository gate | The smallest valid owner and why independent context, development, operation, or handover is justified |
+| Authority and risk | Decision authority, Ship authority, consequential effects, security and trust boundaries, and private or regulated data |
+| Contracts and data | Dependencies, interfaces, compatibility, data authority, and failure behavior |
+| Lifecycle | Deployment unit, operational owner, failure visibility, recovery path, and requested Ship scope |
 
-| Shape       | Primary responsibility                                                           |
-| ----------- | -------------------------------------------------------------------------------- |
-| Application | A human-facing website, product UI, mobile or desktop app, internal tool, or CLI |
-| Service     | One bounded capability behind a stable interface                                 |
-| Automation  | A triggered or scheduled sequence of steps                                       |
-| Integration | Translation and reliable delivery between existing owners                        |
-| Library     | A package, SDK, template, or reusable capability consumed by other solutions     |
-| System      | Architecture, infrastructure, ownership, or operations across repositories       |
+Choose solution shape and technology only after these dimensions expose the
+responsibilities. One repository needs one clear primary responsibility;
+prefer one cohesive deployable unit unless ownership, deployment, scaling,
+isolation, or recovery must be independent.
 
-One outcome may use more than one shape, but each repository needs one clear
-primary responsibility.
+## Ask only for owner decisions
 
-## Choose architecture proportionally
+When one unresolved owner decision materially changes the solution:
 
-- Prefer one cohesive deployable unit. Split a Service or microservice only
-  when ownership, deployment, scaling, isolation, or recovery must be
-  independent.
-- Treat Clean Architecture as dependency direction and separation of stable
-  capability logic from delivery and infrastructure—not a required set of
-  layers or folders.
-- Use REST semantics when HTTP resources are the real interface. Use another
-  explicit contract when events, jobs, libraries, files, or workflows are the
-  natural boundary.
+1. State the current best interpretation and evidence briefly.
+2. Ask exactly one question, including the best guess and why the answer
+   changes the result.
+3. Wait before asking another question.
 
-## Choose technology last
+Do not send a questionnaire. Do not ask for facts that inspection can resolve.
+If implementation can safely choose a reversible technical detail, classify it
+as INFERRED and keep moving.
 
-- Read `TECHNOLOGY.md` before selecting a new stack.
-- Decide Build, Buy, Rent, and Self-host separately for each responsibility.
-  A small owned Service and a bought or self-hosted orchestration runtime can
-  be the simplest valid solution.
-- For a material external capability, read current official pricing, plan
-  limits, license, operational responsibilities, and exit options. Explain the
-  consequence before implementation instead of relying on a free tier or
-  remembered product behavior.
-- Prefer TypeScript for browser interfaces and ordinary web capabilities. Use
-  React when a component-based user interface is required.
-- Prefer TypeScript for ordinary web APIs, Services, and Integrations.
-- Use Python when the capability materially benefits from Python's data, quant,
-  image, scientific, or machine-learning ecosystem, or already has a Python
-  owner.
-- Let n8n or another workflow runtime own orchestration. Extract code into a
-  Service only when logic needs stronger tests, reuse, performance, or
-  independent operation.
-- Add data, deployment, and observability layers only when the solution owns a
-  responsibility for them.
-- Existing ownership and a working system outrank every recommendation.
-- Do not mix languages inside one responsibility without a concrete benefit.
-  Cross-language parts communicate through an explicit contract.
+## Use capability profiles only when earned
 
-## Return the compact spec and plan
+Read `TECHNOLOGY.md` before selecting a new stack. A capability profile is an
+optional, sourced decision aid for a recurring combination of responsibilities;
+it is never a default stack, requirement, or substitute for this audit.
 
-State:
+Use a profile only when its fit conditions are independently RESOLVED and its
+operator burden has an owner. Cite its current official sources. The profile
+must state its fit conditions, responsibilities added, operator burden,
+verification, update path, and exit path. If only part of a profile fits,
+select the smaller individual capabilities instead.
 
-- canonical context source and independent-lifecycle justification
-- outcome, user or caller or operator, success signal, and measurement owner
-- selected shape and stack
-- Build, Buy, Rent, and Self-host ownership for material responsibilities,
-  including the current source for consequential external-service decisions
-- what the repository owns, consumes, and does not own
-- interfaces, data authority, trust boundaries, and deployment unit
-- smallest complete result and explicit non-goals
-- ordered complete results with a verification point for each
-- material risks, open decisions, and recovery expectation
+For a material external capability, inspect current official pricing, plan
+limits, license, operational responsibilities, and exit options when they can
+affect architecture, cost, ownership, or handover. Existing ownership and a
+working system outrank every profile.
 
-Keep one canonical Product Brief or equivalent source. Move it once when the
-project is its natural owner; otherwise link to the external owner.
+## Return one readiness gate
 
-Before Build in a fresh repository, replace the template guide with a
+Return exactly one gate. Include the evidence-state audit only to the detail
+needed to support that gate.
+
+### READY
+
+Use READY when no material MISSING or CONFLICTING item prevents Build. Include
+a compact technical Build contract:
+
+- canonical sources and accepted starting mode
+- intended delta, constraints, served user/caller/operator, and repository
+  ownership justification
+- acceptance evidence, outcome signal, and measurement owner
+- smallest complete result and non-goals
+- primary shape; chosen technology or optional capability profile with fit
+  evidence and source
+- Build, Buy, Rent, and Self-host choices for material responsibilities; what
+  the repository owns, consumes, and excludes
+- interfaces, dependencies, data authority, trust boundaries, deployment unit,
+  operation, recovery, and Ship scope
+- ordered complete results with one verification point each
+- labeled low-risk inferences and material residual risks
+
+For an implementation request, continue into `build-solution` inside the same
+goal. Before Build in a fresh repository, replace template guidance with a
 project-specific README. Preserve a useful README in an adopted repository.
-Record the outcome, status and current result, canonical context link,
-ownership and boundaries, architecture and dependencies, working commands,
-delivery, operation, and recovery as those facts become known. If context
-exists only in conversation, write the durable decisions there.
 
-For a planning or specification request, return the compact spec and stop. For
-an implementation request, update the repository truth, use the plan as the
-agent's internal execution order, and continue with `build-solution` after the
-Spec unless a consequential decision is still missing. Do not require the user
-to prompt each lifecycle phase, create a goal per phase, or create an issue for
-every result.
+### REVISE
+
+Use REVISE when the source is sound but needs a small, non-blocking addition or
+correction before it can become the Build contract. Return only the minimal
+text to add, remove, or replace, with its target location and evidence. Do not
+return a rewritten brief or specification. When authorized and unambiguous,
+apply the patch, re-audit, and continue instead of handing routine editing back
+to the user.
+
+### BLOCKED
+
+Use BLOCKED when Build cannot proceed because of one material missing or
+conflicting owner decision, authority, access dependency, or required proof.
+Name the exact blocker, cite the evidence, identify the owner who can resolve
+it, and ask at most the one decision question described above. Do not hide
+several questions under one gate.
+
+For a planning-only request, stop after the gate. For acceptance examples that
+exercise all maturity levels, AIOS preservation, and optional profile
+selection, read [examples/acceptance-cases.md](examples/acceptance-cases.md).

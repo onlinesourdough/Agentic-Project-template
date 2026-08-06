@@ -58,6 +58,30 @@ Do not add authentication, a database, a queue, a container platform, an
 observability vendor, or runtime AI because a starter stack includes it. Each
 layer needs one concrete responsibility and owner.
 
+## Optional capability profiles
+
+A capability profile is a sourced reference for a recurring combination of
+responsibilities. It is not a default stack, scaffold mandate, or catalog of
+tools. Use one only after `spec-solution` has independently resolved its fit
+conditions and named an owner for its operational cost. If only some conditions
+fit, choose those individual capabilities instead.
+
+Each profile must stay lean and state:
+
+- fit conditions;
+- responsibilities added;
+- operator burden;
+- verification;
+- update path; and
+- exit path.
+
+The optional
+[advanced-full-stack-python profile](capability-profiles/advanced-full-stack-python.md)
+uses the official Full Stack FastAPI Template as a sourced reference. It fits
+only when Python domain logic, a React UI, PostgreSQL, authentication, Docker,
+and an operated deployment are all genuinely justified. It does not change the
+preferred starting points above.
+
 ## Understand an external capability before adopting it
 
 Use current official documentation instead of remembered pricing or a free
