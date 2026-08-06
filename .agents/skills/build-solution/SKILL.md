@@ -19,15 +19,20 @@ because the lifecycle phase changed.
 
 ## Initialize without inventing a stack
 
+Consume the Spec's resolved technology decision. A working stack goes directly
+to Build when the change does not materially alter it. For a new or materially
+changed decision, use the result from
+[choose-technology](../choose-technology/SKILL.md); do not reopen selection or
+preload optional references unless the decision cites one.
+
 For a fresh repository:
 
 1. Make README project-specific before implementation.
 2. Create an official framework scaffold in the repository root only when the
    selected shape and stack require one.
-3. Follow `TECHNOLOGY.md` when choosing new technology.
-4. Preserve repository instructions and use one package manager and lockfile
+3. Preserve repository instructions and use one package manager and lockfile
    per ecosystem.
-5. Do not create fake runtime code when an Automation, Integration, or System
+4. Do not create fake runtime code when an Automation, Integration, or System
    only needs a workflow export, configuration, contract, infrastructure,
    architecture decision, or runbook.
 

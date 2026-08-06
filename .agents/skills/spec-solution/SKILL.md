@@ -43,8 +43,8 @@ Standalone work audits both business and project-local technical readiness.
 For AIOS-originated work, accept resolved AIOS intent, outcome, scope, proof,
 and authority as upstream truth. Cite the upstream source, preserve those
 decisions, and audit only project-local technical truth against this
-repository's instructions, README, `TECHNOLOGY.md`, current code, interfaces,
-relevant skills, operations, and recovery. Do not duplicate discovery, reopen
+repository's instructions, README, relevant project skills, current code,
+interfaces, operations, and recovery. Do not duplicate discovery, reopen
 resolved business decisions, or create another goal.
 
 ## Inspect before asking
@@ -103,22 +103,20 @@ Do not send a questionnaire. Do not ask for facts that inspection can resolve.
 If implementation can safely choose a reversible technical detail, classify it
 as INFERRED and keep moving.
 
-## Use capability profiles only when earned
+## Route technology decisions only when earned
 
-Read `TECHNOLOGY.md` before selecting a new stack. A capability profile is an
-optional, sourced decision aid for a recurring combination of responsibilities;
-it is never a default stack, requirement, or substitute for this audit.
+Do not choose a new stack during this audit when a working stack already owns
+the responsibilities and the change does not materially alter technology.
+Record that existing stack as RESOLVED and continue directly to
+`build-solution`.
 
-Use a profile only when its fit conditions are independently RESOLVED and its
-operator burden has an owner. Cite its current official sources. The profile
-must state its fit conditions, responsibilities added, operator burden,
-verification, update path, and exit path. If only part of a profile fits,
-select the smaller individual capabilities instead.
-
-For a material external capability, inspect current official pricing, plan
-limits, license, operational responsibilities, and exit options when they can
-affect architecture, cost, ownership, or handover. Existing ownership and a
-working system outrank every profile.
+For a new or materially changed technology decision, use
+[choose-technology](../choose-technology/SKILL.md) only after the required
+dimensions are resolved. It is the only project technology-selection
+procedure. Its Full Stack FastAPI reference is loaded only when every fit gate
+might be independently satisfied. A concrete specialist implementation gap
+routes to [manage-skills](../manage-skills/SKILL.md); do not preload or install
+stack-specific skills in this template.
 
 ## Return one readiness gate
 
@@ -135,8 +133,8 @@ a compact technical Build contract:
   ownership justification
 - acceptance evidence, outcome signal, and measurement owner
 - smallest complete result and non-goals
-- primary shape; chosen technology or optional capability profile with fit
-  evidence and source
+- primary shape; existing technology decision or the new or materially changed
+  decision that must route through `choose-technology`
 - Build, Buy, Rent, and Self-host choices for material responsibilities; what
   the repository owns, consumes, and excludes
 - interfaces, dependencies, data authority, trust boundaries, deployment unit,

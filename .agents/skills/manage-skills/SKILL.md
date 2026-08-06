@@ -11,9 +11,20 @@ collection of overlapping instructions.
 ## Confirm the gap
 
 1. State the task the missing skill must perform.
-2. Inspect installed project and personal skills before searching.
-3. Reuse an existing skill when it already owns the procedure.
-4. Stop when ordinary repository instructions or agent reasoning are enough.
+2. Before external search, dynamically inventory:
+   - project-local skills discovered from repository truth;
+   - skills accessible through the calling or containing AIOS context,
+     discovered from current context rather than hardcoded by name;
+   - harness-native capabilities and personal or installed skills exposed to
+     the active agent; and
+   - repository instructions and ordinary agent reasoning.
+3. Reuse the first sufficient capability.
+4. Stop when the inventory is sufficient. Search externally only for a
+   concrete capability gap that remains.
+
+Using an AIOS skill during work must not create an AIOS runtime dependency.
+Keep required project behavior and truth local to this independently operable
+repository.
 
 ## Discover candidates
 

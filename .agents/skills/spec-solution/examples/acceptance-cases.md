@@ -110,22 +110,47 @@ Ship scope.
 - The only gate is READY with a compact project-local Build contract. AIOS is
   not introduced as a runtime dependency.
 
-## FastAPI profile is not a default
+## Conditional technology selection
+
+**Existing working stack bypass**
+
+**Input:** A change keeps an existing TypeScript system's responsibilities,
+interfaces, owner, operation, recovery, and proof intact; the request does not
+materially alter technology.
+
+**Expected:** The project-local Spec records the existing stack as RESOLVED and
+routes directly to `build-solution`. `choose-technology` and its optional
+references are not loaded, and no stack-specific skill is preinstalled.
+
+**New or material technology decision**
+
+**Input:** A new solution or change materially alters technology after its
+responsibilities, ownership, boundaries, risks, operation, recovery, and proof
+are resolved.
+
+**Expected:** The workflow invokes `choose-technology` only after the contract
+is ready. The decision records Build, Buy, Rent, or Self-host choices, fit
+evidence, operator burden, verification and proof, update path, and exit path.
+If a concrete specialist implementation gap is proven, it routes to
+`manage-skills`; the template does not preload or install React, FastAPI,
+Supabase, or other stack-specific skills.
+
+## Full Stack FastAPI reference is conditional
 
 **Non-fit input:** A conventional browser CRUD change can remain in an existing
 TypeScript system; it has no Python domain responsibility, new database
 authority, or owned container operation.
 
-**Expected:** The advanced-full-stack-python profile is not selected. Existing
-ownership outranks the profile, and no authentication, PostgreSQL, Docker, or
-Python layer is added because a template contains it.
+**Expected:** `choose-technology` bypasses its Full Stack FastAPI reference.
+Existing ownership outranks the reference, and no authentication, PostgreSQL,
+Docker, or Python layer is added because a template contains it.
 
 **Fit input:** A new independently operated product has Python-owned specialist
 domain logic, a justified React UI, PostgreSQL data authority, required
 authentication and server authorization, a Docker delivery boundary, and a
 named owner for deployment, secrets, monitoring, backup, restore, and updates.
 
-**Expected:** The profile may be cited as an optional sourced reference after
-all fit conditions are RESOLVED. The Build contract still names each added
-responsibility, operator burden, verification, update path, and exit path; it
-does not copy the upstream template into this repository.
+**Expected:** The `choose-technology` skill may load its Full Stack FastAPI
+reference after all fit conditions are RESOLVED. The Build contract still
+names each added responsibility, operator burden, verification, update path,
+and exit path; it does not copy the upstream template into this repository.

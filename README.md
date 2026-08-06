@@ -31,7 +31,8 @@ demanding a ceremonial document.
 
 | Need | Skill |
 | --- | --- |
-| Clarify boundaries, proof, contracts, or stack | `.agents/skills/spec-solution/SKILL.md` |
+| Clarify boundaries, proof, or contracts | `.agents/skills/spec-solution/SKILL.md` |
+| Choose a new or materially changed technology | `.agents/skills/choose-technology/SKILL.md` |
 | Implement and verify behavior | `.agents/skills/build-solution/SKILL.md` |
 | Review intent, correctness, security, and simplicity | `.agents/skills/review-solution/SKILL.md` |
 | Deliver, activate, deploy, or recover | `.agents/skills/ship-solution/SKILL.md` |
@@ -65,21 +66,21 @@ business truth.
 
 ## Technology
 
-Choose technology after the responsibility is understood. Prefer the smallest
-stack with a clear owner, observable checks, and a realistic recovery path.
-See [TECHNOLOGY.md](TECHNOLOGY.md).
-
-The official Full Stack FastAPI Template is only a sourced option when Python,
-React, PostgreSQL, authentication, Docker, and an operated deployment are all
-independently justified. It is never the default.
+Keep an existing working stack when the change does not materially alter it,
+record it in the Spec, and go directly to Build. For a new or materially
+changed technology decision, use
+`.agents/skills/choose-technology/SKILL.md` after the project-local contract is
+ready. Its rare Full Stack FastAPI reference loads only when its fit gates may
+be independently satisfied. If a concrete specialist capability is missing,
+route it through `.agents/skills/manage-skills/SKILL.md`; do not preload or
+install stack-specific skills from this template.
 
 ## Repository map
 
 ```text
 Solution-template
 ├── AGENTS.md
-├── .agents/skills/       # Spec, Build, Review, Ship, Audit, Manage
-├── TECHNOLOGY.md         # Small technology decision guide
+├── .agents/skills/       # Lifecycle skills and conditional technology choice
 ├── tests/                # Template contract validation
 ├── assets/               # README illustration
 ├── CLAUDE.md             # Harness adapter

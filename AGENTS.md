@@ -10,7 +10,9 @@ owner.
 2. Confirm that this repository should own an independent lifecycle.
 3. Preserve resolved upstream intent. Run `spec-solution` to resolve only the
    project-local technical contract.
-4. Choose technology last using `TECHNOLOGY.md`.
+4. For a new or materially changed technology decision, run
+   `.agents/skills/choose-technology/SKILL.md` after the contract. A working
+   stack bypasses it when the change does not materially alter technology.
 5. Build, verify, review, and ship only within the granted authority.
 
 Ask one question only when a missing decision would materially change the
@@ -20,7 +22,8 @@ solution. Inspect repository truth before asking for facts it already contains.
 
 | Work | Skill |
 | --- | --- |
-| Technical scope, boundaries, proof, contracts, or stack | `.agents/skills/spec-solution/SKILL.md` |
+| Technical scope, boundaries, proof, or contracts | `.agents/skills/spec-solution/SKILL.md` |
+| New or materially changed technology decision | `.agents/skills/choose-technology/SKILL.md` |
 | Implementation | `.agents/skills/build-solution/SKILL.md` |
 | Correctness, security, simplicity, and proof review | `.agents/skills/review-solution/SKILL.md` |
 | Authorized delivery, deployment, activation, or recovery | `.agents/skills/ship-solution/SKILL.md` |
@@ -29,6 +32,11 @@ solution. Inspect repository truth before asking for facts it already contains.
 
 Keep one persistent goal across Spec, Build, Review, revisions, and authorized
 Ship. Do not create lifecycle ceremony for a small mechanical change.
+
+The public path is `spec-solution` → materially unchanged existing stack directly to
+`build-solution`; or, for a new or materially changed technology decision,
+`choose-technology` → optional `manage-skills` for a proven specialist gap →
+`build-solution`.
 
 ## Inputs
 
@@ -56,17 +64,6 @@ at runtime.
 - Preserve rollback, replay, disable, restore, reconciliation, or export as the
   risk requires.
 - Keep README and operational truth current with behavior.
-
-## Technology rules
-
-- Existing ownership and a working system outrank template recommendations.
-- Prefer TypeScript for browser interfaces and ordinary web capabilities.
-- Prefer Python for data, scientific, image, quant, ML, or existing Python
-  ownership.
-- Let a workflow runtime own orchestration; keep substantial reusable logic in
-  a small service.
-- Do not adopt the Full Stack FastAPI Template unless every fit condition in
-  `TECHNOLOGY.md` is independently justified and operated.
 
 ## Before completion
 

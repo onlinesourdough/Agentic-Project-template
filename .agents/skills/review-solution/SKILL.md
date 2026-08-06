@@ -43,10 +43,13 @@ Review these gates:
   not duplicated or blurred; project truth has one canonical owner.
 - **Lifecycle:** the repository still merits independent ownership, and it does
   not duplicate a smaller existing owner without justification.
-- **Technology:** each added layer owns a required capability, follows current
-  project evidence and `TECHNOLOGY.md`, and has an understandable replacement
-  path. Material bought or self-hosted capabilities were checked against
-  current official plans, limits, license, operations, and exit options.
+- **Technology:** each added layer owns a required capability and follows the
+  resolved decision from [choose-technology](../choose-technology/SKILL.md) or
+  the existing working stack. Check fit evidence, operator burden,
+  verification and proof, update path, and exit path. Load the conditional
+  FastAPI reference only when the change actually selects it. Material bought
+  or self-hosted capabilities were checked against current official plans,
+  limits, license, operations, and exit options.
 - **Security:** trust, authorization, secrets, private data, dependencies, and
   external side effects are handled proportionally.
 - **Operation:** important failure is visible and rollback, replay, disable,
