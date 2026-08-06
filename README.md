@@ -83,7 +83,6 @@ Solution-template
 ├── .agents/skills/       # Lifecycle skills and conditional technology choice
 ├── tests/                # Template contract validation
 ├── assets/               # README illustration
-├── CLAUDE.md             # Harness adapter
 └── README.md              # Current project truth
 ```
 
