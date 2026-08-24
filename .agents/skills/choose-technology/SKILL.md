@@ -11,20 +11,20 @@ reason to preload stack-specific skills.
 
 ## Route
 
-1. Run `spec-solution` first. The intended result, served party, ownership,
+1. Run `spec-project` first. The intended result, served party, ownership,
    boundaries, risks, operation, recovery, and proof must be resolved enough
    for a Build contract.
 2. If a working stack already owns the responsibilities and the change does
    not materially alter technology, bypass this skill. Record the existing
-   stack as the resolved decision and go directly to `build-solution`.
+   stack as the resolved decision and go directly to `build-project`.
 3. For a new or materially changed technology decision, select the smallest
    capabilities after the contract is ready. Do not choose from popularity or
    from a starter's included layers.
 4. If a concrete specialist implementation gap remains, route it to
    `.agents/skills/manage-skills/SKILL.md` after the technology decision. Add
    only a justified, reviewed project-local skill; do not install or invent
-   React, FastAPI, Supabase, or other stack-specific skills in this template.
-5. Hand the resolved decision and its evidence to `build-solution`. Build
+   React, FastAPI, Supabase, or other stack-specific skills in the Project.
+5. Hand the resolved decision and its evidence to `build-project`. Build
    consumes that decision and does not preload every technology reference.
 
 ## Select the smallest fit
@@ -96,4 +96,4 @@ Record one explicit technology decision with:
 
 Do not return a catalog of unselected stacks. If the decision is not
 independently justified, keep the existing stack or choose the smaller
-capability and continue to `build-solution`.
+capability and continue to `build-project`.

@@ -1,9 +1,9 @@
 ---
-name: spec-solution
+name: spec-project
 description: Audit technical specifications of any maturity or construct the missing contract from rough input for the smallest build-ready technical solution. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and readiness, ownership, boundaries, acceptance, or implementation order must be established without rewriting resolved context.
 ---
 
-# Spec Solution
+# Project Spec
 
 Audit the available truth for build readiness and, when no usable technical
 specification exists, construct the smallest build-ready contract from the
@@ -108,7 +108,7 @@ as INFERRED and keep moving.
 Do not choose a new stack during this audit when a working stack already owns
 the responsibilities and the change does not materially alter technology.
 Record that existing stack as RESOLVED and continue directly to
-`build-solution`.
+`build-project`.
 
 For a new or materially changed technology decision, use
 [choose-technology](../choose-technology/SKILL.md) only after the required
@@ -116,7 +116,7 @@ dimensions are resolved. It is the only project technology-selection
 procedure. Its Full Stack FastAPI reference is loaded only when every fit gate
 might be independently satisfied. A concrete specialist implementation gap
 routes to [manage-skills](../manage-skills/SKILL.md); do not preload or install
-stack-specific skills in this template.
+stack-specific skills in this Project.
 
 ## Return one readiness gate
 
@@ -147,8 +147,8 @@ Build contract is the constructed project-local specification. Cite the rough
 input and canonical evidence, preserve resolved decisions, and do not ask for a
 formal specification merely because the source is incomplete.
 
-For an implementation request, continue into `build-solution` inside the same
-goal. Before Build in a fresh repository, replace template guidance with a
+For an implementation request, continue into `build-project` inside the same
+goal. Before Build in a fresh repository, replace seed guidance with a
 project-specific README. Preserve a useful README in an adopted repository.
 
 ### REVISE

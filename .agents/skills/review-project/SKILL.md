@@ -1,9 +1,9 @@
 ---
-name: review-solution
+name: review-project
 description: Review and simplify a technical change against its intended outcome using concrete evidence. Use before merge or shipping, for pull requests and code review, or when checking correctness, test quality, architecture, security, operability, scope, and unnecessary complexity.
 ---
 
-# Review Solution
+# Project Review
 
 Review the actual change against the intended behavior and repository
 responsibility, not an imaginary ideal architecture.
@@ -79,7 +79,7 @@ Lead with findings by severity and exact location:
 
 End with **PASS** or **FAIL**, checks performed, documentation evidence,
 evidence that was unavailable, and the smallest next action. A Critical or
-Required finding fails the gate. `audit-solution` is a later holistic backstop
+Required finding fails the gate. `audit-project` is a later holistic backstop
 for accumulated drift; it does not replace this per-change documentation gate.
 For a review-only request, report findings without changing the solution. When
 Review is part of an authorized implementation, fix in-scope Critical and

@@ -1,6 +1,6 @@
-# Spec Solution acceptance cases
+# Project Spec acceptance cases
 
-These cases exercise the public instruction contract. They are not templates
+These cases exercise the public instruction contract. They are not boilerplate
 for rewriting user source material; each expected response contains only the
 evidence and readiness output needed for that input.
 
@@ -119,7 +119,7 @@ interfaces, owner, operation, recovery, and proof intact; the request does not
 materially alter technology.
 
 **Expected:** The project-local Spec records the existing stack as RESOLVED and
-routes directly to `build-solution`. `choose-technology` and its optional
+routes directly to `build-project`. `choose-technology` and its optional
 references are not loaded, and no stack-specific skill is preinstalled.
 
 **New or material technology decision**
@@ -132,7 +132,7 @@ are resolved.
 is ready. The decision records Build, Buy, Rent, or Self-host choices, fit
 evidence, operator burden, verification and proof, update path, and exit path.
 If a concrete specialist implementation gap is proven, it routes to
-`manage-skills`; the template does not preload or install React, FastAPI,
+`manage-skills`; the Project does not preload or install React, FastAPI,
 Supabase, or other stack-specific skills.
 
 ## Full Stack FastAPI reference is conditional
@@ -143,7 +143,7 @@ authority, or owned container operation.
 
 **Expected:** `choose-technology` bypasses its Full Stack FastAPI reference.
 Existing ownership outranks the reference, and no authentication, PostgreSQL,
-Docker, or Python layer is added because a template contains it.
+Docker, or Python layer is added because a starter contains it.
 
 **Fit input:** A new independently operated product has Python-owned specialist
 domain logic, a justified React UI, PostgreSQL data authority, required
@@ -153,4 +153,4 @@ named owner for deployment, secrets, monitoring, backup, restore, and updates.
 **Expected:** The `choose-technology` skill may load its Full Stack FastAPI
 reference after all fit conditions are RESOLVED. The Build contract still
 names each added responsibility, operator burden, verification, update path,
-and exit path; it does not copy the upstream template into this repository.
+and exit path; it does not copy upstream starter code into this repository.

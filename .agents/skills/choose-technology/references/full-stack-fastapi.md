@@ -3,7 +3,7 @@
 Use this reference only when `choose-technology` has found a new or materially
 changed decision whose fit might be independently satisfied. It is an optional
 sourced option, not a default stack. Do not copy or vendor the upstream
-template into Solution-template.
+template into the Project repository.
 
 ## Official sources
 
@@ -25,7 +25,7 @@ All are required:
 - an operated deployment has a named owner for application, data, secrets,
   updates, monitoring, backup, and recovery.
 
-If any condition is missing or supplied only by the template, choose a smaller
+If any condition is missing or supplied only by the starter, choose a smaller
 stack. Existing ownership and a working system outrank this reference.
 
 ## Responsibilities added

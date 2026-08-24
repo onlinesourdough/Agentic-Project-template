@@ -1,9 +1,9 @@
 ---
-name: ship-solution
+name: ship-project
 description: Prepare, release, deploy, activate, and verify a technical solution with a real recovery path. Use after review when publishing an Application, Service, Automation, Integration, Library, or System change, or when changing CI, environments, secrets, migrations, deployment, rollback, replay, or operational ownership.
 ---
 
-# Ship Solution
+# Project Ship
 
 Ship only reviewed work. A green build is not a deployment result.
 

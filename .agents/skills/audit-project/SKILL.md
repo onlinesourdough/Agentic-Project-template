@@ -1,18 +1,18 @@
 ---
-name: audit-solution
+name: audit-project
 description: >-
   Use when a natural-language request asks to audit, check, maintain, repair,
-  reconcile, or investigate drift in an evolved Solution project's current
+  reconcile, or investigate drift in an evolved Project's current
   truth, documentation, proof, ownership, security, operation, or recovery.
   Run periodically after accumulated change, not for every trivial change.
 ---
 
-# Audit Solution
+# Project Audit
 
 Use this periodic holistic backstop after many iterations, at a milestone or
 handoff, or when drift is suspected. It is not a fifth lifecycle phase and is
 not mandatory after every trivial change. Audit the evolved project's current
-outcome and canonical truth, never parity with the original template.
+outcome and canonical truth, never parity with the original seed.
 
 ## Audit
 
@@ -36,8 +36,8 @@ Check, as relevant to the solution:
 - Operations and recovery: health, failure visibility, disable, rollback,
   replay, restore, rebuild, or reconciliation are proportional and owned.
 
-Start read-only. Compare documents with the current project, not with a
-template snapshot or expected file list. If a discrepancy is safe, reversible,
+Start read-only. Compare documents with the current Project, not with a
+seed snapshot or expected file list. If a discrepancy is safe, reversible,
 local, and unambiguous, repair only the documentation or routing. Examples are
 fixing a broken relative link, adding an omitted route to an existing skill, or
 correcting an obvious command path. Re-read repaired routes and verify them.
