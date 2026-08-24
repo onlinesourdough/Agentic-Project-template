@@ -23,7 +23,7 @@ collection of overlapping instructions.
    concrete capability gap that remains.
 
 Using an AIOS skill during work must not create an AIOS runtime dependency.
-Keep required project behavior and truth local to this independently operable
+Keep required Project behavior and truth local to this independently operable
 repository.
 
 ## Discover candidates

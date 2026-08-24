@@ -1,15 +1,15 @@
 ---
-name: build-solution
+name: build-project
 description: Build and test complete results for a specified technical solution. Use when implementing or changing Application, Service, Automation, Integration, Library, or System behavior after outcome, ownership, boundaries, and acceptance are sufficiently clear.
 ---
 
-# Build Solution
+# Project Build
 
 Build the smallest complete artifact or behavior that can be verified through
 its real interface, validator, plan, health check, or rehearsal.
 
 If the intended behavior, boundary, or independent lifecycle is still
-consequentially unclear, use `spec-solution` first.
+consequentially unclear, use `spec-project` first.
 
 Work inside the existing lifecycle goal. Use the harness's matching persistent
 goal/task state or explicit outcome contract. For an AIOS-originated worker,
@@ -44,7 +44,7 @@ technical truth.
 Documentation is part of every implementation result. Identify the README,
 runbooks, instructions, skills, contracts, commands, configuration, operation,
 recovery, and proof affected by the change. Update the canonical local source
-in the same result when its truth changes; do not defer it to `audit-solution`.
+in the same result when its truth changes; do not defer it to `audit-project`.
 Verify local links and skill routes, and verify documented commands,
 configuration, and interfaces against the repository and the checks that prove
 them. If no documentation is affected, state why and confirm the current

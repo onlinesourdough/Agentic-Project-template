@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" role="img" aria-labelledby="title desc">
-  <title id="title">Solution-template workflow</title>
-  <desc id="desc">Business and optional design context move through specification, building, review, and owned operation, with measured learning returning upstream.</desc>
+  <title id="title">Agentic Project Template workflow</title>
+  <desc id="desc">Resolved context moves through project-local specification, building, review, and owned operation, with measured learning returning upstream.</desc>
   <rect width="1600" height="760" rx="42" fill="#f3efe6"/>
-  <text x="88" y="84" fill="#756f62" font-family="ui-monospace,monospace" font-size="22" letter-spacing="3">ONLINESOURDOUGH · SOLUTION-TEMPLATE</text>
+  <text x="88" y="84" fill="#756f62" font-family="ui-monospace,monospace" font-size="22" letter-spacing="3">ONLINESOURDOUGH · AGENTIC PROJECT TEMPLATE</text>
   <text x="88" y="174" fill="#25241f" font-family="ui-sans-serif,system-ui" font-size="62" font-weight="750" letter-spacing="-3">From a useful brief to an owned bake.</text>
   <g font-family="ui-sans-serif,system-ui">
-    <g transform="translate(88 254)"><rect width="270" height="236" rx="28" fill="#fffdf8" stroke="#d8d1c3" stroke-width="2"/><text x="28" y="48" fill="#e4572e" font-size="18" font-weight="700">INPUT</text><text x="28" y="99" fill="#25241f" font-size="29" font-weight="700">Resolved context</text><text x="28" y="138" fill="#666257" font-size="18">AIOS need</text><text x="28" y="168" fill="#666257" font-size="18">Optional design handoff</text><text x="28" y="198" fill="#666257" font-size="18">Existing project truth</text></g>
+    <g transform="translate(88 254)"><rect width="270" height="236" rx="28" fill="#fffdf8" stroke="#d8d1c3" stroke-width="2"/><text x="28" y="48" fill="#e4572e" font-size="18" font-weight="700">INPUT</text><text x="28" y="99" fill="#25241f" font-size="29" font-weight="700">Resolved context</text><text x="28" y="138" fill="#666257" font-size="18">AIOS need</text><text x="28" y="168" fill="#666257" font-size="17">Optional design handoff</text><text x="28" y="198" fill="#666257" font-size="18">Existing project truth</text></g>
     <g transform="translate(425 254)"><rect width="235" height="236" rx="28" fill="#fffdf8" stroke="#d8d1c3" stroke-width="2"/><text x="28" y="48" fill="#e4572e" font-size="18" font-weight="700">SPEC</text><text x="28" y="99" fill="#25241f" font-size="29" font-weight="700">Choose the bake</text><text x="28" y="138" fill="#666257" font-size="18">Boundary, owner,</text><text x="28" y="168" fill="#666257" font-size="18">proof and stack.</text></g>
     <g transform="translate(727 254)"><rect width="235" height="236" rx="28" fill="#fffdf8" stroke="#d8d1c3" stroke-width="2"/><text x="28" y="48" fill="#e4572e" font-size="18" font-weight="700">BUILD ↔ REVIEW</text><text x="28" y="99" fill="#25241f" font-size="29" font-weight="700">Make and taste</text><text x="28" y="138" fill="#666257" font-size="18">Small result, real</text><text x="28" y="168" fill="#666257" font-size="18">interface, evidence.</text></g>
     <g transform="translate(1029 254)"><rect width="235" height="236" rx="28" fill="#fffdf8" stroke="#d8d1c3" stroke-width="2"/><text x="28" y="48" fill="#e4572e" font-size="18" font-weight="700">SHIP</text><text x="28" y="99" fill="#25241f" font-size="29" font-weight="700">Serve safely</text><text x="28" y="138" fill="#666257" font-size="18">Authorized delivery</text><text x="28" y="168" fill="#666257" font-size="18">with recovery.</text></g>
@@ -16,5 +16,5 @@
   <text x="88" y="574" fill="#2f5d50" font-family="ui-sans-serif,system-ui" font-size="22" font-weight="700">Measured learning returns to AIOS</text>
   <path d="M1420 514V620H520" fill="none" stroke="#2f5d50" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 10"/>
   <path d="m520 620 14-9v18z" fill="#2f5d50"/>
-  <text x="88" y="702" fill="#756f62" font-family="ui-sans-serif,system-ui" font-size="20">One solution. One owner. No ceremonial layer cake.</text>
+  <text x="88" y="702" fill="#756f62" font-family="ui-sans-serif,system-ui" font-size="20">One Project. One owner. No inherited template state.</text>
 </svg>
