@@ -135,6 +135,26 @@ If a concrete specialist implementation gap is proven, it routes to
 `manage-skills`; the Project does not preload or install React, FastAPI,
 Supabase, or other stack-specific skills.
 
+## Cost-sensitive, optional orchestration decision
+
+**Input:** A small internal triage Project expects at most 25 deliveries per
+month, four work items per delivery, and one human approval. An owner already
+operates a workflow runtime, but its plan limits, execution capacity, and
+credential lifecycle remain that platform owner's responsibility. The Project
+needs deterministic normalization that can be replayed independently.
+
+**Expected:** The Spec resolves the usage envelope, the Project/code, workflow,
+and infrastructure owners, local replay proof, and Ship restriction. Only then
+`choose-technology` compares code-only, workflow-only, and hybrid shapes. The
+decision cites dated current official terms without copying prices; names a
+usage visibility owner, a guardrail, a stop condition, recovery, and an exit
+path; and rejects a seemingly free static or workflow-only option when it
+cannot own approval visibility or reusable deterministic logic. The hybrid is
+selected only when the existing workflow runtime has a named owner and visible
+approval, scheduling, integration, or bounded-retry responsibilities actually
+exist. Otherwise code-only remains valid. n8n is optional, no provider is a
+default, and no specialist n8n skill is added from one tracer.
+
 ## Full Stack FastAPI reference is conditional
 
 **Non-fit input:** A conventional browser CRUD change can remain in an existing

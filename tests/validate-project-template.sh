@@ -29,6 +29,12 @@ done
 
 require_file "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
 require_file "$repository_root/.agents/skills/choose-technology/references/full-stack-fastapi.md"
+tracer_root="$repository_root/.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer"
+for tracer_file in README.md schemas/request.schema.json schemas/result.schema.json \
+  workflow/n8n-workflow.digest.json fixtures/replay-request.json fixtures/replay-result.json \
+  service/service.mjs test/json-schema.mjs test/replay.mjs; do
+  require_file "$tracer_root/$tracer_file"
+done
 require_file "$repository_root/.agents/skills/audit-project/agents/openai.yaml"
 require_file "$repository_root/scripts/create-project.sh"
 require_file "$repository_root/docs/creation.md"
@@ -81,6 +87,21 @@ require_literal "audit-project" "$repository_root/AGENTS.md"
 require_literal "choose-technology" "$repository_root/AGENTS.md"
 require_literal "manage-skills" "$repository_root/AGENTS.md"
 require_literal "Agentic Project Template workflow</title>" "$repository_root/assets/agentic-project-template-overview.svg"
+require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
+require_literal "n8n is optional" "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
+
+if rg -n -i --glob '!.git/**' \
+  '(n8n|cloudflare|github pages).{0,40}\\b(required|mandatory|default)\\b' "$repository_root"; then
+  fail "mandatory workflow or provider language remains"
+fi
+if rg --files -uu --glob '!.git/**' "$repository_root" |
+  rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
+  fail "static price catalogue path remains"
+fi
+if rg -n -i '"credentials"[[:space:]]*:|https?://|instance(id|identifier)' \
+  "$tracer_root/workflow/n8n-workflow.digest.json"; then
+  fail "workflow digest contains a credential, endpoint, or private instance marker"
+fi
 
 readme_image_count="$(rg -o --no-filename '!\[[^]]*\]\([^)]*\)' "$repository_root/README.md" | wc -l | tr -d '[:space:]')"
 [[ "$readme_image_count" = 1 ]] ||
@@ -188,6 +209,9 @@ check_created_project() {
 check_created_project "$standalone_project" "Standalone Proof" "Prove independent ownership"
 check_created_project "$aios_project" "AIOS Proof" "Prove the direct AIOS creation path"
 require_literal "https://example.test/standalone-proof" "$standalone_project/README.md"
+
+command -v node >/dev/null 2>&1 || fail "Node.js is required for the optional tracer replay"
+node "$aios_project/.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer/test/replay.mjs"
 
 if bash "$repository_root/scripts/create-project.sh" "$standalone_project" \
   --name "Duplicate" --outcome "Must fail" >/dev/null 2>&1; then

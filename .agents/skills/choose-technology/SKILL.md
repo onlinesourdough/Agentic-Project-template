@@ -58,7 +58,37 @@ needs one demonstrated responsibility and one owner.
 
 For a material external capability, inspect current official documentation,
 pricing or plan limits, license, operational responsibilities, and exit options
-when they can affect architecture, cost, ownership, or handover.
+when they can affect architecture, cost, ownership, or handover. Record the
+observation date and source link with the decision evidence. Do not copy
+volatile prices into Project guidance, create a free-tier catalogue, or treat a
+discovery catalogue as pricing authority.
+
+## Cost and usage acceptance case
+
+When an initial low-cost or low-usage assumption can alter the chosen shape,
+make it an explicit acceptance case before selection. This is evidence for a
+specific Project, not a default provider recommendation:
+
+1. State the realistic initial usage envelope and the compute, storage, egress,
+   workflow, database, API, or other boundary that could create an overage.
+2. Eliminate a capability that the Project does not need, and compare the
+   smallest code-only, managed/workflow-only, and hybrid shapes when each could
+   plausibly own the responsibility.
+3. For each material external candidate, record a dated link to current
+   official plan, limit, or pricing terms; record only the material conclusion,
+   not a copied price table. Discovery catalogues can suggest candidates but
+   are not fit or pricing evidence.
+4. Name the owner who sees usage or failure, one bounded guardrail, the stop
+   condition that requires re-evaluation before activation or scale-up, and the
+   backup, recovery, and replacement path.
+5. Reject an apparently free option when it cannot own the contract, hides an
+   overage boundary, or moves unacceptable operations to the owner. Explain why
+   the selected shape is smaller in total responsibility, not merely in price.
+
+For a reproducible example, use the local-only
+[cost and optional orchestration tracer](examples/optional-n8n-boundary-tracer/README.md).
+It is an acceptance fixture, not a provider choice, runtime dependency, or
+global n8n skill.
 
 Before accepting the decision, verify that:
 
@@ -91,6 +121,8 @@ Record one explicit technology decision with:
 - fit evidence and the operator burden for every added layer;
 - contracts, dependencies, cost or license concerns, and failure behavior;
 - verification for build, operation, denial or failure, and recovery;
+- dated official cost or usage evidence, guardrail, visibility owner, and stop
+  condition when cost or usage affects the decision; and
 - update and replacement or exit paths; and
 - residual risks and any capability gap routed to `manage-skills`.
 

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "v1",
+  "deliveryId": "delivery-replay-001",
+  "status": "completed",
+  "deduplicated": false,
+  "outputs": [
+    { "itemId": "item-a", "normalizedText": "flour" },
+    { "itemId": "item-b", "normalizedText": "water" }
+  ],
+  "failures": []
+}

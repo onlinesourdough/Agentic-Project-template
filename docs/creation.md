@@ -51,8 +51,9 @@ canonical location.
 The helper stages the destination and moves it into place only after all
 generation succeeds. It copies only:
 
-- `.agents/skills/`, so the Project can discover the lifecycle and technology
-  guidance locally; and
+- `.agents/skills/`, including conditional acceptance examples that evaluate a
+  technology boundary locally without making its runtime a Project dependency;
+  and
 - `LICENSE`.
 
 It generates a Project-specific `AGENTS.md`, `README.md`, `.gitignore`, and

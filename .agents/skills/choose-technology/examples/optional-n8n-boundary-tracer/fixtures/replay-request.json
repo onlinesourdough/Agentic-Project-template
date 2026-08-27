@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "v1",
+  "deliveryId": "delivery-replay-001",
+  "operation": "normalize",
+  "items": [
+    { "itemId": "item-a", "text": "  Flour  ", "behavior": "ok" },
+    { "itemId": "item-b", "text": "Water", "behavior": "ok" }
+  ]
+}

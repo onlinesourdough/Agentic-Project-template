@@ -15,6 +15,13 @@ can be understood, operated, recovered, and handed over by its owner.
    stack bypasses it when the change does not materially alter technology.
 5. Build, verify, review, and ship only within the granted authority.
 
+Treat cost and usage as acceptance evidence when they can change the smallest
+reliable shape. Check current official terms at decision time; do not preserve
+volatile prices, a provider catalogue, or a default vendor in Project truth.
+An orchestration runtime such as n8n is optional: select it only when visible
+workflow responsibilities justify it, and keep reusable deterministic domain
+logic in tested Project code.
+
 Ask one question only when a missing decision would materially change the
 Project. Inspect repository truth before asking for facts it already contains.
 
