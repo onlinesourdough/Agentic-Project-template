@@ -64,7 +64,7 @@ require_literal "\`CLAUDE.md\` is intentionally absent" "$repository_root/docs/c
 
 require_literal "![Agentic Project Template workflow](assets/agentic-project-template-overview.svg)" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/AIOS-template" "$repository_root/README.md"
-require_literal "https://github.com/onlinesourdough/Design-template" "$repository_root/README.md"
+require_literal "[Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System)" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/Agentic-Content-System" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/Agentic-project-template" "$repository_root/README.md"
 for stale_owner in gustavonline onlinesourdough; do
@@ -76,6 +76,11 @@ done
 stale_link="https://github.com/onlinesourdough/Agentic-videoeditor"
 if rg --fixed-strings --quiet -- "$stale_link" "$repository_root/README.md"; then
   fail "stale canonical link remains: $stale_link"
+fi
+stale_ads_url="https://github.com/onlinesourdough/Design-template"
+if rg --fixed-strings --quiet --glob '!tests/validate-project-template.sh' \
+  -- "$stale_ads_url" "$repository_root"; then
+  fail "stale Agentic Design System URL remains: $stale_ads_url"
 fi
 require_literal "scripts/create-project.sh" "$repository_root/README.md"
 require_literal "docs/creation.md" "$repository_root/README.md"
@@ -90,11 +95,34 @@ require_literal "Agentic Project Template workflow</title>" "$repository_root/as
 require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
 require_literal "n8n is optional" "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
 
+audit_skill="$repository_root/.agents/skills/audit-project/SKILL.md"
+for audit_contract in \
+  "exact Git root" \
+  "credential-free remote identity" \
+  "fresh fetched live upstream object" \
+  "equal, behind, ahead, or diverged" \
+  "Cached tracking refs and a clean worktree are not live proof." \
+  "Do not fast-forward, commit, push, stash, rebase, merge, or force"; do
+  require_literal "$audit_contract" "$audit_skill"
+done
+
+ship_skill="$repository_root/.agents/skills/ship-project/SKILL.md"
+for ship_contract in \
+  "Git delivery gate" \
+  "reviewed exact commit" \
+  "fresh fetch" \
+  "normal non-force push" \
+  "Do not auto-merge, rebase, or force" \
+  "local HEAD equals the fresh fetched live branch object" \
+  "Local-only Projects and Projects without a remote do not need this Git gate."; do
+  require_literal "$ship_contract" "$ship_skill"
+done
+
 if rg -n -i --glob '!.git/**' \
   '(n8n|cloudflare|github pages).{0,40}\\b(required|mandatory|default)\\b' "$repository_root"; then
   fail "mandatory workflow or provider language remains"
 fi
-if rg --files -uu --glob '!.git/**' "$repository_root" |
+if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
   rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
   fail "static price catalogue path remains"
 fi
@@ -124,18 +152,20 @@ check_local_links() {
 
 while IFS= read -r markdown; do
   check_local_links "$repository_root/$markdown"
-done < <(cd "$repository_root" && rg --files -uu --glob '*.md' --glob '!.git/**')
+done < <(cd "$repository_root" && rg --files -uu --glob '*.md' \
+  --glob '!.git/**' --glob '!node_modules/**')
 
 # The validator contains the legacy literals it rejects. It is the sole
 # intentional allowlist; no current instruction, resource, test, or asset may
 # carry the former public identity or skill paths.
 legacy_scan_exclusion='tests/validate-project-template.sh'
-legacy_pattern='Solution-template|solution-template-overview|spec-solution|build-solution|review-solution|ship-solution|audit-solution|Agentic-videoeditor'
-if rg -n -uu --glob '!.git/**' --glob "!$legacy_scan_exclusion" "$legacy_pattern" "$repository_root"; then
+legacy_pattern='Solution-template|solution-template-overview|spec-solution|build-solution|review-solution|ship-solution|audit-solution|Agentic-videoeditor|Design-template'
+if rg -n -uu --glob '!.git/**' --glob '!node_modules/**' \
+  --glob "!$legacy_scan_exclusion" "$legacy_pattern" "$repository_root"; then
   fail "stale public identity or path remains"
 fi
 
-if rg --files -uu --glob '!.git/**' "$repository_root" |
+if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
   rg -n '(^|/)(spec-solution|build-solution|review-solution|ship-solution|audit-solution|validate-spec-solution\.sh|solution-template-overview-v2\.svg)($|/)'; then
   fail "stale public path remains"
 fi
@@ -190,6 +220,12 @@ check_created_project() {
   require_literal "$expected_outcome" "$project/README.md"
   require_literal "$expected_name" "$project/AGENTS.md"
   require_literal "$expected_outcome" "$project/docs/proof.md"
+
+  for lifecycle_skill in audit-project ship-project; do
+    cmp -s "$repository_root/.agents/skills/$lifecycle_skill/SKILL.md" \
+      "$project/.agents/skills/$lifecycle_skill/SKILL.md" ||
+      fail "created Project did not receive current $lifecycle_skill skill"
+  done
 
   for excluded in docs/creation.md assets tests scripts; do
     [[ ! -e "$project/$excluded" ]] || fail "seed-only path copied: $excluded"

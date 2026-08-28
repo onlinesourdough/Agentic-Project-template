@@ -76,7 +76,7 @@ duplicate business truth.
 
 Canonical adjacent repositories, when their context is relevant, are
 [AIOS](https://github.com/onlinesourdough/AIOS-template),
-[Agentic Design System (`Design-template`)](https://github.com/onlinesourdough/Design-template), and
+[Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System), and
 [Agentic Content System](https://github.com/onlinesourdough/Agentic-Content-System).
 They are optional context sources, not runtime dependencies.
 

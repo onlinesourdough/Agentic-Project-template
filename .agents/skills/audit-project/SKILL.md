@@ -35,6 +35,40 @@ Check, as relevant to the solution:
   authorization, private data, and external effects remain explicit and safe.
 - Operations and recovery: health, failure visibility, disable, rollback,
   replay, restore, rebuild, or reconciliation are proportional and owned.
+- Canonical release and operation: when applicable, the README or runbooks
+  identify the release branch, remote or artifact, release owner, operating
+  path, and recovery path without making an upstream template the owner.
+
+## Attest live Git currentness when relevant
+
+When repository currentness, sync, or release drift is relevant and the
+Project has a remote and upstream, establish live evidence instead of
+inferring currentness from local state:
+
+1. Record the exact Git root and confirm it is the intended Project.
+2. Record the current branch and its exact upstream. A detached head, missing
+   upstream, unexpected branch, or substituted worktree is an evidence gap.
+3. Record the remote by name and credential-free remote identity. Redact any
+   embedded user information or token; never copy credentials into evidence.
+4. Record tracked, staged, unstaged, and untracked state and classify the
+   worktree as clean or dirty.
+5. Fetch the exact upstream without changing the current branch or worktree,
+   then resolve the fresh fetched live upstream object. If access or authority
+   is uncertain, or the fetch cannot prove which live object was read, record
+   the evidence gap and return **Needs decision**.
+6. Compare local `HEAD` with that live object and classify the relation as
+   equal, behind, ahead, or diverged: equal hashes are equal;
+   local-as-ancestor is behind; live-as-ancestor is ahead; neither ancestry is
+   diverged.
+
+Cached tracking refs and a clean worktree are not live proof. State the exact
+objects used for the classification and keep access non-interactive so missing
+authority is surfaced rather than guessed. This attestation observes release
+state; it does not reconcile or deliver it.
+
+Do not fast-forward, commit, push, stash, rebase, merge, or force any ref.
+Ahead, behind, diverged, inaccessible, or ambiguous state is evidence to
+report, not permission to change it.
 
 Start read-only. Compare documents with the current Project, not with a
 seed snapshot or expected file list. If a discrepancy is safe, reversible,

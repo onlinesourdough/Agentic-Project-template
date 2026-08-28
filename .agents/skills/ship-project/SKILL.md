@@ -32,6 +32,34 @@ Ask before a production release, external publication, workflow activation,
 destructive migration, or other consequential action unless the user already
 gave specific authority.
 
+## Git delivery gate
+
+Apply this gate only when a Git branch and remote are part of the requested
+Ship.
+
+Local-only Projects and Projects without a remote do not need this Git gate.
+
+1. Pin the reviewed exact commit, its tree, its reviewed base, and the target
+   branch/upstream. Delivery authority for one target does not authorize any
+   other branch, remote, tag, release, merge, setting, or deployment.
+2. Re-attest the exact Git root, branch, upstream, and credential-free remote
+   identity. Confirm that the working tree and index are clean and that the
+   commit's diff against the reviewed base is the expected diff. Stop on an
+   unexpected file, staged change, commit, worktree, branch, upstream, remote,
+   or reviewer substitution.
+3. Perform a fresh fetch of the exact upstream and resolve the fetched live
+   branch object. Stop when the local commit is behind or diverged, when the
+   remote moved from the reviewed expectation, or when access or authority is
+   uncertain. An ahead commit may proceed only when it is the reviewed commit
+   and the exact delivery authority covers the target.
+4. Use a normal non-force push of only that reviewed commit to the authorized
+   branch and only with exact authority. Do not auto-merge, rebase, or force to
+   make delivery fit; return to Review when new integration work is required.
+5. Fetch and read the live target again after delivery. Prove that
+   local HEAD equals the fresh fetched live branch object and report both exact
+   hashes. A successful push command without this live readback is not delivery
+   proof.
+
 ## Keep delivery proportional
 
 - Install from the lockfile and run the repository's real checks.
