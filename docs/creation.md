@@ -51,9 +51,9 @@ canonical location.
 The helper stages the destination and moves it into place only after all
 generation succeeds. It copies only:
 
-- `.agents/skills/`, including conditional acceptance examples that evaluate a
-  technology boundary locally without making its runtime a Project dependency;
-  and
+- `.agents/skills/README.md` and the six flat Project-local skill directories,
+  including conditional acceptance examples that evaluate a technology
+  boundary locally without making its runtime a Project dependency; and
 - `LICENSE`.
 
 It generates a Project-specific `AGENTS.md`, `README.md`, `.gitignore`, and
@@ -77,4 +77,6 @@ needed.
 
 After transfer, the destination is the source of truth. Changes to the seed do
 not flow into an existing Project automatically, and the Project does not
-import runtime state from the seed.
+import runtime state from the seed. Cross-Project or Global Skills remain
+outside the copied Project payload and follow the chosen harness or plugin's
+own authorized installation and update path.

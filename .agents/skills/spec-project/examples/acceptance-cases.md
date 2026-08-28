@@ -132,8 +132,9 @@ are resolved.
 is ready. The decision records Build, Buy, Rent, or Self-host choices, fit
 evidence, operator burden, verification and proof, update path, and exit path.
 If a concrete specialist implementation gap is proven, it routes to
-`manage-skills`; the Project does not preload or install React, FastAPI,
-Supabase, or other stack-specific skills.
+the local skill index's capability inventory and authorized harness method; the
+Project does not preload or install React, FastAPI, Supabase, or other
+stack-specific skills.
 
 ## Cost-sensitive, optional orchestration decision
 

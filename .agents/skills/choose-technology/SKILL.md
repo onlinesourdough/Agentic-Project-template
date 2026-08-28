@@ -1,6 +1,6 @@
 ---
 name: choose-technology
-description: Select the smallest technology after responsibilities, ownership, risks, operation, recovery, and proof are known. Use only for a new or materially changed technology decision; bypass a working stack when the change does not materially alter it, and route concrete specialist gaps to manage-skills.
+description: Select the smallest technology after responsibilities, ownership, risks, operation, recovery, and proof are known. Use only for a new or materially changed technology decision; bypass a working stack when the change does not materially alter it, and identify concrete specialist gaps without copying generic management skills into the Project.
 ---
 
 # Choose Technology
@@ -20,10 +20,11 @@ reason to preload stack-specific skills.
 3. For a new or materially changed technology decision, select the smallest
    capabilities after the contract is ready. Do not choose from popularity or
    from a starter's included layers.
-4. If a concrete specialist implementation gap remains, route it to
-   `.agents/skills/manage-skills/SKILL.md` after the technology decision. Add
-   only a justified, reviewed project-local skill; do not install or invent
-   React, FastAPI, Supabase, or other stack-specific skills in the Project.
+4. If a concrete specialist implementation gap remains, follow the inventory
+   and authority boundary in the [local skill index](../README.md). Add only a
+   justified, reviewed Project- or domain-specific local skill; do not install
+   or invent React, FastAPI, Supabase, or other stack-specific skills in the
+   Project.
 5. Hand the resolved decision and its evidence to `build-project`. Build
    consumes that decision and does not preload every technology reference.
 
@@ -124,7 +125,8 @@ Record one explicit technology decision with:
 - dated official cost or usage evidence, guardrail, visibility owner, and stop
   condition when cost or usage affects the decision; and
 - update and replacement or exit paths; and
-- residual risks and any capability gap routed to `manage-skills`.
+- residual risks and any capability gap routed through the selected harness's
+  authorized method.
 
 Do not return a catalog of unselected stacks. If the decision is not
 independently justified, keep the existing stack or choose the smaller

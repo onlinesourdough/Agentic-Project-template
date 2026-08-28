@@ -48,7 +48,9 @@ demanding a ceremonial document.
 | Review intent, correctness, security, and simplicity | `.agents/skills/review-project/SKILL.md` |
 | Deliver, activate, deploy, or recover | `.agents/skills/ship-project/SKILL.md` |
 | Periodic whole-repository health check | `.agents/skills/audit-project/SKILL.md` |
-| Add a justified specialist skill | `.agents/skills/manage-skills/SKILL.md` |
+
+The [local skill index](.agents/skills/README.md) records the flat layout,
+ownership boundary, and specialist-gap route.
 
 Build and Review repeat until the requested proof passes. Ship happens only
 when the owner authorizes the consequential action.
@@ -118,10 +120,11 @@ cd ../<name>
 ```
 
 The helper initializes fresh empty Git history, does not inherit an origin
-remote, and leaves the first commit to the Project owner. It copies only
-Project-local skills and the license; it generates new Project instructions,
-README, ownership, proof, and recovery notes. Template-only assets, tests,
-creation scripts, issue references, caches, and generated state are not copied.
+remote, and leaves the first commit to the Project owner. It copies only the
+local skill index, six Project-local skills, and the license; it generates new
+Project instructions, README, ownership, proof, and recovery notes.
+Template-only assets, tests, creation scripts, issue references, caches, and
+generated state are not copied.
 `CLAUDE.md` is intentionally not generated; the Project uses its own
 `AGENTS.md` as its root instruction contract.
 
@@ -134,9 +137,10 @@ record it in the Spec, and go directly to Build. For a new or materially
 changed technology decision, use
 `.agents/skills/choose-technology/SKILL.md` after the project-local contract is
 ready. Its conditional Full Stack FastAPI reference loads only when its fit
-gates may be independently satisfied. If a concrete specialist capability is
-missing, route it through `.agents/skills/manage-skills/SKILL.md`; do not
-preload or install stack-specific skills from this template.
+gates may be independently satisfied. For a concrete specialist capability
+gap, follow the inventory and authority boundary in the
+[local skill index](.agents/skills/README.md); do not preload or install
+stack-specific skills from this template.
 
 When usage or cost can change the smallest reliable result, the technology
 decision records a dated check of current official terms, a bounded usage
@@ -153,7 +157,7 @@ for a sanitized, local-only decision and replay example.
 Agentic-project-template
 ├── AGENTS.md
 ├── README.md
-├── .agents/skills/       # Project lifecycle skills and technology choice
+├── .agents/skills/       # Flat Project-local skills and their index
 ├── docs/                 # Creation and ownership contract
 ├── scripts/              # Direct Project creation helper
 ├── tests/                # Template contract and creation validation

@@ -21,10 +21,70 @@ require_literal() {
     fail "missing required contract text $needle in $file"
 }
 
-for skill in spec-project build-project review-project ship-project audit-project choose-technology manage-skills; do
+project_skills=(
+  spec-project
+  choose-technology
+  build-project
+  review-project
+  ship-project
+  audit-project
+)
+
+check_skill_layout() {
+  local skills_root="$1"
+  local context="$2"
+  local expected_children actual_children nested_skills
+
+  require_file "$skills_root/README.md"
+  [[ ! -e "$skills_root/manage-skills" ]] ||
+    fail "$context contains the generic local manage-skills payload"
+
+  expected_children="$(printf '%s\n' "${project_skills[@]}" | LC_ALL=C sort)"
+  actual_children="$(
+    for child in "$skills_root"/*; do
+      [[ -d "$child" ]] || continue
+      basename "$child"
+    done | LC_ALL=C sort
+  )"
+  [[ "$actual_children" = "$expected_children" ]] ||
+    fail "$context skill children differ from the six Project-local routes"
+
+  nested_skills="$(
+    find "$skills_root" -type f -name SKILL.md -print |
+      sed "s#^$skills_root/##" |
+      awk -F/ 'NF != 2'
+  )"
+  [[ -z "$nested_skills" ]] ||
+    fail "$context contains nested SKILL.md paths: $nested_skills"
+
+  if rg --fixed-strings --quiet -- 'name: manage-skills' "$skills_root" ||
+    rg --quiet -- 'npx skills (find|add)' "$skills_root"; then
+    fail "$context contains a copied global skill-management payload"
+  fi
+}
+
+skills_root="$repository_root/.agents/skills"
+check_skill_layout "$skills_root" "seed"
+for skill in "${project_skills[@]}"; do
   require_file "$repository_root/.agents/skills/$skill/SKILL.md"
   require_literal "name: $skill" "$repository_root/.agents/skills/$skill/SKILL.md"
   require_literal "description:" "$repository_root/.agents/skills/$skill/SKILL.md"
+done
+
+for index_contract in \
+  '.agents/skills/<name>/SKILL.md' \
+  'Project- or domain-specific' \
+  'repeatable methods and evals' \
+  'neither owns nor auto-updates' \
+  'inventory existing Project-local' \
+  'harness-native, installed, and Global capabilities' \
+  'Cross-Project and Global Skills' \
+  'chosen harness or plugin' \
+  'outside the Project payload' \
+  'installed optional manager' \
+  'explicit authority'
+do
+  require_literal "$index_contract" "$skills_root/README.md"
 done
 
 require_file "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
@@ -90,7 +150,6 @@ require_literal "review-project" "$repository_root/AGENTS.md"
 require_literal "ship-project" "$repository_root/AGENTS.md"
 require_literal "audit-project" "$repository_root/AGENTS.md"
 require_literal "choose-technology" "$repository_root/AGENTS.md"
-require_literal "manage-skills" "$repository_root/AGENTS.md"
 require_literal "Agentic Project Template workflow</title>" "$repository_root/assets/agentic-project-template-overview.svg"
 require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
 require_literal "n8n is optional" "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
@@ -165,6 +224,11 @@ if rg -n -uu --glob '!.git/**' --glob '!node_modules/**' \
   fail "stale public identity or path remains"
 fi
 
+if rg -n -uu --glob '!.git/**' --glob '!node_modules/**' \
+  --glob '!tests/validate-project-template.sh' 'manage-skills|Skills Atlas' "$repository_root"; then
+  fail "removed local manager route or excluded Project state remains"
+fi
+
 if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
   rg -n '(^|/)(spec-solution|build-solution|review-solution|ship-solution|audit-solution|validate-spec-solution\.sh|solution-template-overview-v2\.svg)($|/)'; then
   fail "stale public path remains"
@@ -196,16 +260,18 @@ check_created_project() {
   local expected_outcome="$3"
 
   for file in AGENTS.md README.md LICENSE .gitignore \
+    .agents/skills/README.md \
     .agents/skills/spec-project/SKILL.md \
+    .agents/skills/choose-technology/SKILL.md \
     .agents/skills/build-project/SKILL.md \
     .agents/skills/review-project/SKILL.md \
     .agents/skills/ship-project/SKILL.md \
     .agents/skills/audit-project/SKILL.md \
-    .agents/skills/choose-technology/SKILL.md \
-    .agents/skills/manage-skills/SKILL.md \
     docs/ownership.md docs/proof.md docs/recovery.md; do
     require_file "$project/$file"
   done
+
+  check_skill_layout "$project/.agents/skills" "created Project $expected_name"
 
   [[ -d "$project/.git" ]] || fail "created Project has no fresh Git directory"
   [[ "$(git -C "$project" rev-parse --is-inside-work-tree)" = true ]] ||
@@ -221,7 +287,10 @@ check_created_project() {
   require_literal "$expected_name" "$project/AGENTS.md"
   require_literal "$expected_outcome" "$project/docs/proof.md"
 
-  for lifecycle_skill in audit-project ship-project; do
+  cmp -s "$repository_root/.agents/skills/README.md" \
+    "$project/.agents/skills/README.md" ||
+    fail "created Project did not receive the current local skill index"
+  for lifecycle_skill in "${project_skills[@]}"; do
     cmp -s "$repository_root/.agents/skills/$lifecycle_skill/SKILL.md" \
       "$project/.agents/skills/$lifecycle_skill/SKILL.md" ||
       fail "created Project did not receive current $lifecycle_skill skill"
@@ -236,7 +305,7 @@ check_created_project() {
   [[ ! -e "$project/.git/refs/remotes/origin" ]] ||
     fail "created Project inherited origin refs"
   if rg -n -uu --glob '!.git/**' \
-    'Agentic Project Template|APT|Solution-template|spec-solution|build-solution|review-solution|ship-solution|audit-solution|Agentic-videoeditor|#19|#17' \
+    'Agentic Project Template|APT|Solution-template|spec-solution|build-solution|review-solution|ship-solution|audit-solution|Agentic-videoeditor|manage-skills|Skills Atlas|template-owned\.psv|#19|#17' \
     "$project"; then
     fail "created Project inherited seed identity or issue state"
   fi

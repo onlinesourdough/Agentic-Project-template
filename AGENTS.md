@@ -35,15 +35,16 @@ Project. Inspect repository truth before asking for facts it already contains.
 | Correctness, security, simplicity, and proof review | `.agents/skills/review-project/SKILL.md` |
 | Authorized delivery, deployment, activation, or recovery | `.agents/skills/ship-project/SKILL.md` |
 | Periodic whole-repository health check | `.agents/skills/audit-project/SKILL.md` |
-| A concrete specialist capability gap | `.agents/skills/manage-skills/SKILL.md` |
+
+See the [local skill index](.agents/skills/README.md) for the flat layout,
+ownership boundary, and specialist-gap route.
 
 Keep one persistent goal across Spec, Build, Review, revisions, and authorized
 Ship. Do not create lifecycle ceremony for a small mechanical change.
 
 The public path is `spec-project` → materially unchanged existing stack
 directly to `build-project`; or, for a new or materially changed technology
-decision, `choose-technology` → optional `manage-skills` for a proven specialist
-gap → `build-project`.
+decision, `choose-technology` → `build-project`.
 
 ## Inputs and ownership
 
@@ -71,7 +72,8 @@ bash scripts/create-project.sh ../<name> \
   --name "Project Name" --outcome "The intended Project outcome"
 ```
 
-The helper copies Project-local skills and the license, generates
+The helper copies the local skill index, six Project-local skills, and the
+license, then generates
 project-specific `AGENTS.md`, `README.md`, ownership/proof/recovery notes,
 and initializes a fresh empty Git repository. It excludes the template's
 README, instructions, docs, assets, tests, creation script, `.git` directory,

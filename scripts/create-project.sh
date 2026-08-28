@@ -89,6 +89,7 @@ fi
 
 source_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 [[ -d "$source_root/.agents/skills" ]] || fail "missing local skills"
+[[ -f "$source_root/.agents/skills/README.md" ]] || fail "missing local skill index"
 [[ -f "$source_root/LICENSE" ]] || fail "missing license"
 
 destination_name="$(basename "$destination_input")"
@@ -174,7 +175,9 @@ Project. Keep resolved context intact and record technical inferences locally.
 | Correctness, security, simplicity, and proof review | \`.agents/skills/review-project/SKILL.md\` |
 | Authorized delivery, deployment, activation, or recovery | \`.agents/skills/ship-project/SKILL.md\` |
 | Periodic whole-repository health check | \`.agents/skills/audit-project/SKILL.md\` |
-| A concrete specialist capability gap | \`.agents/skills/manage-skills/SKILL.md\` |
+
+See the [local skill index](.agents/skills/README.md) for the flat layout,
+ownership boundary, and specialist-gap route.
 
 Keep one lifecycle record across Spec, Build, Review, revisions, and any
 authorized Ship. The Project repository is canonical after creation.
@@ -228,8 +231,7 @@ The public local routes are:
 - [Review](.agents/skills/review-project/SKILL.md)
 - [Ship](.agents/skills/ship-project/SKILL.md), only with owner authority
 - [Audit](.agents/skills/audit-project/SKILL.md), periodically
-- [Skill management](.agents/skills/manage-skills/SKILL.md), only for a proven
-  specialist gap
+- [Local skill index](.agents/skills/README.md)
 
 ## Ownership and recovery
 
