@@ -81,7 +81,7 @@ effects, or an outcome measurement owner.
 | Result boundary | The smallest complete result and explicit non-goals |
 | Canonical truth | Source links, existing systems, current repository behavior, and ownership of each material fact |
 | Repository gate | The smallest valid owner and why independent context, development, operation, or handover is justified |
-| Authority and risk | Decision authority, Ship authority, consequential effects, security and trust boundaries, and private or regulated data |
+| Authority and risk | Decision authority, Ship authority, consequential effects, exposure, callers, security and trust boundaries, protected and intentionally public interfaces, private or regulated data, and abuse or cost risk |
 | Contracts and data | Dependencies, interfaces, compatibility, data authority, and failure behavior |
 | Lifecycle | Deployment unit, operational owner, failure visibility, recovery path, and requested Ship scope |
 
@@ -89,6 +89,33 @@ Choose solution shape and technology only after these dimensions expose the
 responsibilities. One repository needs one clear primary responsibility;
 prefer one cohesive deployable unit unless ownership, deployment, scaling,
 isolation, or recovery must be independent.
+
+## Resolve security proportionally
+
+For every externally reachable or cross-trust interface, classify its callers,
+exposure, trust boundary, protected and intentionally public operations, data,
+side effects, and abuse or cost risk.
+Intentionally public and local-only Projects do not require authentication
+merely because security is being specified. When a boundary needs protection,
+choose the smallest suitable mechanism and keep authorization on a trusted
+server or worker, enforced per action and resource.
+
+Use established mechanism categories without selecting a vendor prematurely:
+
+- browser users: a managed session, OIDC, or OAuth flow;
+- service callers: a scoped API key or stronger service identity; and
+- signed webhooks: a verified request signature at the inbound boundary.
+
+JWT is conditional, not the default for APIs. Never mint ad-hoc tokens merely
+because the interface uses HTTP. When the contract selects JWT, require a
+maintained library to validate these claims and controls:
+configured algorithms, issuer, audience, time claims, and key rotation;
+and expiry, revocation, and replay behavior in proportion to the risk.
+
+Define proof at the real protected boundary. Include a permitted request and,
+as applicable, missing, invalid, expired or replayed, and
+authenticated-but-forbidden requests. Production misconfiguration must not
+silently bypass required protection.
 
 ## Ask only for owner decisions
 

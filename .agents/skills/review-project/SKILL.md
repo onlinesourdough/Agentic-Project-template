@@ -50,8 +50,16 @@ Review these gates:
   FastAPI reference only when the change actually selects it. Material bought
   or self-hosted capabilities were checked against current official plans,
   limits, license, operations, and exit options.
-- **Security:** trust, authorization, secrets, private data, dependencies, and
-  external side effects are handled proportionally.
+- **Security:** callers, exposure, trust boundaries, protected and intentionally
+  public interfaces, authorization, secrets, private data, dependencies,
+  bounded input and resource use, external side effects, safe failure
+  visibility, and abuse or cost risk are handled proportionally. Required
+  protection fails closed in production, authorization is enforced per action
+  and resource on a trusted boundary, and JWT-specific validation exists only
+  when JWT was selected. Relevant proof exercises permitted, missing, invalid,
+  expired or replayed, and authenticated-but-forbidden behavior as applicable.
+  A material gap in an applicable security responsibility or its boundary proof
+  is a Required finding.
 - **Operation:** important failure is visible and rollback, replay, disable,
   restore, rebuild, or reconciliation is real and has been exercised when the
   risk requires it.

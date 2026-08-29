@@ -154,7 +154,42 @@ require_literal "Agentic Project Template workflow</title>" "$repository_root/as
 require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
 require_literal "n8n is optional" "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
 
+spec_skill="$repository_root/.agents/skills/spec-project/SKILL.md"
+for spec_security_contract in \
+  "Intentionally public and local-only Projects do not require authentication" \
+  "managed session, OIDC, or OAuth" \
+  "scoped API key or stronger service identity" \
+  "verified request signature" \
+  "JWT is conditional, not the default for APIs." \
+  "configured algorithms, issuer, audience, time claims, and key rotation" \
+  "expiry, revocation, and replay"; do
+  require_literal "$spec_security_contract" "$spec_skill"
+done
+
+build_skill="$repository_root/.agents/skills/build-project/SKILL.md"
+for build_security_contract in \
+  "maintained framework, identity-provider, or protocol primitives" \
+  "Fail closed in production" \
+  "per action and resource" \
+  "security-relevant failures visible through redacted, safe telemetry" \
+  "authenticated-but-forbidden" \
+  "Do not invent a universal scanner command."; do
+  require_literal "$build_security_contract" "$build_skill"
+done
+
+review_skill="$repository_root/.agents/skills/review-project/SKILL.md"
+require_literal "material gap in an applicable security responsibility" "$review_skill"
+require_literal "is a Required finding." "$review_skill"
+
 audit_skill="$repository_root/.agents/skills/audit-project/SKILL.md"
+require_literal "security drift" "$audit_skill"
+require_literal "intentionally public interfaces" "$audit_skill"
+
+require_literal "Proportional security baseline" "$repository_root/README.md"
+require_literal \
+  "Public and local-only Projects do not gain authentication by default." \
+  "$repository_root/README.md"
+
 for audit_contract in \
   "exact Git root" \
   "credential-free remote identity" \
@@ -286,6 +321,13 @@ check_created_project() {
   require_literal "$expected_outcome" "$project/README.md"
   require_literal "$expected_name" "$project/AGENTS.md"
   require_literal "$expected_outcome" "$project/docs/proof.md"
+  require_literal "Security and denial evidence" "$project/docs/proof.md"
+  require_literal "Production security misconfiguration fails closed where protection is required" \
+    "$project/docs/proof.md"
+  require_literal "JWT is conditional, not the default for APIs." \
+    "$project/.agents/skills/spec-project/SKILL.md"
+  require_literal "authenticated-but-forbidden" \
+    "$project/.agents/skills/build-project/SKILL.md"
 
   cmp -s "$repository_root/.agents/skills/README.md" \
     "$project/.agents/skills/README.md" ||

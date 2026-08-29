@@ -132,6 +132,34 @@ Prefer one cohesive deployable unit. Introduce a microservice only when it needs
 independent ownership, deployment, scaling, isolation, or recovery and can own
 its contract, data responsibility, observability, and failure behavior.
 
+## Implement the proportional security contract
+
+Implement only the protection resolved by Spec. Public and local-only Projects
+do not gain authentication by default. For a protected boundary, prefer
+maintained framework, identity-provider, or protocol primitives over custom
+authentication or cryptography, and enforce authorization on the trusted
+server or worker per action and resource.
+
+- Fail closed in production when required security configuration is missing or
+  invalid; startup or deployment validation must not silently disable the
+  protection.
+- Keep credentials, signing material, tokens, and session data out of source,
+  client builds, logs, and unsafe exports.
+- Validate external input and bound payload size, resource use, reads, retries,
+  concurrency, and cost according to the interface's abuse risk.
+- Make security-relevant failures visible through redacted, safe telemetry
+  without disclosing credentials or unnecessary private data.
+- If JWT was selected, use a maintained library and the Spec's configured
+  algorithms, issuer, audience, time claims, key rotation, expiry, revocation,
+  and replay controls. Do not create an ad-hoc token format.
+
+Prove the relevant real boundary with a permitted request plus missing,
+invalid, expired or replayed, and authenticated-but-forbidden cases as
+applicable. Include a production-misconfiguration case when protection depends
+on runtime configuration. Run relevant dependency, configuration, and static
+checks that the selected stack supports.
+Do not invent a universal scanner command.
+
 For infrastructure and VPS work, document desired state, access and secret
 ownership, health, patching, drift, and a reproducible rebuild or tested restore
 path. When a step cannot be automated safely, provide an exact, reviewable

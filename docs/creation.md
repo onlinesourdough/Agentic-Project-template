@@ -63,6 +63,12 @@ creation helper, issue references, caches, generated state, or the seed's
 `.git` directory. The resulting `.git` directory is new and has no `origin`
 remote.
 
+The copied Spec, Build, Review, and Audit skills retain the proportional
+security contract inside the existing lifecycle. The generated proof record
+prompts the owner to classify public and protected boundaries and preserve the
+applicable success, denial, misconfiguration, and replay evidence; it does not
+require authentication for a public or local-only Project.
+
 ## History and ownership choice
 
 The destination starts with empty Git history and no remote. This keeps the

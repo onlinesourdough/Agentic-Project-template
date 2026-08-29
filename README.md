@@ -151,6 +151,25 @@ those responsibilities justify it. It is never a template dependency; see the
 [optional orchestration tracer](.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer/README.md)
 for a sanitized, local-only decision and replay example.
 
+## Proportional security baseline
+
+Every Project classifies callers, exposure, trust boundaries, intentionally
+public and protected interfaces, data and side effects, and abuse or cost risk
+during Spec.
+Public and local-only Projects do not gain authentication by default.
+A protected browser, service, or webhook boundary selects the smallest
+suitable established mechanism, keeps authorization server-side per action and
+resource, fails closed in production, and records relevant success and denial
+proof. JWT is used only when the Project's risk and interoperability contract
+justify it; it is never the generic API default.
+
+Use current OWASP guidance as evidence when resolving a concrete boundary:
+[API Security Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/),
+[REST Security](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html),
+[Authorization](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html),
+[Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html),
+and [JWT](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html).
+
 ## Repository map
 
 ```text

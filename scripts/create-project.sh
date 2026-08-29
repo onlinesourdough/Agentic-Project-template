@@ -294,6 +294,21 @@ the outcome. Keep command output or links to durable evidence with the change.
 - [ ] Duplicate, partial-failure, and recovery behavior checked where relevant
 - [ ] Documentation and local links checked
 
+## Security and denial evidence
+
+Classify each interface as local-only, intentionally public, or protected and
+record its callers and trust boundary. When protection is relevant, record the
+chosen authentication mechanism, server-side authorization rule, and evidence
+for a permitted request plus missing, invalid, expired or replayed, and
+authenticated-but-forbidden requests as applicable.
+
+- [ ] Production security misconfiguration fails closed where protection is required
+- [ ] Secrets and private data are absent from source, client builds, logs, and
+  evidence
+- [ ] External input, resource use, retries, concurrency, and cost are bounded
+  as relevant
+- [ ] Security-relevant failures are visible without exposing sensitive data
+
 ## Measurement
 
 - Outcome signal: To be recorded

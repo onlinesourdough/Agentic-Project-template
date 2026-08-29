@@ -31,8 +31,13 @@ Check, as relevant to the solution:
   and checks match the current repository and runtime evidence.
 - Execution state and proof: temporary task notes or generated state are not
   stale; documented proof reflects checks actually run and their results.
-- Boundaries and risk: ownership, data authority, trust boundaries, secrets,
-  authorization, private data, and external effects remain explicit and safe.
+- Boundaries and risk: ownership, data authority, callers, exposure,
+  trust boundaries, protected and intentionally public interfaces, secrets,
+  authorization, private data, bounded input and resource use, external
+  effects, and abuse or cost risk remain explicit and safe. Detect
+  security drift such as newly exposed operations, silent production bypass,
+  weakened per-action or per-resource authorization, stale credentials or
+  signing keys, unsafe telemetry, or missing denial and replay evidence.
 - Operations and recovery: health, failure visibility, disable, rollback,
   replay, restore, rebuild, or reconciliation are proportional and owned.
 - Canonical release and operation: when applicable, the README or runbooks
