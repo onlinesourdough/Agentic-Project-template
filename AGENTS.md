@@ -60,7 +60,22 @@ or this template at runtime.
 ## Creation and transfer
 
 This root is the directly copyable APT seed. It does not contain a nested
-template framework. Use the supported helper for either entry point:
+template framework. Use the supported helper for either entry point. A
+correctly rooted worker that fetched and validated the exact live APT revision
+directly at the final Project path can convert that clean seed in place:
+
+```sh
+bash scripts/create-project.sh --in-place \
+  --name "Project Name" --outcome "The intended Project outcome" \
+  --source-url "https://github.com/onlinesourdough/Agentic-project-template.git" \
+  --source-sha "$(git rev-parse HEAD)"
+```
+
+The caller verifies the live source, default branch, exact revision, and APT
+validator before invoking this destructive route. The helper independently
+guards the current Git root, `main`, sole `origin`, source URL, exact HEAD, and
+clean state before generation. Existing out-of-place creation remains
+supported:
 
 ```sh
 # AIOS: create directly under its projects directory.
@@ -72,16 +87,19 @@ bash scripts/create-project.sh ../<name> \
   --name "Project Name" --outcome "The intended Project outcome"
 ```
 
-The helper copies the local skill index, six Project-local skills, and the
-license, then generates
-project-specific `AGENTS.md`, `README.md`, ownership/proof/recovery notes,
-and initializes a fresh empty Git repository. It excludes the template's
+Both routes copy the local skill index, six Project-local skills, and the
+license, generate project-specific `AGENTS.md`, `README.md`, and
+ownership/proof/recovery notes, and initialize a fresh empty Git repository.
+They exclude the template's
 README, instructions, docs, assets, tests, creation script, `.git` directory,
 remotes, issue references, caches, and generated state. The owner makes the
-first Project commit and adds any canonical remote. The seed is not a runtime
-dependency after transfer. `CLAUDE.md` is intentionally absent; `AGENTS.md` is
-the sole root instruction file and the helper does not generate a Claude
-adapter.
+first Project commit and adds any canonical remote. In-place creation records
+the verified APT URL and SHA as historical provenance, then removes the seed
+identity and history. The worker re-enters the exact final path before its
+post-transition attestation. The seed is not a runtime dependency after
+transfer.
+`CLAUDE.md` is intentionally absent; `AGENTS.md` is the sole root instruction
+file and the helper does not generate a Claude adapter.
 
 ## Engineering rules
 

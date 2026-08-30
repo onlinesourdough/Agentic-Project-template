@@ -91,6 +91,43 @@ not part of this Build.
 
 The root is the seed; do not introduce a nested `template/` directory.
 
+### Direct final-root path
+
+When a creation worker is already rooted at the final Project path, fetch the
+live canonical APT commit directly into that empty Git repository. Do not
+download another seed checkout. Before conversion, verify all of these facts:
+
+- the physical current directory is the exact Git top level and final path;
+- `origin` is the sole remote and is
+  `https://github.com/onlinesourdough/Agentic-project-template.git`;
+- the checked-out branch is `main`, the source default branch is `main`, and
+  local `HEAD` equals the freshly queried live `origin/main` SHA;
+- the worktree contains no tracked, untracked, or ignored state beyond the
+  verified seed; and
+- `bash tests/validate-project-template.sh` passes at that exact revision.
+
+Then invoke the APT-owned transition from that root:
+
+```sh
+bash scripts/create-project.sh --in-place \
+  --name "Project Name" \
+  --outcome "The intended Project outcome" \
+  --source-url "https://github.com/onlinesourdough/Agentic-project-template.git" \
+  --source-sha "$(git rev-parse HEAD)"
+```
+
+The helper verifies the current root, branch, sole remote, source URL, exact
+SHA, and clean state again before generating a private sibling payload. A
+pre-transition failure leaves the verified seed untouched. If replacement
+fails after the seed moves into recovery position, the helper restores the
+verified seed at the same final path. Otherwise it reports the exact retained
+recovery directory. Success leaves that final path as the new Project with
+fresh empty Git history, no remote, the filtered payload, and the verified
+source URL@SHA in
+`docs/ownership.md` as historical provenance. Because the directory entry is
+replaced, the worker must re-enter that exact absolute path before its
+post-transition root and Git attestation.
+
 ### AIOS path
 
 From the AIOS workspace, create directly under `projects/<name>` and continue
@@ -119,9 +156,9 @@ bash scripts/create-project.sh ../<name> \
 cd ../<name>
 ```
 
-The helper initializes fresh empty Git history, does not inherit an origin
-remote, and leaves the first commit to the Project owner. It copies only the
-local skill index, six Project-local skills, and the license; it generates new
+Both helper routes initialize fresh empty Git history, do not inherit an origin
+remote, and leave the first commit to the Project owner. They copy only the
+local skill index, six Project-local skills, and the license; they generate new
 Project instructions, README, ownership, proof, and recovery notes.
 Template-only assets, tests, creation scripts, issue references, caches, and
 generated state are not copied.
