@@ -73,9 +73,8 @@ canonical location.
 The helper stages the generated payload beside the destination and moves it
 into place only after all generation succeeds. It copies only:
 
-- `.agents/skills/README.md` and the six flat Project-local skill directories,
-  including conditional acceptance examples that evaluate a technology
-  boundary locally without making its runtime a Project dependency; and
+- `.agents/skills/README.md` and the six flat Project-local skill
+  directories; and
 - `LICENSE`.
 
 It generates a Project-specific `AGENTS.md`, `README.md`, `.gitignore`, and

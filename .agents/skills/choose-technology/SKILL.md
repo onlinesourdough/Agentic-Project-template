@@ -44,7 +44,7 @@ Use these as starting points, not requirements:
 | Browser interface | TypeScript; use React for a component-based interface and Vite before a larger framework |
 | Ordinary web capability | TypeScript when one language simplifies contracts and operation |
 | Data, scientific, image, quant, or ML logic | Python |
-| Visible orchestration and approvals | An existing workflow runtime or n8n; keep substantial reusable logic in a small service |
+| Visible orchestration and approvals | An existing workflow runtime only when concrete workflow responsibilities justify it; keep reusable deterministic logic in tested Project code |
 | Local single-owner state | Files or SQLite |
 | Shared relational truth | PostgreSQL |
 | CI | The repository host's native CI |
@@ -86,10 +86,12 @@ specific Project, not a default provider recommendation:
    overage boundary, or moves unacceptable operations to the owner. Explain why
    the selected shape is smaller in total responsibility, not merely in price.
 
-For a reproducible example, use the local-only
-[cost and optional orchestration tracer](examples/optional-n8n-boundary-tracer/README.md).
-It is an acceptance fixture, not a provider choice, runtime dependency, or
-global n8n skill.
+A concrete Project selects an orchestration runtime, schemas, tests, or
+workflows only when real responsibilities justify them. Visible triggers,
+approvals, schedules, integrations, bounded retries, and error routing may
+belong to that runtime; reusable deterministic domain logic remains in tested
+Project code and can be replayed independently. The template supplies no
+orchestration default or bundled runtime artifacts.
 
 Before accepting the decision, verify that:
 

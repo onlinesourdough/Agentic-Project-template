@@ -182,11 +182,12 @@ stack-specific skills from this template.
 When usage or cost can change the smallest reliable result, the technology
 decision records a dated check of current official terms, a bounded usage
 guardrail, and the operator's stop condition. It does not retain a price table
-or recommend a provider. An existing workflow runtime, including n8n, may own
-visible triggers, integrations, approvals, schedules, and bounded retries when
-those responsibilities justify it. It is never a template dependency; see the
-[optional orchestration tracer](.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer/README.md)
-for a sanitized, local-only decision and replay example.
+or recommend a provider. An existing workflow runtime may own visible triggers,
+integrations, approvals, schedules, and bounded retries only when those
+responsibilities justify it. A concrete Project selects its runtime, schemas,
+tests, or workflows; this template supplies no orchestration default or bundled
+runtime artifacts. Keep reusable deterministic domain logic in tested Project
+code so it can be replayed independently.
 
 ## Proportional security baseline
 

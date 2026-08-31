@@ -89,13 +89,11 @@ done
 
 require_file "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
 require_file "$repository_root/.agents/skills/choose-technology/references/full-stack-fastapi.md"
-tracer_root="$repository_root/.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer"
-for tracer_file in README.md schemas/request.schema.json schemas/result.schema.json \
-  workflow/n8n-workflow.digest.json fixtures/replay-request.json fixtures/replay-result.json \
-  service/service.mjs test/json-schema.mjs test/replay.mjs; do
-  require_file "$tracer_root/$tracer_file"
-done
-require_file "$repository_root/.agents/skills/audit-project/agents/openai.yaml"
+if find "$skills_root" -type f -name openai.yaml -print -quit | rg --quiet .; then
+  fail "seed contains optional skill UI metadata"
+fi
+[[ ! -d "$repository_root/.agents/skills/choose-technology/examples" ]] ||
+  fail "seed contains unselected technology examples"
 require_file "$repository_root/scripts/create-project.sh"
 require_file "$repository_root/docs/creation.md"
 require_file "$repository_root/README.md"
@@ -166,8 +164,6 @@ require_literal "audit-project" "$repository_root/AGENTS.md"
 require_literal "choose-technology" "$repository_root/AGENTS.md"
 require_literal "Agentic Project Template workflow</title>" "$repository_root/assets/agentic-project-template-overview.svg"
 require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
-require_literal "n8n is optional" "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
-
 spec_skill="$repository_root/.agents/skills/spec-project/SKILL.md"
 for spec_security_contract in \
   "Intentionally public and local-only Projects do not require authentication" \
@@ -227,18 +223,13 @@ for ship_contract in \
 done
 
 if rg -n -i --glob '!.git/**' \
-  '(n8n|cloudflare|github pages).{0,40}\\b(required|mandatory|default)\\b' "$repository_root"; then
+  '(cloudflare|github pages).{0,40}\\b(required|mandatory|default)\\b' "$repository_root"; then
   fail "mandatory workflow or provider language remains"
 fi
 if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
   rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
   fail "static price catalogue path remains"
 fi
-if rg -n -i '"credentials"[[:space:]]*:|https?://|instance(id|identifier)' \
-  "$tracer_root/workflow/n8n-workflow.digest.json"; then
-  fail "workflow digest contains a credential, endpoint, or private instance marker"
-fi
-
 readme_image_count="$(rg -o --no-filename '!\[[^]]*\]\([^)]*\)' "$repository_root/README.md" | wc -l | tr -d '[:space:]')"
 [[ "$readme_image_count" = 1 ]] ||
   fail "README must contain exactly one illustration; found $readme_image_count"
@@ -321,6 +312,12 @@ check_created_project() {
   done
 
   check_skill_layout "$project/.agents/skills" "created Project $expected_name"
+  if find "$project/.agents/skills" -type f -name openai.yaml -print -quit |
+    rg --quiet .; then
+    fail "created Project contains optional skill UI metadata"
+  fi
+  [[ ! -d "$project/.agents/skills/choose-technology/examples" ]] ||
+    fail "created Project contains unselected technology examples"
 
   [[ -d "$project/.git" ]] || fail "created Project has no fresh Git directory"
   [[ "$(git -C "$project" rev-parse --is-inside-work-tree)" = true ]] ||
@@ -640,9 +637,6 @@ require_output_literal "restored verified seed after failed transition" \
 assert_verified_seed "$transition_seed" "$transition_sha" \
   "transition-failure recovery"
 assert_no_transition_artifacts "$temporary_root" "transition-failure recovery"
-
-command -v node >/dev/null 2>&1 || fail "Node.js is required for the optional tracer replay"
-node "$aios_project/.agents/skills/choose-technology/examples/optional-n8n-boundary-tracer/test/replay.mjs"
 
 if bash "$repository_root/scripts/create-project.sh" "$standalone_project" \
   --name "Duplicate" --outcome "Must fail" >/dev/null 2>&1; then

@@ -153,8 +153,8 @@ path; and rejects a seemingly free static or workflow-only option when it
 cannot own approval visibility or reusable deterministic logic. The hybrid is
 selected only when the existing workflow runtime has a named owner and visible
 approval, scheduling, integration, or bounded-retry responsibilities actually
-exist. Otherwise code-only remains valid. n8n is optional, no provider is a
-default, and no specialist n8n skill is added from one tracer.
+exist. Otherwise code-only remains valid. No provider is a default, and no
+runtime-specific skill or artifact is added before a concrete selection.
 
 ## Full Stack FastAPI reference is conditional
 
