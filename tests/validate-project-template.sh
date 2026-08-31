@@ -33,7 +33,7 @@ project_skills=(
 check_skill_layout() {
   local skills_root="$1"
   local context="$2"
-  local expected_children actual_children nested_skills
+  local expected_children actual_children expected_files actual_files support_dirs
 
   require_file "$skills_root/README.md"
   [[ ! -e "$skills_root/manage-skills" ]] ||
@@ -49,13 +49,20 @@ check_skill_layout() {
   [[ "$actual_children" = "$expected_children" ]] ||
     fail "$context skill children differ from the six Project-local routes"
 
-  nested_skills="$(
-    find "$skills_root" -type f -name SKILL.md -print |
-      sed "s#^$skills_root/##" |
-      awk -F/ 'NF != 2'
+  expected_files="$(
+    printf '%s\n' "${project_skills[@]}" |
+      sed 's#$#/SKILL.md#' | LC_ALL=C sort
   )"
-  [[ -z "$nested_skills" ]] ||
-    fail "$context contains nested SKILL.md paths: $nested_skills"
+  actual_files="$(
+    find "$skills_root" -mindepth 2 -type f -print |
+      sed "s#^$skills_root/##" | LC_ALL=C sort
+  )"
+  [[ "$actual_files" = "$expected_files" ]] ||
+    fail "$context Project-local skill folders must contain only SKILL.md"
+
+  support_dirs="$(find "$skills_root" -mindepth 2 -type d -print)"
+  [[ -z "$support_dirs" ]] ||
+    fail "$context contains Project-local skill support directories: $support_dirs"
 
   if rg --fixed-strings --quiet -- 'name: manage-skills' "$skills_root" ||
     rg --quiet -- 'npx skills (find|add)' "$skills_root"; then
@@ -87,23 +94,18 @@ do
   require_literal "$index_contract" "$skills_root/README.md"
 done
 
-require_file "$repository_root/.agents/skills/spec-project/examples/acceptance-cases.md"
-require_file "$repository_root/.agents/skills/choose-technology/references/full-stack-fastapi.md"
-if find "$skills_root" -type f -name openai.yaml -print -quit | rg --quiet .; then
-  fail "seed contains optional skill UI metadata"
-fi
-[[ ! -d "$repository_root/.agents/skills/choose-technology/examples" ]] ||
-  fail "seed contains unselected technology examples"
 require_file "$repository_root/scripts/create-project.sh"
-require_file "$repository_root/docs/creation.md"
 require_file "$repository_root/README.md"
 require_file "$repository_root/AGENTS.md"
 require_file "$repository_root/LICENSE"
+[[ ! -d "$repository_root/docs" ]] ||
+  fail "seed contains a duplicate documentation surface"
+[[ ! -d "$repository_root/assets" ]] ||
+  fail "seed contains a cosmetic asset surface"
 
 [[ ! -e "$repository_root/CLAUDE.md" ]] ||
   fail "CLAUDE.md must remain absent after reconciliation"
 require_literal "\`CLAUDE.md\` is intentionally absent" "$repository_root/AGENTS.md"
-require_literal "\`CLAUDE.md\` is intentionally absent" "$repository_root/docs/creation.md"
 
 [[ ! -e "$repository_root/.agents/skills/spec-solution" ]] ||
   fail "obsolete spec-solution skill remains"
@@ -117,10 +119,6 @@ require_literal "\`CLAUDE.md\` is intentionally absent" "$repository_root/docs/c
   fail "obsolete audit-solution skill remains"
 [[ ! -e "$repository_root/tests/validate-spec-solution.sh" ]] ||
   fail "obsolete validation script remains"
-[[ ! -e "$repository_root/assets/solution-template-overview-v2.svg" ]] ||
-  fail "obsolete workflow illustration remains"
-
-require_literal "![Agentic Project Template workflow](assets/agentic-project-template-overview.svg)" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/AIOS-template" "$repository_root/README.md"
 require_literal "[Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System)" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/Agentic-Content-System" "$repository_root/README.md"
@@ -141,7 +139,6 @@ if rg --fixed-strings --quiet --glob '!tests/validate-project-template.sh' \
   fail "stale Agentic Design System URL remains: $stale_ads_url"
 fi
 require_literal "scripts/create-project.sh" "$repository_root/README.md"
-require_literal "docs/creation.md" "$repository_root/README.md"
 for in_place_contract in \
   "--in-place" \
   "--source-url" \
@@ -149,22 +146,44 @@ for in_place_contract in \
   "fresh empty Git history" \
   "historical provenance"; do
   require_literal "$in_place_contract" "$repository_root/README.md"
-  require_literal "$in_place_contract" "$repository_root/docs/creation.md"
 done
 require_literal "pre-transition failure leaves the verified seed untouched" \
   "$repository_root/README.md"
-require_literal "retained recovery directory" "$repository_root/docs/creation.md"
+require_literal "retained recovery directory" "$repository_root/README.md"
 require_literal "re-enter that exact absolute path" "$repository_root/README.md"
-require_literal "re-enter that" "$repository_root/docs/creation.md"
+require_literal "required only for this in-place route" "$repository_root/README.md"
+require_literal "\`--canonical-url\` is optional" "$repository_root/README.md"
+require_literal "never overwrites" "$repository_root/README.md"
 require_literal "spec-project" "$repository_root/AGENTS.md"
 require_literal "build-project" "$repository_root/AGENTS.md"
 require_literal "review-project" "$repository_root/AGENTS.md"
 require_literal "ship-project" "$repository_root/AGENTS.md"
 require_literal "audit-project" "$repository_root/AGENTS.md"
 require_literal "choose-technology" "$repository_root/AGENTS.md"
-require_literal "Agentic Project Template workflow</title>" "$repository_root/assets/agentic-project-template-overview.svg"
 require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
+choose_skill="$repository_root/.agents/skills/choose-technology/SKILL.md"
+for technology_contract in \
+  "Derive candidates from the Project's resolved responsibilities" \
+  "Inspect current official sources" \
+  "Do not retain a starter catalogue or default stack in Project truth."; do
+  require_literal "$technology_contract" "$choose_skill"
+done
 spec_skill="$repository_root/.agents/skills/spec-project/SKILL.md"
+for spec_readiness_contract in \
+  "Preserve useful source material" \
+  "Accept source material at any maturity" \
+  "Rough idea:" \
+  "Developed brief:" \
+  "Near-complete specification:" \
+  "Existing-system change request:" \
+  "accept resolved AIOS intent, outcome, scope, proof," \
+  "and authority as upstream truth." \
+  "Return exactly one gate." \
+  "### READY" \
+  "### REVISE" \
+  "### BLOCKED"; do
+  require_literal "$spec_readiness_contract" "$spec_skill"
+done
 for spec_security_contract in \
   "Intentionally public and local-only Projects do not require authentication" \
   "managed session, OIDC, or OAuth" \
@@ -230,9 +249,9 @@ if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root"
   rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
   fail "static price catalogue path remains"
 fi
-readme_image_count="$(rg -o --no-filename '!\[[^]]*\]\([^)]*\)' "$repository_root/README.md" | wc -l | tr -d '[:space:]')"
-[[ "$readme_image_count" = 1 ]] ||
-  fail "README must contain exactly one illustration; found $readme_image_count"
+if rg --quiet '!\[[^]]*\]\([^)]*\)' "$repository_root/README.md"; then
+  fail "README contains a cosmetic image route"
+fi
 
 check_local_links() {
   local markdown="$1"
@@ -312,12 +331,6 @@ check_created_project() {
   done
 
   check_skill_layout "$project/.agents/skills" "created Project $expected_name"
-  if find "$project/.agents/skills" -type f -name openai.yaml -print -quit |
-    rg --quiet .; then
-    fail "created Project contains optional skill UI metadata"
-  fi
-  [[ ! -d "$project/.agents/skills/choose-technology/examples" ]] ||
-    fail "created Project contains unselected technology examples"
 
   [[ -d "$project/.git" ]] || fail "created Project has no fresh Git directory"
   [[ "$(git -C "$project" rev-parse --is-inside-work-tree)" = true ]] ||
@@ -349,7 +362,7 @@ check_created_project() {
       fail "created Project did not receive current $lifecycle_skill skill"
   done
 
-  for excluded in docs/creation.md assets tests scripts; do
+  for excluded in assets tests scripts; do
     [[ ! -e "$project/$excluded" ]] || fail "seed-only path copied: $excluded"
   done
   while IFS= read -r markdown; do
@@ -367,6 +380,8 @@ check_created_project() {
 check_created_project "$standalone_project" "Standalone Proof" "Prove independent ownership"
 check_created_project "$aios_project" "AIOS Proof" "Prove the direct AIOS creation path"
 require_literal "https://example.test/standalone-proof" "$standalone_project/README.md"
+printf 'out-of-place creation proof: standalone=%s aios=%s history=empty remotes=0 skills=6 support-files=absent\n' \
+  "$standalone_project" "$aios_project"
 
 in_place_source_url='https://github.com/onlinesourdough/Agentic-project-template.git'
 
@@ -637,6 +652,53 @@ require_output_literal "restored verified seed after failed transition" \
 assert_verified_seed "$transition_seed" "$transition_sha" \
   "transition-failure recovery"
 assert_no_transition_artifacts "$temporary_root" "transition-failure recovery"
+
+retained_seed="$temporary_root/retained-recovery-seed"
+make_seed_fixture "$retained_seed"
+retained_sha="$(git -C "$retained_seed" rev-parse HEAD)"
+fake_retained_mv_bin="$temporary_root/fake-retained-mv-bin"
+retained_mv_counter="$temporary_root/retained-mv-counter"
+mkdir -p "$fake_retained_mv_bin"
+cat > "$fake_retained_mv_bin/mv" <<EOF
+#!/usr/bin/env bash
+count=0
+if [[ -f "$retained_mv_counter" ]]; then
+  count="\$(<"$retained_mv_counter")"
+fi
+count=\$((count + 1))
+printf '%s\n' "\$count" > "$retained_mv_counter"
+if [[ "\$count" = 2 || "\$count" = 3 ]]; then
+  exit 93
+fi
+exec "$real_mv" "\$@"
+EOF
+chmod +x "$fake_retained_mv_bin/mv"
+if retained_recovery_output="$(
+  (
+    cd "$retained_seed"
+    PATH="$fake_retained_mv_bin:$PATH" bash scripts/create-project.sh --in-place \
+      --name "Retained Recovery" --outcome "Retain the verified seed" \
+      --source-url "$in_place_source_url" \
+      --source-sha "$retained_sha"
+  ) 2>&1
+)"; then
+  fail "in-place creation survived failed installation and restoration"
+fi
+require_output_literal "could not install the generated Project at the final root" \
+  "$retained_recovery_output" "retained-recovery failure"
+require_output_literal "recovery required; verified seed retained at:" \
+  "$retained_recovery_output" "retained-recovery failure"
+retained_recovery_directory="$(find "$temporary_root" -maxdepth 1 -type d \
+  -name '.apt-seed-recovery.*' -print)"
+[[ -n "$retained_recovery_directory" && \
+  "$retained_recovery_directory" != *$'\n'* ]] ||
+  fail "retained-recovery failure did not leave exactly one recovery directory"
+[[ ! -e "$retained_seed" ]] ||
+  fail "retained-recovery failure left an ambiguous final path"
+assert_verified_seed "$retained_recovery_directory" "$retained_sha" \
+  "retained-recovery failure"
+printf 'retained recovery proof: source=%s recovery=%s revision=%s\n' \
+  "$retained_seed" "$retained_recovery_directory" "$retained_sha"
 
 if bash "$repository_root/scripts/create-project.sh" "$standalone_project" \
   --name "Duplicate" --outcome "Must fail" >/dev/null 2>&1; then

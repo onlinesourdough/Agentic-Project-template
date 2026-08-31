@@ -140,9 +140,8 @@ Record that existing stack as RESOLVED and continue directly to
 For a new or materially changed technology decision, use
 [choose-technology](../choose-technology/SKILL.md) only after the required
 dimensions are resolved. It is the only project technology-selection
-procedure. Its Full Stack FastAPI reference is loaded only when every fit gate
-might be independently satisfied. For a concrete specialist implementation
-gap, follow the capability inventory and authority boundary in the
+procedure. For a concrete specialist implementation gap, follow the capability
+inventory and authority boundary in the
 [local skill index](../README.md); do not preload or install stack-specific
 skills in this Project.
 
@@ -196,6 +195,4 @@ Name the exact blocker, cite the evidence, identify the owner who can resolve
 it, and ask at most the one decision question described above. Do not hide
 several questions under one gate.
 
-For a planning-only request, stop after the gate. For acceptance examples that
-exercise all maturity levels, AIOS preservation, and optional profile
-selection, read [examples/acceptance-cases.md](examples/acceptance-cases.md).
+For a planning-only request, stop after the gate.

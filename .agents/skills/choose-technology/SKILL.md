@@ -23,8 +23,7 @@ reason to preload stack-specific skills.
 4. If a concrete specialist implementation gap remains, follow the inventory
    and authority boundary in the [local skill index](../README.md). Add only a
    justified, reviewed Project- or domain-specific local skill; do not install
-   or invent React, FastAPI, Supabase, or other stack-specific skills in the
-   Project.
+   or invent stack-specific skills in the Project.
 5. Hand the resolved decision and its evidence to `build-project`. Build
    consumes that decision and does not preload every technology reference.
 
@@ -37,25 +36,15 @@ the first complete result. Buy or rent generic capability when
 reduced operation justifies the dependency and exit path. Self-host only when
 license, updates, security, observability, backup, and recovery have an owner.
 
-Use these as starting points, not requirements:
+Derive candidates from the Project's resolved responsibilities, current
+systems, constraints, and owners. Inspect current official sources for the
+smallest plausible options only after those facts are known; compare their
+contracts, operating burden, failure and recovery behavior, update path, and
+exit path. Do not retain a starter catalogue or default stack in Project truth.
 
-| Responsibility | Starting point |
-| --- | --- |
-| Browser interface | TypeScript; use React for a component-based interface and Vite before a larger framework |
-| Ordinary web capability | TypeScript when one language simplifies contracts and operation |
-| Data, scientific, image, quant, or ML logic | Python |
-| Visible orchestration and approvals | An existing workflow runtime only when concrete workflow responsibilities justify it; keep reusable deterministic logic in tested Project code |
-| Local single-owner state | Files or SQLite |
-| Shared relational truth | PostgreSQL |
-| CI | The repository host's native CI |
-| Static public delivery | GitHub Pages or an already-owned web platform |
-| Portable runtime | OCI container only when deployment or handover needs it |
-| Observability | Health checks and structured logs before a vendor platform |
-| Infrastructure | Versioned configuration; IaC only when reproducibility needs it |
-
-Do not add authentication, a database, queue, container platform,
-observability vendor, or runtime AI because a starter includes it. Each layer
-needs one demonstrated responsibility and one owner.
+Do not add authentication, persistence, queues, containers, observability
+services, or runtime AI because a starter includes them. Each layer needs one
+demonstrated responsibility and one owner.
 
 For a material external capability, inspect current official documentation,
 pricing or plan limits, license, operational responsibilities, and exit options
@@ -103,17 +92,6 @@ Before accepting the decision, verify that:
   handover.
 
 Language popularity is not proof of fit. Existing systems and owners win.
-
-## Conditional references
-
-Load [the Full Stack FastAPI reference](references/full-stack-fastapi.md) only
-when a new or materially changed decision might independently satisfy every
-FastAPI fit gate. Do not load it for an existing working stack or a known
-non-fit change. If any fit condition is missing, choose the smaller individual
-capabilities instead.
-
-The reference is an optional sourced decision aid. It never makes a stack the
-default, and it does not authorize copying or vendoring upstream code.
 
 ## Return one decision
 

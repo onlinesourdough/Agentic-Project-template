@@ -1,5 +1,3 @@
-![Agentic Project Template workflow](assets/agentic-project-template-overview.svg)
-
 # Agentic Project Template (APT)
 
 A small, directly copyable foundation for an application, service, automation,
@@ -116,14 +114,17 @@ bash scripts/create-project.sh --in-place \
   --source-sha "$(git rev-parse HEAD)"
 ```
 
+`--source-url` and `--source-sha` are required only for this in-place route and
+are recorded as historical provenance, not runtime ownership.
+
 The helper verifies the current root, branch, sole remote, source URL, exact
 SHA, and clean state again before generating a private sibling payload. A
 pre-transition failure leaves the verified seed untouched. If replacement
 fails after the seed moves into recovery position, the helper restores the
-verified seed at the same final path. Otherwise it reports the exact retained
-recovery directory. Success leaves that final path as the new Project with
-fresh empty Git history, no remote, the filtered payload, and the verified
-source URL@SHA in
+verified seed at the same final path. If restoration or cleanup cannot finish,
+it reports the exact retained recovery directory instead of claiming success.
+Success leaves that final path as the new Project with fresh empty Git history,
+no remote, the filtered payload, and the verified source URL@SHA in
 `docs/ownership.md` as historical provenance. Because the directory entry is
 replaced, the worker must re-enter that exact absolute path before its
 post-transition root and Git attestation.
@@ -156,16 +157,19 @@ bash scripts/create-project.sh ../<name> \
 cd ../<name>
 ```
 
+`--canonical-url` is optional; without it, the repository remains the declared
+canonical location.
+
 Both helper routes initialize fresh empty Git history, do not inherit an origin
 remote, and leave the first commit to the Project owner. They copy only the
 local skill index, six Project-local skills, and the license; they generate new
 Project instructions, README, ownership, proof, and recovery notes.
 Template-only assets, tests, creation scripts, issue references, caches, and
 generated state are not copied.
+An out-of-place failure removes only private staging state and never overwrites
+an existing destination.
 `CLAUDE.md` is intentionally not generated; the Project uses its own
 `AGENTS.md` as its root instruction contract.
-
-See [the creation contract](docs/creation.md) for the exact transfer behavior.
 
 ## Technology
 
@@ -173,9 +177,8 @@ Keep an existing working stack when the change does not materially alter it,
 record it in the Spec, and go directly to Build. For a new or materially
 changed technology decision, use
 `.agents/skills/choose-technology/SKILL.md` after the project-local contract is
-ready. Its conditional Full Stack FastAPI reference loads only when its fit
-gates may be independently satisfied. For a concrete specialist capability
-gap, follow the inventory and authority boundary in the
+ready. For a concrete specialist capability gap, follow the inventory and
+authority boundary in the
 [local skill index](.agents/skills/README.md); do not preload or install
 stack-specific skills from this template.
 
@@ -215,13 +218,11 @@ Agentic-project-template
 ├── AGENTS.md
 ├── README.md
 ├── .agents/skills/       # Flat Project-local skills and their index
-├── docs/                 # Creation and ownership contract
 ├── scripts/              # Direct Project creation helper
-├── tests/                # Template contract and creation validation
-└── assets/               # Documentation illustration
+└── tests/                # Template contract and creation validation
 ```
 
-Validate the template and creation contract with:
+Validate the template and creation behavior with:
 
 ```sh
 bash tests/validate-project-template.sh

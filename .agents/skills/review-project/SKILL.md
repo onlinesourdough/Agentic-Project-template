@@ -46,10 +46,9 @@ Review these gates:
 - **Technology:** each added layer owns a required capability and follows the
   resolved decision from [choose-technology](../choose-technology/SKILL.md) or
   the existing working stack. Check fit evidence, operator burden,
-  verification and proof, update path, and exit path. Load the conditional
-  FastAPI reference only when the change actually selects it. Material bought
-  or self-hosted capabilities were checked against current official plans,
-  limits, license, operations, and exit options.
+  verification and proof, update path, and exit path. Material bought or
+  self-hosted capabilities were checked against current official plans, limits,
+  license, operations, and exit options.
 - **Security:** callers, exposure, trust boundaries, protected and intentionally
   public interfaces, authorization, secrets, private data, dependencies,
   bounded input and resource use, external side effects, safe failure

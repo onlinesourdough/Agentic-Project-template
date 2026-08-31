@@ -22,8 +22,7 @@ because the lifecycle phase changed.
 Consume the Spec's resolved technology decision. A working stack goes directly
 to Build when the change does not materially alter it. For a new or materially
 changed decision, use the result from
-[choose-technology](../choose-technology/SKILL.md); do not reopen selection or
-preload optional references unless the decision cites one.
+[choose-technology](../choose-technology/SKILL.md); do not reopen selection.
 
 For a fresh repository:
 
