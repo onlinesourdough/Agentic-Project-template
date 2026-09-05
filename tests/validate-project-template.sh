@@ -100,8 +100,9 @@ require_file "$repository_root/AGENTS.md"
 require_file "$repository_root/LICENSE"
 [[ ! -d "$repository_root/docs" ]] ||
   fail "seed contains a duplicate documentation surface"
-[[ ! -d "$repository_root/assets" ]] ||
-  fail "seed contains a cosmetic asset surface"
+# Branding belongs to this seed; creation must still exclude all assets.
+require_file "$repository_root/assets/branding/project-banner.png"
+require_file "$repository_root/assets/branding/project-icon.png"
 
 [[ ! -e "$repository_root/CLAUDE.md" ]] ||
   fail "CLAUDE.md must remain absent after reconciliation"
@@ -249,9 +250,10 @@ if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root"
   rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
   fail "static price catalogue path remains"
 fi
-if rg --quiet '!\[[^]]*\]\([^)]*\)' "$repository_root/README.md"; then
-  fail "README contains a cosmetic image route"
-fi
+require_literal '![Agentic Project Template banner](assets/branding/project-banner.png)' \
+  "$repository_root/README.md"
+require_literal '[<img src="assets/branding/project-icon.png" alt="Agentic Project Template icon" width="32" height="32">](assets/branding/project-icon.png)' \
+  "$repository_root/README.md"
 
 check_local_links() {
   local markdown="$1"

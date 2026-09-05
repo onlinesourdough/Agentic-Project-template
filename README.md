@@ -1,4 +1,8 @@
+![Agentic Project Template banner](assets/branding/project-banner.png)
+
 # Agentic Project Template (APT)
+
+[<img src="assets/branding/project-icon.png" alt="Agentic Project Template icon" width="32" height="32">](assets/branding/project-icon.png)
 
 A small, directly copyable foundation for an application, service, automation,
 integration, library, or system that needs its own owner and lifecycle.
