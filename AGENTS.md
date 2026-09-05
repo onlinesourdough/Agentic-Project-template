@@ -6,10 +6,10 @@ can be understood, operated, recovered, and handed over by its owner.
 ## Start
 
 1. Read the request, README, and relevant canonical context.
-2. Confirm that this repository or the newly created Project should own an
-   independent lifecycle.
-3. Preserve resolved upstream intent. Run `spec-project` to resolve only the
-   project-local technical contract.
+2. Revisit independent ownership only when the requested change affects it.
+3. Preserve resolved upstream intent. Use `spec-project` for unresolved
+   project-local scope, boundaries, or proof; a clear mechanical change needs
+   only the delta and its check in the current session.
 4. For a new or materially changed technology decision, run
    `.agents/skills/choose-technology/SKILL.md` after the contract. A working
    stack bypasses it when the change does not materially alter technology.
@@ -120,7 +120,7 @@ file and the helper does not generate a Claude adapter.
 ## Before completion
 
 - Verify intended behavior through its real interface.
-- Run affected format, lint, type, test, build, contract, and security checks.
+- Run the affected checks supported by this repository, proportional to risk.
 - Check relevant failure, denial, duplicate, and recovery behavior.
 - Review the diff for accidental complexity and stale truth.
 - State unavailable evidence and remaining risk.

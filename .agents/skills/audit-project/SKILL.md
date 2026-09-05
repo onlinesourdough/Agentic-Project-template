@@ -1,10 +1,9 @@
 ---
 name: audit-project
 description: >-
-  Use when a natural-language request asks to audit, check, maintain, repair,
-  reconcile, or investigate drift in an evolved Project's current
-  truth, documentation, proof, ownership, security, operation, or recovery.
-  Run periodically after accumulated change, not for every trivial change.
+  Audit an evolved Project for drift between documented truth, behavior,
+  ownership, and operational evidence. Use for repository health checks or
+  suspected accumulated drift, not ordinary targeted fixes.
 ---
 
 # Project Audit
@@ -16,9 +15,9 @@ outcome and canonical truth, never parity with the original seed.
 
 ## Audit
 
-Read the current README, project instructions, relevant skills, code,
-interfaces, configuration, workflows, tests, runbooks, and operational or
-recovery records. Establish the current outcome, owner, boundaries, and
+Read the current README and project instructions, then inspect skills, code,
+interfaces, configuration, tests, and operational records relevant to the
+audit scope. Establish the current outcome, owner, boundaries, and
 canonical sources before judging any document.
 
 Check, as relevant to the solution:
@@ -84,12 +83,14 @@ correcting an obvious command path. Re-read repaired routes and verify them.
 When available, run the repository's relevant documented safe, non-mutating
 validation commands. Record each exact command and its exact result. If a
 relevant check is unavailable or unsafe to run, disclose it as an evidence gap.
-Do not run consequential or mutating commands or operations.
+Audit validation must not trigger consequential operations; run mutating
+checks only within separately authorized fixes and disposable fixtures.
 
-Do not delete files or change runtime code, configuration, contracts, security
-meaning, ownership, authority, or operational behavior. Require one owner
-decision for semantic conflict, deletion, authority, or unclear canonical
-truth. Record the location, evidence, and decision needed; do not guess.
+An audit alone does not authorize deletion or changes to runtime behavior,
+configuration, contracts, security meaning, ownership, or authority. When the
+request also authorizes fixes, route those changes through Spec/Build/Review
+within that scope. Ask only for unresolved semantic conflicts, unclear
+canonical truth, or actions beyond existing authority; cite the evidence.
 
 ## Return
 

@@ -15,9 +15,8 @@ resume that same goal for any required revision or authorized Ship.
 ## Inspect
 
 1. Establish the comparison point and intended outcome.
-2. Read the diff, relevant code, project-local agents and skills, workflow
-   exports, interfaces, configuration, infrastructure, contracts, architecture,
-   runbooks, tests, and runtime evidence.
+2. Read the diff and the code, instructions, contracts, tests, and operational
+   evidence needed to assess the affected responsibilities.
 3. Run or inspect the checks that can actually prove the change.
 4. Review correctness and failure paths before style.
 
@@ -30,15 +29,14 @@ Review these gates:
   claimed as runtime proof.
 - **Documentation truth:** every implementation-affected README, runbook,
   instruction, skill route, command, configuration, interface, operation,
-  recovery, and proof statement is current or has an explicit no-change reason;
+  recovery, and proof statement remains current;
   links and documented checks agree with the repository.
 - **Simplicity:** names are clear, modules are cohesive, interfaces are small,
   and abstractions earn their cost.
 - **Architecture:** dependencies point toward stable domain or capability
   logic; framework and vendor clients stay at the edges; client code does not
   own server trust; repositories, adapters, and interfaces represent real
-  boundaries instead of ceremony. SOLID, DRY, and Clean Architecture were used
-  to reduce change cost rather than to manufacture layers.
+  boundaries instead of ceremony.
 - **Ownership:** responsibilities, data authority, and framework boundaries are
   not duplicated or blurred; project truth has one canonical owner.
 - **Lifecycle:** the repository still merits independent ownership, and it does
@@ -73,8 +71,9 @@ Do not merge coincidentally similar code until it represents one stable concept
 with one owner. Challenge microservices, containers, interfaces, repositories,
 and generic extension points that have no current responsibility.
 
-Stay inside the changed responsibility. Ask before deleting public interfaces,
-data, compatibility behavior, or code whose ownership is uncertain.
+Stay inside the changed responsibility. Deleting public interfaces, data, or
+compatibility behavior needs authority covering that effect. Ask when that
+authority or ownership is unresolved; do not repeat an already resolved gate.
 
 ## Return
 

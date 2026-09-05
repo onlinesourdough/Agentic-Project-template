@@ -294,8 +294,8 @@ Build and operate the smallest independent Project that creates this outcome:
 
 ## Start
 
-Read this file, [README.md](README.md), and the canonical context for the
-Project. Confirm that this repository owns an independent lifecycle. Run the
+Read this file and [README.md](README.md), then only the canonical context
+relevant to the change. Revisit independent ownership when it changes. Run the
 project-local Spec before implementation when scope, ownership, boundaries,
 proof, or contracts are not already clear.
 
@@ -318,11 +318,13 @@ ownership boundary, and specialist-gap route.
 
 Keep one lifecycle record across Spec, Build, Review, revisions, and any
 authorized Ship. The Project repository is canonical after creation.
+For a clear mechanical change, record only the delta and its check in the
+current session; do not recreate a full specification or lifecycle record.
 
 ## Before completion
 
-Verify behavior through the real interface or validator. Run the relevant
-format, lint, type, test, build, contract, and security checks. Check failure,
+Verify behavior through the real interface or validator. Run affected checks
+supported by the Project, proportional to risk. Check failure,
 denial, duplicate, and recovery behavior as relevant. Keep the README and
 [proof record](docs/proof.md) current with actual evidence.
 
@@ -350,9 +352,9 @@ $canonical_section
 
 ## Start
 
-Read [AGENTS.md](AGENTS.md), then inspect the current Project truth and the
-records in [docs/](docs/). Run the project-local Spec when a build-ready
-technical contract is not already resolved. Continue from this repository root
+Read [AGENTS.md](AGENTS.md), then consult the ownership, proof, or recovery
+records in [docs/](docs/) when relevant to the change. Run the project-local
+Spec when a build-ready technical contract is not already resolved. Continue from this repository root
 for Build, Review, authorized Ship, and operation.
 
 ## Lifecycle

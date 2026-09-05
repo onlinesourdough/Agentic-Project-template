@@ -1,6 +1,6 @@
 ---
 name: spec-project
-description: Audit technical specifications of any maturity or construct the missing contract from rough input for the smallest build-ready technical solution. Use when starting or changing an Application, Service, Automation, Integration, Library, or System and readiness, ownership, boundaries, acceptance, or implementation order must be established without rewriting resolved context.
+description: Resolve missing project-local scope, boundaries, and acceptance into a build-ready technical contract. Use for rough input, specification review, or material changes; preserve resolved context.
 ---
 
 # Project Spec
@@ -49,8 +49,10 @@ resolved business decisions, or create another goal.
 
 ## Inspect before asking
 
-Read the request, canonical source material, repository instructions, current
-code, interfaces, existing owners, operating evidence, and recovery paths.
+Read the request and repository instructions, then inspect canonical sources,
+code, interfaces, ownership, operation, and recovery only as needed to resolve
+the affected contract. A clear mechanical change needs only its delta and
+check in the session; do not recreate the full dimension table or lifecycle.
 Link to canonical sources instead of copying them. Resolve facts through
 inspection; never ask an owner to restate discoverable repository or source
 truth.
