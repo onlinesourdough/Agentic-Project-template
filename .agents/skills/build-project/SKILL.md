@@ -57,6 +57,12 @@ build, real interface, or rehearsal when a unit test would be artificial.
 Run affected checks and the repository's required checks; inspect their actual
 results. Do not require a failing test or new tests for mechanical edits.
 
+Reproduce a reported bug at the nearest safe representative caller boundary
+before changing it. Report when the original behavior cannot be reproduced,
+then verify a meaningful regression after the change. Do not delete, skip,
+weaken, or narrow tests merely to get green. A legitimate contract change needs
+explicit rationale and replacement behavior coverage.
+
 A complete result may be code, a workflow, configuration, infrastructure,
 a contract, or a runbook. Prove it through its actual interface; do not invent
 runtime code or deployment for a documentation or operational artifact.

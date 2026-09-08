@@ -73,6 +73,14 @@ low-risk, and inside the implementer's ordinary technical authority. Never
 infer product direction, external authority, trust policy, irreversible
 effects, or an outcome measurement owner.
 
+## Retain material decisions
+
+Where this Project owns a material business, product, architecture, or trust
+decision, inspect actual constraints and reasonable alternatives before
+choosing. Record the context, decision, rationale, consequences, and any
+supersession in the existing owning record. Do not duplicate upstream truth or
+require a particular decision-log directory.
+
 ## Audit the required dimensions
 
 | Dimension | Evidence needed |
@@ -118,6 +126,16 @@ Define proof at the real protected boundary. Include a permitted request and,
 as applicable, missing, invalid, expired or replayed, and
 authenticated-but-forbidden requests. Production misconfiguration must not
 silently bypass required protection.
+
+## Plan data changes proportionally
+
+For a data, schema, RLS, permission, or refresh change, record the exact
+environment, target, scope, action authority, verification, and recovery or
+restore limitation. Prefer read-only inspection. Prepare the owning stack's
+reviewable migration or change mechanism with purpose, application,
+verification, and rollback or restore notes; use SQL only when that mechanism
+is appropriate. Test only in an authorized isolated target. Development
+authority never implies production mutation authority.
 
 ## Ask only for owner decisions
 

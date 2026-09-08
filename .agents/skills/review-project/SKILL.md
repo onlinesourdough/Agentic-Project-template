@@ -19,6 +19,8 @@ resume that same goal for any required revision or authorized Ship.
    evidence needed to assess the affected responsibilities.
 3. Run or inspect the checks that can actually prove the change.
 4. Review correctness and failure paths before style.
+5. Review final bytes and distinguish inspection from execution, and source,
+   synthetic, and operational proof.
 
 Review these gates:
 

@@ -350,6 +350,8 @@ check_created_project() {
   require_literal "Security and denial evidence" "$project/docs/proof.md"
   require_literal "Production security misconfiguration fails closed where protection is required" \
     "$project/docs/proof.md"
+  require_literal "user's language and at the requested depth" "$project/AGENTS.md"
+  require_literal "context, alternatives," "$project/docs/ownership.md"
   require_literal "JWT is conditional, not the default for APIs." \
     "$project/.agents/skills/spec-project/SKILL.md"
   require_literal "authenticated-but-forbidden" \

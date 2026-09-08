@@ -301,6 +301,8 @@ proof, or contracts are not already clear.
 
 Ask one question only when a missing owner decision materially changes the
 Project. Keep resolved context intact and record technical inferences locally.
+Act on obvious authorized steps and parallelize safe independent work. Hand
+back clear, concise results in the user's language and at the requested depth.
 
 ## Route
 
@@ -320,6 +322,11 @@ Keep one lifecycle record across Spec, Build, Review, revisions, and any
 authorized Ship. The Project repository is canonical after creation.
 For a clear mechanical change, record only the delta and its check in the
 current session; do not recreate a full specification or lifecycle record.
+
+Prefer existing maintainable patterns and small coherent components; comments
+explain only non-obvious intent, tradeoffs, or constraints. Use synthetic
+fixture data; never copy real \`.env\` files into fixtures or worktrees by
+default.
 
 ## Before completion
 
@@ -401,6 +408,9 @@ cat > "$staging_directory/docs/ownership.md" <<EOF
 Record one owner for each material responsibility, data source, external
 dependency, trust boundary, and operational decision. Link to the authoritative
 contract rather than copying it into this record.
+
+For a material Project-owned decision, record its context, alternatives,
+rationale, consequences, and any supersession in the existing owning record.
 
 | Responsibility | Source of truth | Owner | Failure or escalation route |
 | --- | --- | --- | --- |

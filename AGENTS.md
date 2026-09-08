@@ -24,6 +24,8 @@ tested Project code.
 
 Ask one question only when a missing decision would materially change the
 Project. Inspect repository truth before asking for facts it already contains.
+Act on obvious authorized steps and parallelize safe independent work. Hand
+back clear, concise results in the user's language and at the requested depth.
 
 ## Route
 
@@ -106,16 +108,22 @@ file and the helper does not generate a Claude adapter.
 - Give every responsibility and source of truth one owner.
 - Prefer one deployable unit before adding a network boundary.
 - Keep framework and vendor details at the edges of stable capability logic.
+- Prefer existing maintainable patterns and small coherent components; comments
+  explain only non-obvious intent, tradeoffs, or constraints.
 - Validate external input and enforce authorization and irreversible policy on
   a trusted server or worker boundary.
 - Make retried effects idempotent; bound reads, timeouts, retries,
   concurrency, and cost.
 - Keep secrets and private data out of code, logs, exports, and client builds.
+- Use synthetic fixture data; never copy real `.env` files into fixtures or
+  worktrees by default.
 - Add dependencies, databases, queues, containers, observability, and runtime AI
   only for demonstrated responsibilities.
 - Preserve rollback, replay, disable, restore, reconciliation, or export as
   the risk requires.
 - Keep README and operational truth current with behavior.
+- Preserve unrelated contributors' changes and distinguish source, synthetic,
+  and operational proof.
 
 ## Before completion
 
