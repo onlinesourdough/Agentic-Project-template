@@ -1,25 +1,16 @@
-# Project-local skills
+# Repository specialist skills
 
-Keep local skills directly at `.agents/skills/<name>/SKILL.md`.
+Keep only Project- or domain-specific repeatable methods and evals at
+`.agents/skills/<name>/SKILL.md`. Shared Spec, Build, Review, Ship, technology
+selection and generic repository audits come from the installed AIOS plugin,
+outside the Project payload. Do not copy, wrap, rename or symlink those methods
+into this shelf. The template neither owns nor auto-updates this Project.
 
-The six seed routes are:
+For a concrete specialist gap, inventory existing Project-local,
+harness-native, installed, and Global capabilities. Reuse a sufficient method;
+install external skills through the chosen harness or plugin under explicit
+authority. An installed optional manager may help. Cross-Project and Global
+Skills remain independently owned. See the root AGENTS.md for shared routing.
 
-- [spec-project](spec-project/SKILL.md)
-- [choose-technology](choose-technology/SKILL.md)
-- [build-project](build-project/SKILL.md)
-- [review-project](review-project/SKILL.md)
-- [ship-project](ship-project/SKILL.md)
-- [audit-project](audit-project/SKILL.md)
-
-After `create-project`, the new Project owns this index and the copied skills.
-The source seed neither owns nor auto-updates them after transfer. Add a local
-skill only for Project- or domain-specific repeatable methods and evals that
-belong to this repository.
-
-For a concrete specialist gap, first inventory existing Project-local,
-harness-native, installed, and Global capabilities. Reuse a sufficient
-capability. If the gap remains, use an installed optional manager or the
-harness's current official method with explicit authority. Install and update
-Cross-Project and Global Skills through the chosen harness or plugin,
-outside the Project payload; do not copy a generic management skill into the
-Project.
+No repository-specific skill is currently needed. Add one only for a concrete
+repeatable specialist responsibility.

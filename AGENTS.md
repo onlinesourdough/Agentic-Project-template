@@ -3,15 +3,34 @@
 Build the smallest independent Project that creates the intended outcome and
 can be understood, operated, recovered, and handed over by its owner.
 
+## Shared lifecycle
+
+Use the installed AIOS plugin (0.4.0 or later) for shared procedures:
+`aios-spec-work`, `aios-build-work`, `aios-review-work` and `aios-ship-work`.
+Spec owns conditional technology selection; Review owns generic repository
+health audits. Resolve these skills through the harness, not copied files or
+hardcoded cache paths. This repository owns its requirements, specialist
+methods, checks, release facts and recovery. Keep those facts here and load
+only the phase and local context needed for the change.
+
+Work in the current task by default, including when opened directly from the
+sidebar. Use `aios-orchestrate-workers` only for requested or concretely
+beneficial delegation, or existing-worker recovery. Verify each selected root
+and preserve one writer for overlapping changes. Repository work does not
+preload personal AIOS context. Plugin availability is an authoring capability,
+not a dependency of the product at runtime; if unavailable, report the method
+gap and perform only work adequately covered by the local contract. Do not
+recreate generic skills locally.
+
 ## Start
 
 1. Read the request, README, and relevant canonical context.
 2. Revisit independent ownership only when the requested change affects it.
-3. Preserve resolved upstream intent. Use `spec-project` for unresolved
+3. Preserve resolved upstream intent. Use `aios-spec-work` for unresolved
    project-local scope, boundaries, or proof; a clear mechanical change needs
    only the delta and its check in the current session.
 4. For a new or materially changed technology decision, run
-   `.agents/skills/choose-technology/SKILL.md` after the contract. A working
+   `aios-spec-work` after the contract. A working
    stack bypasses it when the change does not materially alter technology.
 5. Build, verify, review, and ship only within the granted authority.
 
@@ -27,26 +46,11 @@ Project. Inspect repository truth before asking for facts it already contains.
 Act on obvious authorized steps and parallelize safe independent work. Hand
 back clear, concise results in the user's language and at the requested depth.
 
-## Route
-
-| Work | Skill |
-| --- | --- |
-| Technical scope, boundaries, proof, or contracts | `.agents/skills/spec-project/SKILL.md` |
-| New or materially changed technology decision | `.agents/skills/choose-technology/SKILL.md` |
-| Implementation | `.agents/skills/build-project/SKILL.md` |
-| Correctness, security, simplicity, and proof review | `.agents/skills/review-project/SKILL.md` |
-| Authorized delivery, deployment, activation, or recovery | `.agents/skills/ship-project/SKILL.md` |
-| Periodic whole-repository health check | `.agents/skills/audit-project/SKILL.md` |
-
 See the [local skill index](.agents/skills/README.md) for the flat layout,
 ownership boundary, and specialist-gap route.
 
-Keep one persistent goal across Spec, Build, Review, revisions, and authorized
+Keep the same authorized goal across Spec, Build, Review, revisions, and authorized
 Ship. Do not create lifecycle ceremony for a small mechanical change.
-
-The public path is `spec-project` → materially unchanged existing stack
-directly to `build-project`; or, for a new or materially changed technology
-decision, `choose-technology` → `build-project`.
 
 ## Inputs and ownership
 
@@ -63,7 +67,7 @@ or this template at runtime.
 
 This root is the directly copyable APT seed. It does not contain a nested
 template framework. Use the supported helper for either entry point. A
-correctly rooted worker that fetched and validated the exact live APT revision
+verified task or worker that fetched and validated the exact live APT revision
 directly at the final Project path can convert that clean seed in place:
 
 ```sh
@@ -89,7 +93,7 @@ bash scripts/create-project.sh ../<name> \
   --name "Project Name" --outcome "The intended Project outcome"
 ```
 
-Both routes copy the local skill index, six Project-local skills, and the
+Both routes copy the specialist skill index and the
 license, generate project-specific `AGENTS.md`, `README.md`, and
 ownership/proof/recovery notes, and initialize a fresh empty Git repository.
 They exclude the template's
@@ -97,7 +101,7 @@ README, instructions, docs, assets, tests, creation script, `.git` directory,
 remotes, issue references, caches, and generated state. The owner makes the
 first Project commit and adds any canonical remote. In-place creation records
 the verified APT URL and SHA as historical provenance, then removes the seed
-identity and history. The worker re-enters the exact final path before its
+identity and history. The writer re-enters the exact final path before its
 post-transition attestation. The seed is not a runtime dependency after
 transfer.
 `CLAUDE.md` is intentionally absent; `AGENTS.md` is the sole root instruction

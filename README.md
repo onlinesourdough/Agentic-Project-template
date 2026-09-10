@@ -23,7 +23,7 @@ may supply context, but the Project works without them at runtime and retains
 no competing template identity or state.
 
 ```text
-intent → project-local spec → build ↔ review → authorized ship → owned result
+intent → shared Spec with local requirements → build ↔ review → authorized ship → owned result
 ```
 
 ## Start
@@ -31,38 +31,35 @@ intent → project-local spec → build ↔ review → authorized ship → owned
 Use an AIOS handoff, Design System handoff, conversation, brief, existing
 README, or change request as context. Then ask:
 
-> Use this context as resolved input. Run `spec-project`, construct the
+> Use this context as resolved input. Use `aios-spec-work`, construct the
 > smallest build-ready contract, and build the smallest useful result. Ask one
 > question only if a missing decision would materially change it.
 
-`spec-project` accepts rough ideas, developed briefs, near-complete
+`aios-spec-work` accepts rough ideas, developed briefs, near-complete
 specifications, and existing-system changes. It preserves resolved material
 and constructs the missing project-local technical specification instead of
 demanding a ceremonial document.
 
 ## Workflow
 
-| Need | Skill |
-| --- | --- |
-| Clarify boundaries, proof, or contracts | `.agents/skills/spec-project/SKILL.md` |
-| Choose a new or materially changed technology | `.agents/skills/choose-technology/SKILL.md` |
-| Implement and verify behavior | `.agents/skills/build-project/SKILL.md` |
-| Review intent, correctness, security, and simplicity | `.agents/skills/review-project/SKILL.md` |
-| Deliver, activate, deploy, or recover | `.agents/skills/ship-project/SKILL.md` |
-| Periodic whole-repository health check | `.agents/skills/audit-project/SKILL.md` |
+Use the installed AIOS plugin's shared `aios-spec-work`, `aios-build-work`,
+`aios-review-work` and `aios-ship-work` procedures with the new repository's
+local AGENTS, requirements and proof. Spec includes conditional technology
+selection; Review includes generic repository audits. The
+[local skill index](.agents/skills/README.md) contains only specialist methods.
 
-The [local skill index](.agents/skills/README.md) records the flat layout,
-ownership boundary, and specialist-gap route.
-
-Build and Review repeat until the requested proof passes. Ship happens only
-when the owner authorizes the consequential action.
+Open the Project and work in its current task. Delegation is optional and must
+have a concrete benefit or be requested; it is not required by independent
+ownership. Shared skills are discovered by the harness, not copied from a
+parent directory. An unavailable plugin is an explicit method gap, not a reason
+to vendor its procedures or load personal context. The product runs independently.
 
 ## Inputs and boundaries
 
 ### From AIOS
 
 AIOS can supply resolved outcome, scope, proof, authority, and canonical links.
-The Project runs a compact project-local Spec, then owns implementation,
+The Project runs a compact shared AIOS Spec with the local contract, then owns implementation,
 operation, recovery, and handover. Measured learning can return to AIOS; AIOS
 is not a runtime dependency.
 
@@ -79,7 +76,7 @@ intent through operation. Keep one source for each fact and link rather than
 duplicate business truth.
 
 Canonical adjacent repositories, when their context is relevant, are
-[AIOS](https://github.com/onlinesourdough/AIOS-template),
+[AIOS](https://github.com/onlinesourdough/AIOS-Plugin),
 [Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System), and
 [Agentic Content System](https://github.com/onlinesourdough/Agentic-Content-System).
 They are optional context sources, not runtime dependencies.
@@ -95,7 +92,7 @@ The root is the seed; do not introduce a nested `template/` directory.
 
 ### Direct final-root path
 
-When a creation worker is already rooted at the final Project path, fetch the
+When the current task is working at the final Project path, fetch the
 live canonical APT commit directly into that empty Git repository. Do not
 download another seed checkout. Before conversion, verify all of these facts:
 
@@ -130,7 +127,7 @@ it reports the exact retained recovery directory instead of claiming success.
 Success leaves that final path as the new Project with fresh empty Git history,
 no remote, the filtered payload, and the verified source URL@SHA in
 `docs/ownership.md` as historical provenance. Because the directory entry is
-replaced, the worker must re-enter that exact absolute path before its
+replaced, the writer must re-enter that exact absolute path before its
 post-transition root and Git attestation.
 
 ### AIOS path
@@ -166,7 +163,7 @@ canonical location.
 
 Both helper routes initialize fresh empty Git history, do not inherit an origin
 remote, and leave the first commit to the Project owner. They copy only the
-local skill index, six Project-local skills, and the license; they generate new
+specialist skill index and the license; they generate new
 Project instructions, README, ownership, proof, and recovery notes.
 Template-only assets, tests, creation scripts, issue references, caches, and
 generated state are not copied.
@@ -180,7 +177,7 @@ an existing destination.
 Keep an existing working stack when the change does not materially alter it,
 record it in the Spec, and go directly to Build. For a new or materially
 changed technology decision, use
-`.agents/skills/choose-technology/SKILL.md` after the project-local contract is
+`aios-spec-work` after the project-local contract is
 ready. For a concrete specialist capability gap, follow the inventory and
 authority boundary in the
 [local skill index](.agents/skills/README.md); do not preload or install

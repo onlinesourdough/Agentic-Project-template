@@ -241,8 +241,8 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-mkdir -p "$staging_directory/.agents"
-cp -R "$source_root/.agents/skills" "$staging_directory/.agents/skills"
+mkdir -p "$staging_directory/.agents/skills"
+cp "$source_root/.agents/skills/README.md" "$staging_directory/.agents/skills/README.md"
 cp "$source_root/LICENSE" "$staging_directory/LICENSE"
 
 cat > "$staging_directory/.gitignore" <<'GITIGNORE'
@@ -296,7 +296,7 @@ Build and operate the smallest independent Project that creates this outcome:
 
 Read this file and [README.md](README.md), then only the canonical context
 relevant to the change. Revisit independent ownership when it changes. Run the
-project-local Spec before implementation when scope, ownership, boundaries,
+shared AIOS Spec with local requirements before implementation when scope, ownership, boundaries,
 proof, or contracts are not already clear.
 
 Ask one question only when a missing owner decision materially changes the
@@ -304,16 +304,24 @@ Project. Keep resolved context intact and record technical inferences locally.
 Act on obvious authorized steps and parallelize safe independent work. Hand
 back clear, concise results in the user's language and at the requested depth.
 
-## Route
+## Shared lifecycle
 
-| Work | Skill |
-| --- | --- |
-| Technical scope, boundaries, proof, or contracts | \`.agents/skills/spec-project/SKILL.md\` |
-| New or materially changed technology decision | \`.agents/skills/choose-technology/SKILL.md\` |
-| Implementation | \`.agents/skills/build-project/SKILL.md\` |
-| Correctness, security, simplicity, and proof review | \`.agents/skills/review-project/SKILL.md\` |
-| Authorized delivery, deployment, activation, or recovery | \`.agents/skills/ship-project/SKILL.md\` |
-| Periodic whole-repository health check | \`.agents/skills/audit-project/SKILL.md\` |
+Use the installed AIOS plugin (0.4.0 or later) for shared procedures:
+\`aios-spec-work\`, \`aios-build-work\`, \`aios-review-work\` and \`aios-ship-work\`.
+Spec owns conditional technology selection; Review owns generic repository
+health audits. Resolve these skills through the harness, not copied files or
+hardcoded cache paths. This repository owns its requirements, specialist
+methods, checks, release facts and recovery. Keep those facts here and load
+only the phase and local context needed for the change.
+
+Work in the current task by default, including when opened directly from the
+sidebar. Use \`aios-orchestrate-workers\` only for requested or concretely
+beneficial delegation, or existing-worker recovery. Verify each selected root
+and preserve one writer for overlapping changes. Repository work does not
+preload personal AIOS context. Plugin availability is an authoring capability,
+not a dependency of the product at runtime; if unavailable, report the method
+gap and perform only work adequately covered by the local contract. Do not
+recreate generic skills locally.
 
 See the [local skill index](.agents/skills/README.md) for the flat layout,
 ownership boundary, and specialist-gap route.
@@ -360,24 +368,19 @@ $canonical_section
 ## Start
 
 Read [AGENTS.md](AGENTS.md), then consult the ownership, proof, or recovery
-records in [docs/](docs/) when relevant to the change. Run the project-local
-Spec when a build-ready technical contract is not already resolved. Continue from this repository root
+records in [docs/](docs/) when relevant to the change. Use shared AIOS
+Spec with the local contract when a build-ready technical contract is not already resolved. Continue from this repository root
 for Build, Review, authorized Ship, and operation.
 
 ## Lifecycle
 
-\`intent → project-local spec → build ↔ review → authorized ship → owned result\`
+\`intent → shared spec with local requirements → build ↔ review → authorized ship → owned result\`
 
-The public local routes are:
-
-- [Spec](.agents/skills/spec-project/SKILL.md)
-- [Technology choice](.agents/skills/choose-technology/SKILL.md), only for a
-  new or materially changed decision
-- [Build](.agents/skills/build-project/SKILL.md)
-- [Review](.agents/skills/review-project/SKILL.md)
-- [Ship](.agents/skills/ship-project/SKILL.md), only with owner authority
-- [Audit](.agents/skills/audit-project/SKILL.md), periodically
-- [Local skill index](.agents/skills/README.md)
+Use the shared AIOS plugin methods listed in [AGENTS.md](AGENTS.md). Local
+requirements and release/recovery facts remain in this repository. The
+[local skill index](.agents/skills/README.md) is reserved for specialist methods;
+creation copies no generic lifecycle skills. Direct tasks can continue here
+without a lead or worker launch. The plugin is no product runtime dependency.
 
 ## Ownership and recovery
 

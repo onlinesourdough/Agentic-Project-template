@@ -21,239 +21,31 @@ require_literal() {
     fail "missing required contract text $needle in $file"
 }
 
-project_skills=(
-  spec-project
-  choose-technology
-  build-project
-  review-project
-  ship-project
-  audit-project
-)
-
+# The seed and its generated projects carry only the specialist shelf index.
+# Shared method behavior is validated by AIOS, not copied here as wording tests.
 check_skill_layout() {
   local skills_root="$1"
   local context="$2"
-  local expected_children actual_children expected_files actual_files support_dirs
-
   require_file "$skills_root/README.md"
-  [[ ! -e "$skills_root/manage-skills" ]] ||
-    fail "$context contains the generic local manage-skills payload"
-
-  expected_children="$(printf '%s\n' "${project_skills[@]}" | LC_ALL=C sort)"
-  actual_children="$(
-    for child in "$skills_root"/*; do
-      [[ -d "$child" ]] || continue
-      basename "$child"
-    done | LC_ALL=C sort
-  )"
-  [[ "$actual_children" = "$expected_children" ]] ||
-    fail "$context skill children differ from the six Project-local routes"
-
-  expected_files="$(
-    printf '%s\n' "${project_skills[@]}" |
-      sed 's#$#/SKILL.md#' | LC_ALL=C sort
-  )"
-  actual_files="$(
-    find "$skills_root" -mindepth 2 -type f -print |
-      sed "s#^$skills_root/##" | LC_ALL=C sort
-  )"
-  [[ "$actual_files" = "$expected_files" ]] ||
-    fail "$context Project-local skill folders must contain only SKILL.md"
-
-  support_dirs="$(find "$skills_root" -mindepth 2 -type d -print)"
-  [[ -z "$support_dirs" ]] ||
-    fail "$context contains Project-local skill support directories: $support_dirs"
-
-  if rg --fixed-strings --quiet -- 'name: manage-skills' "$skills_root" ||
-    rg --quiet -- 'npx skills (find|add)' "$skills_root"; then
-    fail "$context contains a copied global skill-management payload"
-  fi
+  local extra
+  extra="$(find "$skills_root" -mindepth 1 ! -path "$skills_root/README.md" -print)"
+  [[ -z "$extra" ]] || fail "$context contains a copied skill payload: $extra"
 }
 
 skills_root="$repository_root/.agents/skills"
 check_skill_layout "$skills_root" "seed"
-for skill in "${project_skills[@]}"; do
-  require_file "$repository_root/.agents/skills/$skill/SKILL.md"
-  require_literal "name: $skill" "$repository_root/.agents/skills/$skill/SKILL.md"
-  require_literal "description:" "$repository_root/.agents/skills/$skill/SKILL.md"
+for file in scripts/create-project.sh README.md AGENTS.md LICENSE \
+  assets/branding/project-banner.png assets/branding/project-icon.png; do
+  require_file "$repository_root/$file"
 done
-
-for index_contract in \
-  '.agents/skills/<name>/SKILL.md' \
-  'Project- or domain-specific' \
-  'repeatable methods and evals' \
-  'neither owns nor auto-updates' \
-  'inventory existing Project-local' \
-  'harness-native, installed, and Global capabilities' \
-  'Cross-Project and Global Skills' \
-  'chosen harness or plugin' \
-  'outside the Project payload' \
-  'installed optional manager' \
-  'explicit authority'
-do
-  require_literal "$index_contract" "$skills_root/README.md"
+[[ ! -e "$repository_root/CLAUDE.md" ]] || fail "unexpected secondary root instructions"
+[[ ! -d "$repository_root/docs" ]] || fail "duplicate seed documentation surface"
+for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
+  require_literal "$skill" "$repository_root/AGENTS.md"
 done
-
-require_file "$repository_root/scripts/create-project.sh"
-require_file "$repository_root/README.md"
-require_file "$repository_root/AGENTS.md"
-require_file "$repository_root/LICENSE"
-[[ ! -d "$repository_root/docs" ]] ||
-  fail "seed contains a duplicate documentation surface"
-# Branding belongs to this seed; creation must still exclude all assets.
-require_file "$repository_root/assets/branding/project-banner.png"
-require_file "$repository_root/assets/branding/project-icon.png"
-
-[[ ! -e "$repository_root/CLAUDE.md" ]] ||
-  fail "CLAUDE.md must remain absent after reconciliation"
-require_literal "\`CLAUDE.md\` is intentionally absent" "$repository_root/AGENTS.md"
-
-[[ ! -e "$repository_root/.agents/skills/spec-solution" ]] ||
-  fail "obsolete spec-solution skill remains"
-[[ ! -e "$repository_root/.agents/skills/build-solution" ]] ||
-  fail "obsolete build-solution skill remains"
-[[ ! -e "$repository_root/.agents/skills/review-solution" ]] ||
-  fail "obsolete review-solution skill remains"
-[[ ! -e "$repository_root/.agents/skills/ship-solution" ]] ||
-  fail "obsolete ship-solution skill remains"
-[[ ! -e "$repository_root/.agents/skills/audit-solution" ]] ||
-  fail "obsolete audit-solution skill remains"
-[[ ! -e "$repository_root/tests/validate-spec-solution.sh" ]] ||
-  fail "obsolete validation script remains"
-require_literal "https://github.com/onlinesourdough/AIOS-template" "$repository_root/README.md"
+require_literal "https://github.com/onlinesourdough/AIOS-Plugin" "$repository_root/README.md"
 require_literal "[Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System)" "$repository_root/README.md"
 require_literal "https://github.com/onlinesourdough/Agentic-Content-System" "$repository_root/README.md"
-require_literal "https://github.com/onlinesourdough/Agentic-project-template" "$repository_root/README.md"
-for stale_owner in gustavonline onlinesourdough; do
-  stale_pattern="https://github\\.com/$stale_owner/AIOS(\$|[^-A-Za-z0-9])"
-  if rg --quiet -- "$stale_pattern" "$repository_root/README.md"; then
-    fail "stale canonical link remains for $stale_owner/AIOS"
-  fi
-done
-stale_link="https://github.com/onlinesourdough/Agentic-videoeditor"
-if rg --fixed-strings --quiet -- "$stale_link" "$repository_root/README.md"; then
-  fail "stale canonical link remains: $stale_link"
-fi
-stale_ads_url="https://github.com/onlinesourdough/Design-template"
-if rg --fixed-strings --quiet --glob '!tests/validate-project-template.sh' \
-  -- "$stale_ads_url" "$repository_root"; then
-  fail "stale Agentic Design System URL remains: $stale_ads_url"
-fi
-require_literal "scripts/create-project.sh" "$repository_root/README.md"
-for in_place_contract in \
-  "--in-place" \
-  "--source-url" \
-  "--source-sha" \
-  "fresh empty Git history" \
-  "historical provenance"; do
-  require_literal "$in_place_contract" "$repository_root/README.md"
-done
-require_literal "pre-transition failure leaves the verified seed untouched" \
-  "$repository_root/README.md"
-require_literal "retained recovery directory" "$repository_root/README.md"
-require_literal "re-enter that exact absolute path" "$repository_root/README.md"
-require_literal "required only for this in-place route" "$repository_root/README.md"
-require_literal "\`--canonical-url\` is optional" "$repository_root/README.md"
-require_literal "never overwrites" "$repository_root/README.md"
-require_literal "spec-project" "$repository_root/AGENTS.md"
-require_literal "build-project" "$repository_root/AGENTS.md"
-require_literal "review-project" "$repository_root/AGENTS.md"
-require_literal "ship-project" "$repository_root/AGENTS.md"
-require_literal "audit-project" "$repository_root/AGENTS.md"
-require_literal "choose-technology" "$repository_root/AGENTS.md"
-require_literal "Cost and usage acceptance case" "$repository_root/.agents/skills/choose-technology/SKILL.md"
-choose_skill="$repository_root/.agents/skills/choose-technology/SKILL.md"
-for technology_contract in \
-  "Derive candidates from the Project's resolved responsibilities" \
-  "Inspect current official sources" \
-  "Do not retain a starter catalogue or default stack in Project truth."; do
-  require_literal "$technology_contract" "$choose_skill"
-done
-spec_skill="$repository_root/.agents/skills/spec-project/SKILL.md"
-for spec_readiness_contract in \
-  "Preserve useful source material" \
-  "Accept source material at any maturity" \
-  "Rough idea:" \
-  "Developed brief:" \
-  "Near-complete specification:" \
-  "Existing-system change request:" \
-  "accept resolved AIOS intent, outcome, scope, proof," \
-  "and authority as upstream truth." \
-  "Return exactly one gate." \
-  "### READY" \
-  "### REVISE" \
-  "### BLOCKED"; do
-  require_literal "$spec_readiness_contract" "$spec_skill"
-done
-for spec_security_contract in \
-  "Intentionally public and local-only Projects do not require authentication" \
-  "managed session, OIDC, or OAuth" \
-  "scoped API key or stronger service identity" \
-  "verified request signature" \
-  "JWT is conditional, not the default for APIs." \
-  "configured algorithms, issuer, audience, time claims, and key rotation" \
-  "expiry, revocation, and replay"; do
-  require_literal "$spec_security_contract" "$spec_skill"
-done
-
-build_skill="$repository_root/.agents/skills/build-project/SKILL.md"
-for build_security_contract in \
-  "maintained framework, identity-provider, or protocol primitives" \
-  "Fail closed in production" \
-  "per action and resource" \
-  "security-relevant failures visible through redacted, safe telemetry" \
-  "authenticated-but-forbidden" \
-  "Do not invent a universal scanner command."; do
-  require_literal "$build_security_contract" "$build_skill"
-done
-
-review_skill="$repository_root/.agents/skills/review-project/SKILL.md"
-require_literal "material gap in an applicable security responsibility" "$review_skill"
-require_literal "is a Required finding." "$review_skill"
-
-audit_skill="$repository_root/.agents/skills/audit-project/SKILL.md"
-require_literal "security drift" "$audit_skill"
-require_literal "intentionally public interfaces" "$audit_skill"
-
-require_literal "Proportional security baseline" "$repository_root/README.md"
-require_literal \
-  "Public and local-only Projects do not gain authentication by default." \
-  "$repository_root/README.md"
-
-for audit_contract in \
-  "exact Git root" \
-  "credential-free remote identity" \
-  "fresh fetched live upstream object" \
-  "equal, behind, ahead, or diverged" \
-  "Cached tracking refs and a clean worktree are not live proof." \
-  "Do not fast-forward, commit, push, stash, rebase, merge, or force"; do
-  require_literal "$audit_contract" "$audit_skill"
-done
-
-ship_skill="$repository_root/.agents/skills/ship-project/SKILL.md"
-for ship_contract in \
-  "Git delivery gate" \
-  "reviewed exact commit" \
-  "fresh fetch" \
-  "normal non-force push" \
-  "Do not auto-merge, rebase, or force" \
-  "local HEAD equals the fresh fetched live branch object" \
-  "Local-only Projects and Projects without a remote do not need this Git gate."; do
-  require_literal "$ship_contract" "$ship_skill"
-done
-
-if rg -n -i --glob '!.git/**' \
-  '(cloudflare|github pages).{0,40}\\b(required|mandatory|default)\\b' "$repository_root"; then
-  fail "mandatory workflow or provider language remains"
-fi
-if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
-  rg -i '(free-for-dev\\.md|price.*catalog|catalog.*price)'; then
-  fail "static price catalogue path remains"
-fi
-require_literal '![Agentic Project Template banner](assets/branding/project-banner.png)' \
-  "$repository_root/README.md"
-require_literal '[<img src="assets/branding/project-icon.png" alt="Agentic Project Template icon" width="32" height="32">](assets/branding/project-icon.png)' \
-  "$repository_root/README.md"
 
 check_local_links() {
   local markdown="$1"
@@ -275,29 +67,10 @@ while IFS= read -r markdown; do
 done < <(cd "$repository_root" && rg --files -uu --glob '*.md' \
   --glob '!.git/**' --glob '!node_modules/**')
 
-# The validator contains the legacy literals it rejects. It is the sole
-# intentional allowlist; no current instruction, resource, test, or asset may
-# carry the former public identity or skill paths.
-legacy_scan_exclusion='tests/validate-project-template.sh'
-legacy_pattern='Solution-template|solution-template-overview|spec-solution|build-solution|review-solution|ship-solution|audit-solution|Agentic-videoeditor|Design-template'
-if rg -n -uu --glob '!.git/**' --glob '!node_modules/**' \
-  --glob "!$legacy_scan_exclusion" "$legacy_pattern" "$repository_root"; then
-  fail "stale public identity or path remains"
+if rg -n -uu --glob '!.git/**' --glob '!tests/validate-project-template.sh' \
+  '\.agents/skills/(spec|build|review|ship|audit)-(project|solution)/|\.agents/skills/choose-technology/' "$repository_root"; then
+  fail "local generic lifecycle route remains"
 fi
-
-if rg -n -uu --glob '!.git/**' --glob '!node_modules/**' \
-  --glob '!tests/validate-project-template.sh' 'manage-skills|Skills Atlas' "$repository_root"; then
-  fail "removed local manager route or excluded Project state remains"
-fi
-
-if rg --files -uu --glob '!.git/**' --glob '!node_modules/**' "$repository_root" |
-  rg -n '(^|/)(spec-solution|build-solution|review-solution|ship-solution|audit-solution|validate-spec-solution\.sh|solution-template-overview-v2\.svg)($|/)'; then
-  fail "stale public path remains"
-fi
-
-for obsolete in capability-profiles/advanced-full-stack-python.md TECHNOLOGY.md; do
-  [[ ! -e "$repository_root/$obsolete" ]] || fail "obsolete file remains: $obsolete"
-done
 
 bash -n "$repository_root/scripts/create-project.sh"
 bash -n "$repository_root/tests/validate-project-template.sh"
@@ -322,12 +95,6 @@ check_created_project() {
 
   for file in AGENTS.md README.md LICENSE .gitignore \
     .agents/skills/README.md \
-    .agents/skills/spec-project/SKILL.md \
-    .agents/skills/choose-technology/SKILL.md \
-    .agents/skills/build-project/SKILL.md \
-    .agents/skills/review-project/SKILL.md \
-    .agents/skills/ship-project/SKILL.md \
-    .agents/skills/audit-project/SKILL.md \
     docs/ownership.md docs/proof.md docs/recovery.md; do
     require_file "$project/$file"
   done
@@ -352,19 +119,11 @@ check_created_project() {
     "$project/docs/proof.md"
   require_literal "user's language and at the requested depth" "$project/AGENTS.md"
   require_literal "context, alternatives," "$project/docs/ownership.md"
-  require_literal "JWT is conditional, not the default for APIs." \
-    "$project/.agents/skills/spec-project/SKILL.md"
-  require_literal "authenticated-but-forbidden" \
-    "$project/.agents/skills/build-project/SKILL.md"
-
-  cmp -s "$repository_root/.agents/skills/README.md" \
-    "$project/.agents/skills/README.md" ||
-    fail "created Project did not receive the current local skill index"
-  for lifecycle_skill in "${project_skills[@]}"; do
-    cmp -s "$repository_root/.agents/skills/$lifecycle_skill/SKILL.md" \
-      "$project/.agents/skills/$lifecycle_skill/SKILL.md" ||
-      fail "created Project did not receive current $lifecycle_skill skill"
+  for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
+    require_literal "$skill" "$project/AGENTS.md"
   done
+  cmp -s "$repository_root/.agents/skills/README.md" \
+    "$project/.agents/skills/README.md" || fail "specialist shelf index changed during creation"
 
   for excluded in assets tests scripts; do
     [[ ! -e "$project/$excluded" ]] || fail "seed-only path copied: $excluded"
@@ -384,8 +143,18 @@ check_created_project() {
 check_created_project "$standalone_project" "Standalone Proof" "Prove independent ownership"
 check_created_project "$aios_project" "AIOS Proof" "Prove the direct AIOS creation path"
 require_literal "https://example.test/standalone-proof" "$standalone_project/README.md"
-printf 'out-of-place creation proof: standalone=%s aios=%s history=empty remotes=0 skills=6 support-files=absent\n' \
+printf 'out-of-place creation proof: standalone=%s aios=%s history=empty remotes=0 skills=0 shared-routes=4\n' \
   "$standalone_project" "$aios_project"
+
+# Extra methods in a locally customized seed must not leak into a new Project.
+whitelist_seed="$temporary_root/whitelist-seed"
+mkdir -p "$whitelist_seed"
+cp -R "$repository_root/." "$whitelist_seed/"
+mkdir -p "$whitelist_seed/.agents/skills/spec-project"
+printf '%s\n' 'unexpected copied method' > "$whitelist_seed/.agents/skills/spec-project/SKILL.md"
+bash "$whitelist_seed/scripts/create-project.sh" "$temporary_root/whitelist-project" \
+  --name "Whitelist Proof" --outcome "No copied generic skill" >/dev/null
+check_skill_layout "$temporary_root/whitelist-project/.agents/skills" "payload whitelist"
 
 in_place_source_url='https://github.com/onlinesourdough/Agentic-project-template.git'
 
@@ -470,7 +239,7 @@ require_literal "$in_place_source_url@$in_place_sha" \
   "$in_place_seed/docs/ownership.md"
 require_literal "Historical provenance" "$in_place_seed/docs/ownership.md"
 assert_no_transition_artifacts "$temporary_root" "successful in-place creation"
-printf 'in-place transition proof: before=%s after=%s source=%s@%s history=empty remotes=0 skills=6 seed-only-paths=absent\n' \
+printf 'in-place transition proof: before=%s after=%s source=%s@%s history=empty remotes=0 skills=0 shared-routes=4 seed-only-paths=absent\n' \
   "$in_place_path_before" "$in_place_path_after" "$in_place_source_url" \
   "$in_place_sha"
 
