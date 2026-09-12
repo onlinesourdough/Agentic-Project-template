@@ -5,13 +5,22 @@ can be understood, operated, recovered, and handed over by its owner.
 
 ## Shared lifecycle
 
-Use the installed AIOS plugin (0.4.0 or later) for shared procedures:
-`aios-spec-work`, `aios-build-work`, `aios-review-work` and `aios-ship-work`.
-Spec owns conditional technology selection; Review owns generic repository
-health audits. Resolve these skills through the harness, not copied files or
-hardcoded cache paths. This repository owns its requirements, specialist
-methods, checks, release facts and recovery. Keep those facts here and load
-only the phase and local context needed for the change.
+For substantive lifecycle work, use the installed AIOS plugin (0.4.0 or later):
+`aios-spec-work` for unresolved scope or technology decisions, `aios-build-work`
+for accepted implementation, `aios-review-work` for acceptance or a requested
+repository audit, and `aios-ship-work` for authorized delivery. Resolve only the
+needed procedure through the harness; do not copy it or hardcode cache paths.
+This repository owns its requirements, specialist methods, checks, release
+facts and recovery. A clear mechanical or typo edit needs only relevant context,
+the scoped diff and its affected check, without a mandatory skill load or full
+suite.
+
+Complete the authorized result through affected checks, diff review and in-scope
+fixes before handing back. Carry explicit session authorization across phases;
+local procedures do not require renewed approval for the same action and scope.
+Pause only for a material missing decision, authority or required capability.
+Preserve delegated acceptance and delivery boundaries; implementation authority
+does not authorize new publication, external actions or destinations.
 
 Work in the current task by default, including when opened directly from the
 sidebar. Use `aios-orchestrate-workers` only for requested or concretely
@@ -24,7 +33,8 @@ recreate generic skills locally.
 
 ## Start
 
-1. Read the request, README, and relevant canonical context.
+1. Read the request and only the README sections or canonical context relevant
+   to the change.
 2. Revisit independent ownership only when the requested change affects it.
 3. Preserve resolved upstream intent. Use `aios-spec-work` for unresolved
    project-local scope, boundaries, or proof; a clear mechanical change needs
@@ -41,8 +51,8 @@ An orchestration runtime is optional: select one only when visible workflow
 responsibilities justify it, and keep reusable deterministic domain logic in
 tested Project code.
 
-Ask one question only when a missing decision would materially change the
-Project. Inspect repository truth before asking for facts it already contains.
+Ask only when a missing decision materially changes the Project and cannot be
+resolved from repository truth or the accepted session context.
 Act on obvious authorized steps and parallelize safe independent work. Hand
 back clear, concise results in the user's language and at the requested depth.
 
@@ -134,8 +144,14 @@ file and the helper does not generate a Claude adapter.
 - Verify intended behavior through its real interface.
 - Run the affected checks supported by this repository, proportional to risk.
 - Check relevant failure, denial, duplicate, and recovery behavior.
-- Review the diff for accidental complexity and stale truth.
-- State unavailable evidence and remaining risk.
+- Review the diff for accidental complexity and stale truth; fix in-scope findings.
+- Rerun affected checks after fixes; broaden only for new failures or unresolved risk.
+- Report the observable result, actual check outcomes, unavailable evidence and
+  remaining risk. Mark delivery and outcome measurement pending until evidenced.
 
+The creation suite uses disposable local fixtures with no production access.
+When creation or transfer changes, run `bash tests/validate-project-template.sh`,
+inspect a generated Project's actual instructions, and fix related failures
+within the accepted task. A prose-only correction does not require that suite.
 Never claim a test, deployment, migration, or runtime path passed without
 reading its result.

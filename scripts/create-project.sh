@@ -294,25 +294,35 @@ Build and operate the smallest independent Project that creates this outcome:
 
 ## Start
 
-Read this file and [README.md](README.md), then only the canonical context
-relevant to the change. Revisit independent ownership when it changes. Run the
-shared AIOS Spec with local requirements before implementation when scope, ownership, boundaries,
-proof, or contracts are not already clear.
+Use [README.md](README.md) for the outcome and entrypoints, then only canonical
+context relevant to the change. Revisit independent ownership when it changes.
+Use shared AIOS Spec before implementation only for material gaps in scope,
+ownership, boundaries, proof or contracts.
 
-Ask one question only when a missing owner decision materially changes the
-Project. Keep resolved context intact and record technical inferences locally.
+Ask only for a missing decision that materially changes the Project and cannot
+be resolved from repository truth or accepted session context. Keep resolved
+context intact and record technical inferences locally.
 Act on obvious authorized steps and parallelize safe independent work. Hand
 back clear, concise results in the user's language and at the requested depth.
 
 ## Shared lifecycle
 
-Use the installed AIOS plugin (0.4.0 or later) for shared procedures:
-\`aios-spec-work\`, \`aios-build-work\`, \`aios-review-work\` and \`aios-ship-work\`.
-Spec owns conditional technology selection; Review owns generic repository
-health audits. Resolve these skills through the harness, not copied files or
-hardcoded cache paths. This repository owns its requirements, specialist
-methods, checks, release facts and recovery. Keep those facts here and load
-only the phase and local context needed for the change.
+For substantive lifecycle work, use the installed AIOS plugin (0.4.0 or later):
+\`aios-spec-work\` for unresolved scope or technology decisions, \`aios-build-work\`
+for accepted implementation, \`aios-review-work\` for acceptance or a requested
+repository audit, and \`aios-ship-work\` for authorized delivery. Resolve only the
+needed procedure through the harness; do not copy it or hardcode cache paths.
+This repository owns its requirements, specialist methods, checks, release
+facts and recovery. A clear mechanical or typo edit needs only relevant context,
+the scoped diff and its affected check, without a mandatory skill load or full
+suite.
+
+Complete the authorized result through affected checks, diff review and in-scope
+fixes before handing back. Carry explicit session authorization across phases;
+local procedures do not require renewed approval for the same action and scope.
+Pause only for a material missing decision, authority or required capability.
+Preserve delegated acceptance and delivery boundaries; implementation authority
+does not authorize new publication, external actions or destinations.
 
 Work in the current task by default, including when opened directly from the
 sidebar. Use \`aios-orchestrate-workers\` only for requested or concretely
@@ -340,8 +350,12 @@ default.
 
 Verify behavior through the real interface or validator. Run affected checks
 supported by the Project, proportional to risk. Check failure,
-denial, duplicate, and recovery behavior as relevant. Keep the README and
-[proof record](docs/proof.md) current with actual evidence.
+denial, duplicate, and recovery behavior as relevant. Inspect the result and
+diff, fix in-scope findings, and rerun affected checks. Broaden verification only
+for new failures or unresolved risk. Keep affected README and
+[proof record](docs/proof.md) facts current with actual evidence. Hand back the
+observable result, check outcomes and material limits; delivery and outcome
+measurement remain pending until evidenced.
 
 ## Ownership and recovery
 
@@ -367,19 +381,22 @@ $canonical_section
 
 ## Start
 
-Read [AGENTS.md](AGENTS.md), then consult the ownership, proof, or recovery
-records in [docs/](docs/) when relevant to the change. Use shared AIOS
-Spec with the local contract when a build-ready technical contract is not already resolved. Continue from this repository root
-for Build, Review, authorized Ship, and operation.
+Use [AGENTS.md](AGENTS.md) for local instructions and the ownership, proof or
+recovery records in [docs/](docs/) when relevant. Use shared AIOS Spec for
+material unresolved contract gaps. Continue from this repository root through
+implementation, affected checks, review, fixes and authorized delivery.
 
 ## Lifecycle
 
 \`intent → shared spec with local requirements → build ↔ review → authorized ship → owned result\`
 
-Use the shared AIOS plugin methods listed in [AGENTS.md](AGENTS.md). Local
-requirements and release/recovery facts remain in this repository. The
+Use shared AIOS plugin methods when the task needs the procedures routed in
+[AGENTS.md](AGENTS.md). Local requirements and release/recovery facts remain in
+this repository. The
 [local skill index](.agents/skills/README.md) is reserved for specialist methods;
-creation copies no generic lifecycle skills. Direct tasks can continue here
+creation copies no generic lifecycle skills. Version each maintained specialist
+skill independently using quoted SemVer in YAML metadata.version, initially
+"1.0.0"; the index explains bump criteria. Direct tasks can continue here
 without a lead or worker launch. The plugin is no product runtime dependency.
 
 ## Ownership and recovery
@@ -491,8 +508,8 @@ Do not place secrets in this record.
 2. Stop or disable the unsafe operation when applicable.
 3. Apply the tested rollback, rebuild, restore, replay, or reconciliation path.
 4. Verify the critical journey and failure visibility.
-5. Record the result in [docs/proof.md](proof.md) and return to operation only
-   with owner authority.
+5. Record the result in [docs/proof.md](proof.md) and return to operation within
+   existing owner authority; obtain only genuinely missing authorization.
 
 ## Rehearsal
 

@@ -31,9 +31,9 @@ intent → shared Spec with local requirements → build ↔ review → authoriz
 Use an AIOS handoff, Design System handoff, conversation, brief, existing
 README, or change request as context. Then ask:
 
-> Use this context as resolved input. Use `aios-spec-work`, construct the
-> smallest build-ready contract, and build the smallest useful result. Ask one
-> question only if a missing decision would materially change it.
+> Preserve this resolved context. Use `aios-spec-work` only for material gaps,
+> then complete the authorized result through affected checks, review and fixes.
+> Ask only for a missing decision or authority that changes the work.
 
 `aios-spec-work` accepts rough ideas, developed briefs, near-complete
 specifications, and existing-system changes. It preserves resolved material
@@ -42,10 +42,11 @@ demanding a ceremonial document.
 
 ## Workflow
 
-Use the installed AIOS plugin's shared `aios-spec-work`, `aios-build-work`,
-`aios-review-work` and `aios-ship-work` procedures with the new repository's
-local AGENTS, requirements and proof. Spec includes conditional technology
-selection; Review includes generic repository audits. The
+For substantive work, select the installed AIOS plugin procedure relevant to
+the current need, as routed by local AGENTS. Carry the accepted contract and
+session authority through implementation, affected checks, review, fixes and
+authorized delivery. A typo or clear mechanical edit needs its scoped diff and
+affected check, without a mandatory skill load or full suite. The
 [local skill index](.agents/skills/README.md) contains only specialist methods.
 
 Open the Project and work in its current task. Delegation is optional and must
@@ -59,9 +60,9 @@ to vendor its procedures or load personal context. The product runs independentl
 ### From AIOS
 
 AIOS can supply resolved outcome, scope, proof, authority, and canonical links.
-The Project runs a compact shared AIOS Spec with the local contract, then owns implementation,
-operation, recovery, and handover. Measured learning can return to AIOS; AIOS
-is not a runtime dependency.
+The Project uses shared Spec when material local contract gaps remain, then owns
+implementation, operation, recovery, and handover. Measured learning can return
+to AIOS; AIOS is not a runtime dependency.
 
 ### From a Design System
 
@@ -81,10 +82,10 @@ Canonical adjacent repositories, when their context is relevant, are
 [Agentic Content System](https://github.com/onlinesourdough/Agentic-Content-System).
 They are optional context sources, not runtime dependencies.
 
-The authorized Ship target is
+The template source is
 [onlinesourdough/Agentic-project-template](https://github.com/onlinesourdough/Agentic-project-template).
-Renaming the GitHub repository or changing remotes is an authorized Ship action,
-not part of this Build.
+A source link does not grant delivery authority; publishing or changing remotes
+requires authorization for that action and destination in the current task.
 
 ## Create an owned Project
 
@@ -229,5 +230,14 @@ Validate the template and creation behavior with:
 bash tests/validate-project-template.sh
 ```
 
-The GitHub repository rename and any remote/settings change are Ship actions;
-they are intentionally not performed by this Build.
+The suite uses disposable local fixtures and verifies creation, source identity,
+clean-state guards and failure recovery. Run it when creation or transfer is
+affected; a prose-only correction needs only its affected checks.
+
+## Instruction maintenance evidence
+
+The 2026-09-12 instruction audit used OpenAI's
+[Rethinking skills and prompts for GPT-6 Astra](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
+(2026-09-11): precise triggers, contextual reads, proportionate checks and
+completion within existing authority. Apply these model-neutral choices to both
+the seed and generated instructions. Static checks do not prove model behavior.
