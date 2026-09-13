@@ -2,7 +2,8 @@
 set -euo pipefail
 
 repository_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-temporary_root="$(mktemp -d)"
+temporary_root="$(mktemp -d "${TMPDIR:-/tmp}/apt-validation.XXXXXX")"
+temporary_root="$(cd "$temporary_root" && pwd -P)"
 trap 'rm -rf "$temporary_root"' EXIT HUP INT TERM
 
 fail() {
@@ -38,14 +39,19 @@ for file in scripts/create-project.sh README.md AGENTS.md LICENSE \
   assets/branding/project-banner.png assets/branding/project-icon.png; do
   require_file "$repository_root/$file"
 done
-[[ ! -e "$repository_root/CLAUDE.md" ]] || fail "unexpected secondary root instructions"
+check_instruction_adapter() {
+  local root="$1"
+  require_file "$root/AGENTS.md"
+  # A native import must resolve locally and contain no second instruction body.
+  cmp -s "$root/CLAUDE.md" <(printf '%s\n' '@AGENTS.md') ||
+    fail "Claude adapter must import the single maintained AGENTS source: $root"
+}
+check_instruction_adapter "$repository_root"
 [[ ! -d "$repository_root/docs" ]] || fail "duplicate seed documentation surface"
 for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
   require_literal "$skill" "$repository_root/AGENTS.md"
 done
 require_literal "https://github.com/onlinesourdough/AIOS-Plugin" "$repository_root/README.md"
-require_literal "[Agentic Design System](https://github.com/onlinesourdough/Agentic-Design-System)" "$repository_root/README.md"
-require_literal "https://github.com/onlinesourdough/Agentic-Content-System" "$repository_root/README.md"
 
 check_local_links() {
   local markdown="$1"
@@ -76,24 +82,28 @@ bash -n "$repository_root/scripts/create-project.sh"
 bash -n "$repository_root/tests/validate-project-template.sh"
 
 standalone_project="$temporary_root/standalone-project"
-aios_parent="$temporary_root/aios/projects"
-aios_project="$aios_parent/aios-project"
-mkdir -p "$aios_parent"
+chosen_parent="$temporary_root/customer work"
+chosen_project="$chosen_parent/forecast tool"
+mkdir -p "$chosen_parent"
 
 bash "$repository_root/scripts/create-project.sh" "$standalone_project" \
   --name "Standalone Proof" \
   --outcome "Prove independent ownership" \
   --canonical-url "https://example.test/standalone-proof" >/dev/null
-bash "$repository_root/scripts/create-project.sh" "$aios_project" \
-  --name "AIOS Proof" \
-  --outcome "Prove the direct AIOS creation path" >/dev/null
+chosen_output="$(bash "$repository_root/scripts/create-project.sh" "$chosen_project" \
+  --name "Destination Proof" \
+  --outcome "Use the caller-selected repository")"
+[[ "$chosen_output" = "Created Project: $chosen_project" ]] ||
+  fail "creation did not return the caller's actual destination"
+[[ "$(git -C "$chosen_project" rev-parse --show-toplevel)" = "$chosen_project" ]] ||
+  fail "creation placed Git outside the chosen root"
 
 check_created_project() {
   local project="$1"
   local expected_name="$2"
   local expected_outcome="$3"
 
-  for file in AGENTS.md README.md LICENSE .gitignore \
+  for file in AGENTS.md CLAUDE.md README.md LICENSE .gitignore \
     .agents/skills/README.md \
     docs/ownership.md docs/proof.md docs/recovery.md; do
     require_file "$project/$file"
@@ -114,20 +124,26 @@ check_created_project() {
   require_literal "$expected_outcome" "$project/README.md"
   require_literal "$expected_name" "$project/AGENTS.md"
   require_literal "$expected_outcome" "$project/docs/proof.md"
-  require_literal "Security and denial evidence" "$project/docs/proof.md"
-  require_literal "Production security misconfiguration fails closed where protection is required" \
-    "$project/docs/proof.md"
-  require_literal "user's language and at the requested depth" "$project/AGENTS.md"
-  require_literal "context, alternatives," "$project/docs/ownership.md"
   for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
     require_literal "$skill" "$project/AGENTS.md"
   done
   cmp -s "$repository_root/.agents/skills/README.md" \
     "$project/.agents/skills/README.md" || fail "specialist shelf index changed during creation"
 
-  for excluded in assets tests scripts; do
-    [[ ! -e "$project/$excluded" ]] || fail "seed-only path copied: $excluded"
-  done
+  check_instruction_adapter "$project"
+  # Check the actual payload boundary, not prose promising an independent role.
+  # No registry, shared method copies, runtime, design/content placeholders or
+  # harness configuration should be created alongside these owned files.
+  local actual_files expected_files
+  actual_files="$(cd "$project" && rg --files -uu --glob '!.git/**' | LC_ALL=C sort)"
+  expected_files="$(printf '%s\n' .agents/skills/README.md .gitignore AGENTS.md \
+    CLAUDE.md LICENSE README.md docs/ownership.md docs/proof.md docs/recovery.md | LC_ALL=C sort)"
+  [[ "$actual_files" = "$expected_files" ]] || fail "unexpected generated payload: $actual_files"
+  local actual_directories expected_directories
+  actual_directories="$(cd "$project" && find . -type d -not -path './.git*' | LC_ALL=C sort)"
+  expected_directories="$(printf '%s\n' . ./.agents ./.agents/skills ./docs | LC_ALL=C sort)"
+  [[ "$actual_directories" = "$expected_directories" ]] ||
+    fail "unexpected generated directories: $actual_directories"
   while IFS= read -r markdown; do
     check_local_links "$project/$markdown"
   done < <(cd "$project" && rg --files -uu --glob '*.md' --glob '!.git/**')
@@ -141,10 +157,10 @@ check_created_project() {
 }
 
 check_created_project "$standalone_project" "Standalone Proof" "Prove independent ownership"
-check_created_project "$aios_project" "AIOS Proof" "Prove the direct AIOS creation path"
+check_created_project "$chosen_project" "Destination Proof" "Use the caller-selected repository"
 require_literal "https://example.test/standalone-proof" "$standalone_project/README.md"
-printf 'out-of-place creation proof: standalone=%s aios=%s history=empty remotes=0 skills=0 shared-routes=4\n' \
-  "$standalone_project" "$aios_project"
+printf 'out-of-place creation proof: standalone=%s chosen=%s history=empty remotes=0 skills=0 shared-routes=4\n' \
+  "$standalone_project" "$chosen_project"
 
 # Extra methods in a locally customized seed must not leak into a new Project.
 whitelist_seed="$temporary_root/whitelist-seed"
@@ -298,6 +314,53 @@ require_file "$guarded_seed/existing-state.txt"
   fail "dirty-seed guard changed the verified seed revision"
 rm "$guarded_seed/existing-state.txt"
 assert_verified_seed "$guarded_seed" "$guarded_sha" "dirty-seed guard"
+
+# Identity and caller-location guards must reject without converting the seed.
+for guard in branch remote push-url subdirectory ignored-state tracked-state; do
+  case "$guard" in
+    branch) git -C "$guarded_seed" checkout --quiet -b wrong-branch ;;
+    remote) git -C "$guarded_seed" remote add unexpected https://example.test/other.git ;;
+    push-url) git -C "$guarded_seed" remote set-url --push origin https://example.test/push.git ;;
+    ignored-state) printf '%s\n' 'synthetic secret fixture' > "$guarded_seed/.env" ;;
+    tracked-state) printf '%s\n' 'local owner change' >> "$guarded_seed/README.md" ;;
+  esac
+  if (
+    cd "$guarded_seed"
+    if [[ "$guard" = subdirectory ]]; then cd scripts; fi
+    bash "$guarded_seed/scripts/create-project.sh" --in-place \
+      --name "Guard Failure" --outcome "Keep the seed" \
+      --source-url "$in_place_source_url" --source-sha "$guarded_sha"
+  ) >/dev/null 2>&1; then
+    fail "in-place creation accepted $guard"
+  fi
+  [[ "$(git -C "$guarded_seed" rev-parse HEAD)" = "$guarded_sha" ]] ||
+    fail "$guard changed seed history"
+  require_file "$guarded_seed/scripts/create-project.sh"
+  case "$guard" in
+    branch)
+      [[ "$(git -C "$guarded_seed" branch --show-current)" = wrong-branch ]] || fail "guard changed branch"
+      git -C "$guarded_seed" checkout --quiet main
+      ;;
+    remote)
+      [[ "$(git -C "$guarded_seed" remote get-url unexpected)" = https://example.test/other.git ]] || fail "guard changed remote"
+      git -C "$guarded_seed" remote remove unexpected
+      ;;
+    push-url)
+      [[ "$(git -C "$guarded_seed" remote get-url --push origin)" = https://example.test/push.git ]] || fail "guard changed push URL"
+      git -C "$guarded_seed" config --unset-all remote.origin.pushurl
+      ;;
+    ignored-state)
+      cmp -s "$guarded_seed/.env" <(printf '%s\n' 'synthetic secret fixture') || fail "guard changed ignored state"
+      rm "$guarded_seed/.env"
+      ;;
+    tracked-state)
+      [[ "$(tail -n 1 "$guarded_seed/README.md")" = 'local owner change' ]] || fail "guard changed tracked state"
+      git -C "$guarded_seed" restore README.md
+      ;;
+  esac
+  assert_verified_seed "$guarded_seed" "$guarded_sha" "$guard"
+  assert_no_transition_artifacts "$temporary_root" "$guard"
+done
 
 existing_readme="$temporary_root/existing-project-readme"
 cp "$standalone_project/README.md" "$existing_readme"
@@ -478,5 +541,59 @@ if bash "$repository_root/scripts/create-project.sh" "$standalone_project" \
   fail "creation unexpectedly overwrote an existing destination"
 fi
 require_literal "# Standalone Proof" "$standalone_project/README.md"
+
+# Existing destinations, including empty directories and symlinks, are never seeded.
+empty_destination="$temporary_root/empty-existing"
+mkdir "$empty_destination"
+linked_destination="$temporary_root/linked-existing"
+ln -s "$standalone_project" "$linked_destination"
+dangling_destination="$temporary_root/dangling-existing"
+ln -s "$temporary_root/absent-target" "$dangling_destination"
+for destination in "$empty_destination" "$linked_destination" "$dangling_destination"; do
+  if bash "$repository_root/scripts/create-project.sh" "$destination" \
+    --name "No Overwrite" --outcome "Preserve existing owner state" >/dev/null 2>&1; then
+    fail "creation accepted an existing directory or symlink: $destination"
+  fi
+done
+[[ -z "$(ls -A "$empty_destination")" ]] || fail "empty destination was seeded"
+[[ "$(readlink "$linked_destination")" = "$standalone_project" ]] || fail "owner symlink changed"
+[[ "$(readlink "$dangling_destination")" = "$temporary_root/absent-target" ]] || fail "dangling symlink changed"
+cmp -s "$standalone_project/README.md" "$existing_readme" || fail "existing owner content changed"
+
+# Out-of-place generation failure must not install partial output.
+failed_destination="$temporary_root/failed-project"
+if PATH="$fake_git_bin:$PATH" bash "$repository_root/scripts/create-project.sh" \
+  "$failed_destination" --name "Failure" --outcome "No partial repository" >/dev/null 2>&1; then
+  fail "creation survived an injected Git init failure"
+fi
+[[ ! -e "$failed_destination" ]] || fail "generation failure installed partial output"
+
+# A caller-owned destination appearing during generation must survive intact.
+late_destination="$temporary_root/late-destination"
+fake_destination_git_bin="$temporary_root/fake-destination-git-bin"
+mkdir "$fake_destination_git_bin"
+cat > "$fake_destination_git_bin/git" <<EOF
+#!/usr/bin/env bash
+for argument in "\$@"; do
+  if [[ "\$argument" = init ]]; then
+    mkdir "$late_destination"
+    printf '%s\n' 'caller-owned state' > "$late_destination/owner.txt"
+  fi
+done
+exec "$real_git" "\$@"
+EOF
+chmod +x "$fake_destination_git_bin/git"
+if PATH="$fake_destination_git_bin:$PATH" bash "$repository_root/scripts/create-project.sh" \
+  "$late_destination" --name "Late Destination" --outcome "Keep owner state" >/dev/null 2>&1; then
+  fail "creation accepted a destination introduced during generation"
+fi
+cmp -s "$late_destination/owner.txt" <(printf '%s\n' 'caller-owned state') ||
+  fail "creation changed late owner state"
+[[ "$(ls -A "$late_destination")" = owner.txt ]] || fail "creation seeded the late destination"
+
+# Follow the retained recovery path and verify that it is actually restorable.
+mv "$retained_recovery_directory" "$retained_seed"
+assert_verified_seed "$retained_seed" "$retained_sha" "manual retained-seed restoration"
+assert_no_transition_artifacts "$temporary_root" "final cleanup"
 
 printf 'project template validation: PASS\n'

@@ -288,82 +288,63 @@ fi
 cat > "$staging_directory/AGENTS.md" <<EOF
 # $markdown_name
 
-Build and operate the smallest independent Project that creates this outcome:
+Use [README.md](README.md) for the outcome and entrypoints, then read only local
+requirements and canonical context relevant to the change. This repository owns
+its implementation, specialist methods, proof and recovery.
 
-> $markdown_outcome
+## Shared methods
 
-## Start
-
-Use [README.md](README.md) for the outcome and entrypoints, then only canonical
-context relevant to the change. Revisit independent ownership when it changes.
-Use shared AIOS Spec before implementation only for material gaps in scope,
-ownership, boundaries, proof or contracts.
-
-Ask only for a missing decision that materially changes the Project and cannot
-be resolved from repository truth or accepted session context. Keep resolved
-context intact and record technical inferences locally.
-Act on obvious authorized steps and parallelize safe independent work. Hand
-back clear, concise results in the user's language and at the requested depth.
-
-## Shared lifecycle
-
-For substantive lifecycle work, use the installed AIOS plugin (0.4.0 or later):
+Discover the needed installed AIOS method through the native harness:
 \`aios-spec-work\` for unresolved scope or technology decisions, \`aios-build-work\`
-for accepted implementation, \`aios-review-work\` for acceptance or a requested
-repository audit, and \`aios-ship-work\` for authorized delivery. Resolve only the
-needed procedure through the harness; do not copy it or hardcode cache paths.
-This repository owns its requirements, specialist methods, checks, release
-facts and recovery. A clear mechanical or typo edit needs only relevant context,
-the scoped diff and its affected check, without a mandatory skill load or full
-suite.
+for implementation, \`aios-review-work\` for acceptance or repository audit, and
+\`aios-ship-work\` for authorized delivery. Keep accepted context and action/
+destination authority through checks, review and in-scope fixes. Preserve
+separate acceptance and delivery boundaries when delegated.
 
-Complete the authorized result through affected checks, diff review and in-scope
-fixes before handing back. Carry explicit session authorization across phases;
-local procedures do not require renewed approval for the same action and scope.
-Pause only for a material missing decision, authority or required capability.
-Preserve delegated acceptance and delivery boundaries; implementation authority
-does not authorize new publication, external actions or destinations.
+Work in the current task; delegate only when requested or concretely useful.
+Verify each selected root and keep one writer per overlapping change. A
+mechanical edit needs only its relevant context, scoped diff and affected check.
+Do not preload personal AIOS context or copy shared procedures. If a required
+method is unavailable, report the gap and continue work adequately covered by
+the local contract. The plugin is no product runtime dependency.
 
-Work in the current task by default, including when opened directly from the
-sidebar. Use \`aios-orchestrate-workers\` only for requested or concretely
-beneficial delegation, or existing-worker recovery. Verify each selected root
-and preserve one writer for overlapping changes. Repository work does not
-preload personal AIOS context. Plugin availability is an authoring capability,
-not a dependency of the product at runtime; if unavailable, report the method
-gap and perform only work adequately covered by the local contract. Do not
-recreate generic skills locally.
+Use shared design and content skills when needed. Keep working material in
+project-local \`design/\` and \`content/\` as needed and retain input provenance.
+Use the [local skill index](.agents/skills/README.md) for repeatable specialist
+methods. \`AGENTS.md\` owns these instructions; \`CLAUDE.md\` only imports it.
 
-See the [local skill index](.agents/skills/README.md) for the flat layout,
-ownership boundary, and specialist-gap route.
+## Engineering constraints
 
-Keep one lifecycle record across Spec, Build, Review, revisions, and any
-authorized Ship. The Project repository is canonical after creation.
-For a clear mechanical change, record only the delta and its check in the
-current session; do not recreate a full specification or lifecycle record.
+- Keep an existing working stack unless the contract needs a material change.
+  Prefer one deployable unit and keep vendor/framework details at the edges of
+  reusable domain logic. Add infrastructure only for demonstrated responsibilities.
+- Prefer existing maintainable patterns and small coherent components; comments
+  explain non-obvious intent, tradeoffs or constraints.
+- Validate external input. Enforce protected actions and irreversible policy at
+  a trusted server or worker boundary; public or local-only interfaces do not
+  gain authentication by default.
+- Make retried effects idempotent; bound reads, timeouts, retries, concurrency
+  and cost. Check current official terms when cost changes the chosen shape.
+- Keep secrets and private data out of source, logs, exports and client builds.
+  Use synthetic fixtures; never copy real \`.env\` files into fixtures or worktrees
+  by default. Preserve unrelated work.
 
-Prefer existing maintainable patterns and small coherent components; comments
-explain only non-obvious intent, tradeoffs, or constraints. Use synthetic
-fixture data; never copy real \`.env\` files into fixtures or worktrees by
-default.
+## Local proof and operation
 
-## Before completion
+Keep entrypoints and actual check commands in README as implementation develops.
+Record current responsibilities in [ownership](docs/ownership.md), acceptance
+and measurement evidence in [proof](docs/proof.md), and the tested rollback,
+restore, replay or reconciliation path in [recovery](docs/recovery.md).
 
-Verify behavior through the real interface or validator. Run affected checks
-supported by the Project, proportional to risk. Check failure,
-denial, duplicate, and recovery behavior as relevant. Inspect the result and
-diff, fix in-scope findings, and rerun affected checks. Broaden verification only
-for new failures or unresolved risk. Keep affected README and
-[proof record](docs/proof.md) facts current with actual evidence. Hand back the
-observable result, check outcomes and material limits; delivery and outcome
-measurement remain pending until evidenced.
-
-## Ownership and recovery
-
-Record current responsibility in [docs/ownership.md](docs/ownership.md),
-acceptance evidence in [docs/proof.md](docs/proof.md), and the tested recovery
-path in [docs/recovery.md](docs/recovery.md). Keep secrets and private data out
-of source, logs, exports, and client builds.
+Verify through the real interface or validator, including failure, denial,
+duplicate and recovery behavior as relevant. Review the diff, fix in-scope
+findings and rerun affected checks. Report actual results and material limits;
+delivery and outcome measurement remain pending until evidenced. Hand back
+clear, concise results in the user's language and at the requested depth.
 EOF
+
+# Native Claude Code import; AGENTS.md remains the only instruction body.
+printf '%s\n' '@AGENTS.md' > "$staging_directory/CLAUDE.md"
 
 cat > "$staging_directory/README.md" <<EOF
 # $markdown_name
@@ -372,42 +353,32 @@ cat > "$staging_directory/README.md" <<EOF
 
 $markdown_outcome
 
-This repository is the canonical home of the Project. It owns the Project's
-instructions, skills, implementation, proof, recovery, and lifecycle. Context
-from other repositories or systems is copied as needed and is not a runtime
-dependency.
-
 $canonical_section
 
 ## Start
 
-Use [AGENTS.md](AGENTS.md) for local instructions and the ownership, proof or
-recovery records in [docs/](docs/) when relevant. Use shared AIOS Spec for
-material unresolved contract gaps. Continue from this repository root through
-implementation, affected checks, review, fixes and authorized delivery.
+Follow [AGENTS.md](AGENTS.md) for local requirements and shared method discovery.
+Work from this repository in the current task. Record the implementation's
+entrypoints, setup and check commands here as they become known.
 
-## Lifecycle
+This repository owns its instructions, implementation, proof and recovery.
+Bring in relevant context and approved assets with their provenance. Shared
+AIOS methods are authoring capabilities; the product runs independently.
+Design and content working material stays in project-local \`design/\` and
+\`content/\` as needed. The [skill index](.agents/skills/README.md) is for local
+specialist methods.
 
-\`intent → shared spec with local requirements → build ↔ review → authorized ship → owned result\`
-
-Use shared AIOS plugin methods when the task needs the procedures routed in
-[AGENTS.md](AGENTS.md). Local requirements and release/recovery facts remain in
-this repository. The
-[local skill index](.agents/skills/README.md) is reserved for specialist methods;
-creation copies no generic lifecycle skills. Version each maintained specialist
-skill independently using quoted SemVer in YAML metadata.version, initially
-"1.0.0"; the index explains bump criteria. Direct tasks can continue here
-without a lead or worker launch. The plugin is no product runtime dependency.
+\`AGENTS.md\` is the maintained instruction source; \`CLAUDE.md\` imports it for
+Claude Code. Harness setup and shared method installation remain native.
 
 ## Ownership and recovery
 
-- [Ownership](docs/ownership.md) records the owner and canonical sources.
-- [Proof](docs/proof.md) records acceptance and outcome measurement.
-- [Recovery](docs/recovery.md) records rollback, rebuild, restore, replay, or
-  reconciliation evidence as the Project requires.
+- [Ownership](docs/ownership.md) records responsibilities and canonical sources.
+- [Proof](docs/proof.md) records acceptance evidence and outcome measurement.
+- [Recovery](docs/recovery.md) records the actual recovery path and rehearsal.
 
-The repository was initialized with fresh empty Git history and no remote. The
-Project owner makes the first commit and adds a canonical remote when ready.
+The repository starts with fresh empty Git history and no remote. The owner
+makes the first commit and adds a canonical remote within the granted authority.
 See [LICENSE](LICENSE) for the applicable license.
 EOF
 
@@ -486,8 +457,8 @@ authenticated-but-forbidden requests as applicable.
 - Measurement owner: To be recorded
 - Measurement point or window: To be recorded
 
-Tests prove behavior and delivery. Record an outcome as pending until its
-measurement window has elapsed.
+Tests supply behavior evidence. Record delivery only after destination
+verification and the outcome only after its measurement window has elapsed.
 EOF
 
 cat > "$staging_directory/docs/recovery.md" <<EOF

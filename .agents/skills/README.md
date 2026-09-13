@@ -1,28 +1,19 @@
 # Repository specialist skills
 
-Keep only Project- or domain-specific repeatable methods and evals at
-`.agents/skills/<name>/SKILL.md`. Shared Spec, Build, Review, Ship, technology
-selection and generic repository audits come from the installed AIOS plugin,
-outside the Project payload. Do not copy, wrap, rename or symlink those methods
-into this shelf. The template neither owns nor auto-updates this Project.
+Keep repeatable project- or domain-specific methods and evaluations at
+`.agents/skills/<name>/SKILL.md`. Shared AIOS methods, including Spec, Build,
+Review, Ship, design, content and human-writing, are discovered through the
+native harness. Do not copy or wrap them here. See [AGENTS.md](../../AGENTS.md)
+for local requirements and routing.
 
-For a concrete specialist gap, inventory existing Project-local,
-harness-native, installed, and Global capabilities. Reuse a sufficient method;
-install external skills through the chosen harness or plugin only within
-explicit authority, including authorization already granted in the session. An
-installed optional manager may help. Cross-Project and Global Skills remain
-independently owned. See the root AGENTS.md for shared routing.
+For a concrete specialist gap, inspect project-local and installed capabilities,
+reuse a sufficient method, and install only within the session's authority.
+Cross-project skills stay with their owning harness or plugin. No local skill
+is currently needed; add one only for a recurring specialist responsibility.
 
-No repository-specific skill is currently needed. Add one only for a concrete
-repeatable specialist responsibility.
-
-Give every maintained specialist `SKILL.md` a quoted SemVer in YAML frontmatter
-under `metadata.version`, initially `"1.0.0"`. Version each skill independently
-of the Project or package: patch for compatible corrections, minor for compatible
-capabilities, major for breaking invocation or operating-contract changes. Bump
-only affected skills; do not create placeholder skills or generic copies.
-
-Keep discovery descriptions short and specific to the recurring responsibility.
-Read supporting references only when they change the current task's decisions.
-Validate frontmatter, version, local links and inventory when authoring a skill;
-use a representative behavior check when its operating contract changes.
+Keep descriptions short and specific, and read supporting references only when
+they affect the task. Give each maintained specialist skill a quoted SemVer in
+YAML `metadata.version`, initially `"1.0.0"`: patch for compatible corrections,
+minor for compatible capabilities, major for breaking invocation or contract
+changes. Validate frontmatter and local links; verify representative behavior
+when its operating contract changes.

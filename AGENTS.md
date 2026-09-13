@@ -1,121 +1,46 @@
 # Agentic Project Template (APT)
 
-Build the smallest independent Project that creates the intended outcome and
-can be understood, operated, recovered, and handed over by its owner.
+Use APT as described in [README.md](README.md) to start a new independent
+repository at the caller's actual destination. Do not seed an existing project.
 
-## Shared lifecycle
+## Local work and shared methods
 
-For substantive lifecycle work, use the installed AIOS plugin (0.4.0 or later):
+Read only the request and relevant repository context. This repository owns its
+requirements, specialist methods, checks and creation/recovery behavior.
+Discover the needed installed AIOS method through the native harness:
 `aios-spec-work` for unresolved scope or technology decisions, `aios-build-work`
-for accepted implementation, `aios-review-work` for acceptance or a requested
-repository audit, and `aios-ship-work` for authorized delivery. Resolve only the
-needed procedure through the harness; do not copy it or hardcode cache paths.
-This repository owns its requirements, specialist methods, checks, release
-facts and recovery. A clear mechanical or typo edit needs only relevant context,
-the scoped diff and its affected check, without a mandatory skill load or full
-suite.
+for implementation, `aios-review-work` for acceptance or repository audit, and
+`aios-ship-work` for authorized delivery. Do not copy shared methods or hardcode
+installation paths; the [local skill index](.agents/skills/README.md) holds only
+specialist guidance. Missing methods are a capability gap, not a runtime
+requirement; continue work adequately covered by the local contract.
 
-Complete the authorized result through affected checks, diff review and in-scope
-fixes before handing back. Carry explicit session authorization across phases;
-local procedures do not require renewed approval for the same action and scope.
-Pause only for a material missing decision, authority or required capability.
-Preserve delegated acceptance and delivery boundaries; implementation authority
-does not authorize new publication, external actions or destinations.
+Keep accepted context and action/destination authority across phases. Complete
+authorized work through affected checks, review and in-scope fixes. Preserve
+separate acceptance and delivery boundaries when delegated. Work in the current
+task, verify each selected root and keep one writer per overlapping change.
+Repository work does not preload personal AIOS context. A mechanical or typo
+edit needs only the relevant context, scoped diff and affected check.
 
-Work in the current task by default, including when opened directly from the
-sidebar. Use `aios-orchestrate-workers` only for requested or concretely
-beneficial delegation, or existing-worker recovery. Verify each selected root
-and preserve one writer for overlapping changes. Repository work does not
-preload personal AIOS context. Plugin availability is an authoring capability,
-not a dependency of the product at runtime; if unavailable, report the method
-gap and perform only work adequately covered by the local contract. Do not
-recreate generic skills locally.
-
-## Start
-
-1. Read the request and only the README sections or canonical context relevant
-   to the change.
-2. Revisit independent ownership only when the requested change affects it.
-3. Preserve resolved upstream intent. Use `aios-spec-work` for unresolved
-   project-local scope, boundaries, or proof; a clear mechanical change needs
-   only the delta and its check in the current session.
-4. For a new or materially changed technology decision, run
-   `aios-spec-work` after the contract. A working
-   stack bypasses it when the change does not materially alter technology.
-5. Build, verify, review, and ship only within the granted authority.
-
-Treat cost and usage as acceptance evidence when they can change the smallest
-reliable shape. Check current official terms at decision time; do not preserve
-volatile prices, a provider catalogue, or a default vendor in Project truth.
-An orchestration runtime is optional: select one only when visible workflow
-responsibilities justify it, and keep reusable deterministic domain logic in
-tested Project code.
-
-Ask only when a missing decision materially changes the Project and cannot be
-resolved from repository truth or the accepted session context.
-Act on obvious authorized steps and parallelize safe independent work. Hand
-back clear, concise results in the user's language and at the requested depth.
-
-See the [local skill index](.agents/skills/README.md) for the flat layout,
-ownership boundary, and specialist-gap route.
-
-Keep the same authorized goal across Spec, Build, Review, revisions, and authorized
-Ship. Do not create lifecycle ceremony for a small mechanical change.
-
-## Inputs and ownership
-
-- AIOS may provide resolved business context, outcome, proof, and authority.
-- A Design System may provide an approved visual handoff as ordinary input.
-- Existing code, a brief, conversation, issue, or README may provide
-  standalone context.
-
-Copy only the context the Project needs. The Project repository becomes
-canonical for its technical truth and never depends on AIOS, a Design System,
-or this template at runtime.
+Use shared design and content skills when needed; working material belongs in
+project-local `design/` and `content/` as needed. Copy only relevant inputs and
+preserve their provenance. Neither directory is part of the seed payload.
 
 ## Creation and transfer
 
-This root is the directly copyable APT seed. It does not contain a nested
-template framework. Use the supported helper for either entry point. A
-verified task or worker that fetched and validated the exact live APT revision
-directly at the final Project path can convert that clean seed in place:
+Use [the creation procedure](README.md#create-a-repository). The helper owns both
+out-of-place creation and conversion of an exactly verified clean seed at the
+final root. Preserve its source URL/SHA, exact Git root, branch, sole remote,
+clean-state, payload whitelist, no-overwrite and recovery guards. The caller
+verifies the live source/default branch and runs the validator before in-place
+conversion. Re-enter the exact final path after replacement before attesting
+the new Git root. Retain and report recovery evidence if restoration or cleanup
+fails; do not claim success while it remains unresolved.
 
-```sh
-bash scripts/create-project.sh --in-place \
-  --name "Project Name" --outcome "The intended Project outcome" \
-  --source-url "https://github.com/onlinesourdough/Agentic-project-template.git" \
-  --source-sha "$(git rev-parse HEAD)"
-```
-
-The caller verifies the live source, default branch, exact revision, and APT
-validator before invoking this destructive route. The helper independently
-guards the current Git root, `main`, sole `origin`, source URL, exact HEAD, and
-clean state before generation. Existing out-of-place creation remains
-supported:
-
-```sh
-# AIOS: create directly under its projects directory.
-bash scripts/create-project.sh /path/to/AIOS/projects/<name> \
-  --name "Project Name" --outcome "The intended Project outcome"
-
-# Standalone: run the same helper from a checked-out APT seed.
-bash scripts/create-project.sh ../<name> \
-  --name "Project Name" --outcome "The intended Project outcome"
-```
-
-Both routes copy the specialist skill index and the
-license, generate project-specific `AGENTS.md`, `README.md`, and
-ownership/proof/recovery notes, and initialize a fresh empty Git repository.
-They exclude the template's
-README, instructions, docs, assets, tests, creation script, `.git` directory,
-remotes, issue references, caches, and generated state. The owner makes the
-first Project commit and adds any canonical remote. In-place creation records
-the verified APT URL and SHA as historical provenance, then removes the seed
-identity and history. The writer re-enters the exact final path before its
-post-transition attestation. The seed is not a runtime dependency after
-transfer.
-`CLAUDE.md` is intentionally absent; `AGENTS.md` is the sole root instruction
-file and the helper does not generate a Claude adapter.
+`scripts/create-project.sh` owns generated instructions and ownership/proof/
+recovery notes. New repositories have fresh empty Git history and no remote.
+Keep `AGENTS.md` as the maintained instruction source; `CLAUDE.md` is only its
+local import adapter. Creation must not change global harness configuration.
 
 ## Engineering rules
 
@@ -139,19 +64,12 @@ file and the helper does not generate a Claude adapter.
 - Preserve unrelated contributors' changes and distinguish source, synthetic,
   and operational proof.
 
-## Before completion
+## Verification
 
-- Verify intended behavior through its real interface.
-- Run the affected checks supported by this repository, proportional to risk.
-- Check relevant failure, denial, duplicate, and recovery behavior.
-- Review the diff for accidental complexity and stale truth; fix in-scope findings.
-- Rerun affected checks after fixes; broaden only for new failures or unresolved risk.
-- Report the observable result, actual check outcomes, unavailable evidence and
-  remaining risk. Mark delivery and outcome measurement pending until evidenced.
-
-The creation suite uses disposable local fixtures with no production access.
-When creation or transfer changes, run `bash tests/validate-project-template.sh`,
-inspect a generated Project's actual instructions, and fix related failures
-within the accepted task. A prose-only correction does not require that suite.
-Never claim a test, deployment, migration, or runtime path passed without
-reading its result.
+When creation or transfer changes, run `bash tests/validate-project-template.sh`
+and inspect a generated project's actual instructions. Use synthetic local
+fixtures without production access. Check relevant success, denial, duplicate
+and recovery behavior, review the diff and fix in-scope findings. Rerun affected
+checks after fixes; broaden only for new failures or unresolved risk. Report
+actual check results and material limitations. Delivery and outcome measurement
+remain pending until evidenced.
