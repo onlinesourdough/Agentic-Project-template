@@ -11,7 +11,8 @@ and generated files limited to the selected kind. An ordinary code change
 updates its owning documentation in the same change or explains no impact.
 Do not treat a date refresh as evidence.
 
-For generation or transfer changes, run
+Validation needs Bash, Git and ripgrep; ShellCheck checks the generator scripts.
+CI installs its validation tools explicitly. For generation or transfer changes, run
 `bash tests/validate-project-template.sh`, inspect representative generated
 instructions, review the diff and fix in-scope findings. Preserve synthetic
 denial, duplicate and recovery cases. Put version-bound proof in the PR or CI
