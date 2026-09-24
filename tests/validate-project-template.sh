@@ -35,7 +35,7 @@ check_skill_layout() {
 
 skills_root="$repository_root/.agents/skills"
 check_skill_layout "$skills_root" "seed"
-for file in scripts/create-project.sh README.md AGENTS.md LICENSE \
+for file in scripts/create-project.sh scripts/foundation-content.sh README.md AGENTS.md LICENSE \
   assets/branding/project-banner.png assets/branding/project-icon.png; do
   require_file "$repository_root/$file"
 done
@@ -47,7 +47,6 @@ check_instruction_adapter() {
     fail "Claude adapter must import the single maintained AGENTS source: $root"
 }
 check_instruction_adapter "$repository_root"
-[[ ! -d "$repository_root/docs" ]] || fail "duplicate seed documentation surface"
 for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
   require_literal "$skill" "$repository_root/AGENTS.md"
 done
@@ -79,6 +78,7 @@ if rg -n -uu --glob '!.git/**' --glob '!tests/validate-project-template.sh' \
 fi
 
 bash -n "$repository_root/scripts/create-project.sh"
+bash -n "$repository_root/scripts/foundation-content.sh"
 bash -n "$repository_root/tests/validate-project-template.sh"
 
 standalone_project="$temporary_root/standalone-project"
@@ -97,15 +97,28 @@ chosen_output="$(bash "$repository_root/scripts/create-project.sh" "$chosen_proj
   fail "creation did not return the caller's actual destination"
 [[ "$(git -C "$chosen_project" rev-parse --show-toplevel)" = "$chosen_project" ]] ||
   fail "creation placed Git outside the chosen root"
+application_project="$temporary_root/application-project"
+bash "$repository_root/scripts/create-project.sh" "$application_project" \
+  --name "Application Proof" --outcome "Serve a small local application" \
+  --kind application >/dev/null
+api_project="$temporary_root/api-project"
+bash "$repository_root/scripts/create-project.sh" "$api_project" \
+  --name "API Proof" --outcome "Expose a documented interface" \
+  --kind api >/dev/null
+cli_project="$temporary_root/cli-project"
+bash "$repository_root/scripts/create-project.sh" "$cli_project" \
+  --name "CLI Proof" --outcome "Provide a command interface" \
+  --kind cli >/dev/null
 
 check_created_project() {
   local project="$1"
   local expected_name="$2"
   local expected_outcome="$3"
+  local kind="${4:-general}"
 
-  for file in AGENTS.md CLAUDE.md README.md LICENSE .gitignore \
+  for file in AGENTS.md CLAUDE.md README.md CONTRIBUTING.md .gitignore \
     .agents/skills/README.md \
-    docs/ownership.md docs/proof.md docs/recovery.md; do
+    docs/README.md docs/template-license.txt; do
     require_file "$project/$file"
   done
 
@@ -123,7 +136,15 @@ check_created_project() {
   require_literal "# $expected_name" "$project/README.md"
   require_literal "$expected_outcome" "$project/README.md"
   require_literal "$expected_name" "$project/AGENTS.md"
-  require_literal "$expected_outcome" "$project/docs/proof.md"
+  require_literal "No application," "$project/README.md"
+  [[ ! -e "$project/LICENSE" ]] || fail "template license became a product license"
+  require_literal "Copyright (c) 2026 Gustav Anderson" "$project/docs/template-license.txt"
+  require_literal "does not license later product code" "$project/docs/template-license.txt"
+  cmp -s <(tail -n +3 "$project/docs/template-license.txt") "$repository_root/LICENSE" ||
+    fail "template license notice changed in generated project"
+  [[ ! -e "$project/docs/ownership.md" && ! -e "$project/docs/proof.md" &&
+     ! -e "$project/docs/recovery.md" ]] ||
+    fail "obsolete boilerplate notes were generated"
   for skill in aios-spec-work aios-build-work aios-review-work aios-ship-work; do
     require_literal "$skill" "$project/AGENTS.md"
   done
@@ -136,8 +157,15 @@ check_created_project() {
   # harness configuration should be created alongside these owned files.
   local actual_files expected_files
   actual_files="$(cd "$project" && rg --files -uu --glob '!.git/**' | LC_ALL=C sort)"
-  expected_files="$(printf '%s\n' .agents/skills/README.md .gitignore AGENTS.md \
-    CLAUDE.md LICENSE README.md docs/ownership.md docs/proof.md docs/recovery.md | LC_ALL=C sort)"
+  if [[ "$kind" = general ]]; then
+    expected_files="$(printf '%s\n' .agents/skills/README.md .gitignore AGENTS.md \
+      CLAUDE.md README.md CONTRIBUTING.md docs/README.md docs/template-license.txt | LC_ALL=C sort)"
+  else
+    expected_files="$(printf '%s\n' .agents/skills/README.md .gitignore AGENTS.md \
+      CLAUDE.md README.md CONTRIBUTING.md docs/README.md docs/template-license.txt \
+      ARCHITECTURE.md DESIGN.md SECURITY.md docs/operations.md \
+      docs/deployment.md docs/infrastructure.md | LC_ALL=C sort)"
+  fi
   [[ "$actual_files" = "$expected_files" ]] || fail "unexpected generated payload: $actual_files"
   local actual_directories expected_directories
   actual_directories="$(cd "$project" && find . -type d -not -path './.git*' | LC_ALL=C sort)"
@@ -158,6 +186,32 @@ check_created_project() {
 
 check_created_project "$standalone_project" "Standalone Proof" "Prove independent ownership"
 check_created_project "$chosen_project" "Destination Proof" "Use the caller-selected repository"
+check_created_project "$application_project" "Application Proof" "Serve a small local application" application
+check_created_project "$api_project" "API Proof" "Expose a documented interface" api
+check_created_project "$cli_project" "CLI Proof" "Provide a command interface" cli
+require_literal "# Interface contract" "$api_project/DESIGN.md"
+require_literal "selected interface kind is api" "$api_project/DESIGN.md"
+require_literal "selected interface kind is cli" "$cli_project/DESIGN.md"
+require_literal "every three hours" "$application_project/docs/operations.md"
+require_literal "No provider" "$application_project/docs/deployment.md"
+invalid_kind="$temporary_root/invalid-kind"
+if bash "$repository_root/scripts/create-project.sh" "$invalid_kind" \
+  --name "Invalid" --outcome "Reject an unsupported kind" \
+  --kind factory >/dev/null 2>&1; then
+  fail "creation accepted an unsupported kind"
+fi
+[[ ! -e "$invalid_kind" ]] || fail "unsupported kind created a destination"
+for project in "$standalone_project" "$application_project"; do
+  for ignored in .env .env.production .dev.vars .local/cache node_modules/cache .venv/lib .wrangler/state; do
+    git -C "$project" check-ignore --quiet "$ignored" ||
+      fail "credential or local state was not ignored: $ignored"
+  done
+  for tracked in .env.example .dev.vars.example package-lock.json pnpm-lock.yaml src/main.ts config.local.json .vscode/settings.json; do
+    if git -C "$project" check-ignore --quiet "$tracked"; then
+      fail "source or example was ignored: $tracked"
+    fi
+  done
+done
 require_literal "https://example.test/standalone-proof" "$standalone_project/README.md"
 printf 'out-of-place creation proof: standalone=%s chosen=%s history=empty remotes=0 skills=0 shared-routes=4\n' \
   "$standalone_project" "$chosen_project"
@@ -252,8 +306,8 @@ in_place_path_after="$(cd "$in_place_seed" && pwd -P)"
 check_created_project "$in_place_seed" "In-place Proof" \
   "Prove same-root ownership transfer"
 require_literal "$in_place_source_url@$in_place_sha" \
-  "$in_place_seed/docs/ownership.md"
-require_literal "Historical provenance" "$in_place_seed/docs/ownership.md"
+  "$in_place_seed/README.md"
+require_literal "historical provenance" "$in_place_seed/README.md"
 assert_no_transition_artifacts "$temporary_root" "successful in-place creation"
 printf 'in-place transition proof: before=%s after=%s source=%s@%s history=empty remotes=0 skills=0 shared-routes=4 seed-only-paths=absent\n' \
   "$in_place_path_before" "$in_place_path_after" "$in_place_source_url" \

@@ -48,10 +48,21 @@ empty directory or symlink. `--canonical-url` may identify an existing canonical
 location; omitting it declares the new repository canonical. Neither option
 sets a Git remote or grants publication authority.
 
-Both creation routes generate project-specific instructions, README and
-ownership/proof/recovery notes, copy only the specialist skill index and
-license, and initialize fresh empty Git history with no remote. The owner makes
-the first commit and adds a canonical remote within the granted authority.
+The default `--kind general` creates README, AGENTS, CONTRIBUTING and
+docs/README entrypoints without assuming an app or hosting. Explicit
+`--kind application` adds ARCHITECTURE, DESIGN, SECURITY and
+operations/deployment/infrastructure records. `--kind api` and `--kind cli`
+use the same application records with an interface contract in DESIGN.
+These foundation records use only the supplied name, outcome, kind and URL.
+They state what remains unimplemented and unverified. Later work records the
+actual stack, commands, owners, controls, deployment and evidence. Creation
+does not select a provider, deploy an app or enable CI.
+
+Both creation routes generate project-specific instructions, a scoped template
+license notice, and fresh empty Git history with no remote. The new product's
+license is an owner decision. The owner makes the first commit and adds a
+canonical remote within granted authority. Only the specialist skill index is
+copied; generic AIOS skills remain installed capabilities.
 Template assets, tests, scripts, issue state and caches stay behind. An
 out-of-place failure removes private staging state and preserves an existing
 destination.
@@ -92,7 +103,7 @@ verified seed at the same final path. If restoration or cleanup cannot finish,
 it reports the exact retained recovery directory instead of claiming success.
 Success leaves that final path as the new project with fresh empty Git history,
 no remote, the filtered payload, and the verified source URL@SHA in
-`docs/ownership.md` as historical provenance. Because the directory entry is
+`README.md` as historical provenance. Because the directory entry is
 replaced, the writer must re-enter that exact absolute path before its
 post-transition root and Git attestation.
 
@@ -112,7 +123,8 @@ Other harnesses need their own supported discovery checked when selected.
 
 ## Maintaining APT
 
-The root is the seed. `scripts/create-project.sh` owns the generated instructions;
+The root is the seed. `scripts/create-project.sh` and its sourced
+`scripts/foundation-content.sh` own generated instructions and foundation;
 changing this README or the seed's AGENTS alone does not change new projects.
 Keep local engineering constraints useful and framework-neutral. Shared Spec
 owns material scope and technology decisions, including current cost and usage
@@ -128,7 +140,11 @@ bash tests/validate-project-template.sh
 It uses disposable local fixtures to verify the payload, source identity,
 no-overwrite guards, clean-state checks and recovery. Inspect a generated
 project's actual instructions as well; structural checks do not prove agent
-behavior. A prose-only correction needs only its affected checks.
+behavior, production readiness, CI activation or native model behavior. A
+prose-only correction needs only its affected checks.
+
+The [documentation index](docs/README.md) identifies the template's canonical
+records. [CONTRIBUTING.md](CONTRIBUTING.md) covers changes to this generator.
 
 The canonical template source is
 [onlinesourdough/Agentic-project-template](https://github.com/onlinesourdough/Agentic-project-template).

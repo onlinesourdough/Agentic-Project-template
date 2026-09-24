@@ -10,8 +10,11 @@ requirements, specialist methods, checks and creation/recovery behavior.
 Discover the needed installed AIOS method through the native harness:
 `aios-spec-work` for unresolved scope or technology decisions, `aios-build-work`
 for implementation, `aios-review-work` for acceptance or repository audit, and
-`aios-ship-work` for authorized delivery. Do not copy shared methods or hardcode
-installation paths; the [local skill index](.agents/skills/README.md) holds only
+`aios-ship-work` for authorized delivery. Use `aios-project-foundation` for
+explicit foundation repair or transition to a software/defence factory when
+available; ordinary creation grants no provisioning authority. Do not copy
+shared methods or hardcode installation paths; the
+[local skill index](.agents/skills/README.md) holds only
 specialist guidance. Missing methods are a capability gap, not a runtime
 requirement; continue work adequately covered by the local contract.
 
@@ -37,8 +40,10 @@ conversion. Re-enter the exact final path after replacement before attesting
 the new Git root. Retain and report recovery evidence if restoration or cleanup
 fails; do not claim success while it remains unresolved.
 
-`scripts/create-project.sh` owns generated instructions and ownership/proof/
-recovery notes. New repositories have fresh empty Git history and no remote.
+`scripts/create-project.sh` and `scripts/foundation-content.sh` own generated
+instructions and foundation records. New repositories have fresh empty Git
+history and no remote. The generated template license notice is scoped to
+starter material; product licensing remains an owner decision.
 Keep `AGENTS.md` as the maintained instruction source; `CLAUDE.md` is only its
 local import adapter. Creation must not change global harness configuration.
 
@@ -61,6 +66,8 @@ local import adapter. Creation must not change global harness configuration.
 - Preserve rollback, replay, disable, restore, reconciliation, or export as
   the risk requires.
 - Keep README and operational truth current with behavior.
+- Update the owning document with ordinary code changes or explain no impact;
+  a date-only refresh is not evidence.
 - Preserve unrelated contributors' changes and distinguish source, synthetic,
   and operational proof.
 
