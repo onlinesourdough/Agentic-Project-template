@@ -5,11 +5,12 @@ usage() {
   cat <<'USAGE'
 Usage:
   bash scripts/create-project.sh DESTINATION --name "Project Name" \
-    --outcome "The intended Project outcome" [--canonical-url URL]
+    --outcome "The intended Project outcome" [--kind general|application|api|cli] \
+    [--canonical-url URL]
 
   bash scripts/create-project.sh --in-place --name "Project Name" \
     --outcome "The intended Project outcome" --source-url URL \
-    --source-sha SHA [--canonical-url URL]
+    --source-sha SHA [--kind general|application|api|cli] [--canonical-url URL]
 
 DESTINATION must not already exist. --in-place converts the clean, verified APT
 seed at the current Git root. Both routes create a fresh Project with no Git
@@ -48,6 +49,7 @@ project_outcome=''
 canonical_url=''
 source_url=''
 source_sha=''
+project_kind='general'
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -76,6 +78,11 @@ while [[ $# -gt 0 ]]; do
       source_sha="$2"
       shift 2
       ;;
+    --kind)
+      [[ $# -ge 2 ]] || fail "--kind requires a value"
+      project_kind="$2"
+      shift 2
+      ;;
     --help)
       usage
       exit 0
@@ -88,6 +95,10 @@ done
 
 [[ -n "$project_name" ]] || fail "--name is required"
 [[ -n "$project_outcome" ]] || fail "--outcome is required"
+case "$project_kind" in
+  general|application|api|cli) ;;
+  *) fail "--kind must be general, application, api, or cli" ;;
+esac
 
 if $in_place; then
   [[ -n "$source_url" ]] || fail "--source-url is required with --in-place"
@@ -138,6 +149,7 @@ source_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 [[ -d "$source_root/.agents/skills" ]] || fail "missing local skills"
 [[ -f "$source_root/.agents/skills/README.md" ]] || fail "missing local skill index"
 [[ -f "$source_root/LICENSE" ]] || fail "missing license"
+[[ -f "$source_root/scripts/foundation-content.sh" ]] || fail "missing foundation generator"
 
 verify_in_place_seed() {
   local seed_root="$1"
@@ -241,9 +253,12 @@ trap 'exit 129' HUP
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-mkdir -p "$staging_directory/.agents/skills"
+mkdir -p "$staging_directory/.agents/skills" "$staging_directory/docs"
 cp "$source_root/.agents/skills/README.md" "$staging_directory/.agents/skills/README.md"
-cp "$source_root/LICENSE" "$staging_directory/LICENSE"
+{
+  printf "%s\n\n" "Template-derived starter material: generated foundation text and .agents/skills/README.md. This notice does not license later product code or content."
+  cat "$source_root/LICENSE"
+} > "$staging_directory/docs/template-license.txt"
 
 cat > "$staging_directory/.gitignore" <<'GITIGNORE'
 .DS_Store
@@ -253,241 +268,24 @@ build/
 coverage/
 .cache/
 .tmp/
+.venv/
+__pycache__/
+.pytest_cache/
+.turbo/
+.next/
+.tanstack/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 .env
 .env.*
 !.env.example
+.local/
 GITIGNORE
 
-markdown_name="$project_name"
-markdown_name="${markdown_name//\\/\\\\}"
-markdown_name="${markdown_name//\`/\\\`}"
-markdown_name="${markdown_name//\[/\\[}"
-markdown_name="${markdown_name//\]/\\]}"
-markdown_outcome="$project_outcome"
-markdown_outcome="${markdown_outcome//\\/\\\\}"
-markdown_outcome="${markdown_outcome//\`/\\\`}"
-markdown_outcome="${markdown_outcome//\[/\\[}"
-markdown_outcome="${markdown_outcome//\]/\\]}"
-
-if [[ -n "$canonical_url" ]]; then
-  canonical_section="Canonical URL: [$canonical_url]($canonical_url)"
-else
-  canonical_section='Canonical location: this repository.'
-fi
-
-historical_provenance=''
-if $in_place; then
-  historical_provenance="## Historical provenance
-
-- Creation source: \`$source_url@$source_sha\`
-- This reference records the source used at creation. It is not a runtime
-  dependency or a competing source of Project truth.
-"
-fi
-
-cat > "$staging_directory/AGENTS.md" <<EOF
-# $markdown_name
-
-Use [README.md](README.md) for the outcome and entrypoints, then read only local
-requirements and canonical context relevant to the change. This repository owns
-its implementation, specialist methods, proof and recovery.
-
-## Shared methods
-
-Discover the needed installed AIOS method through the native harness:
-\`aios-spec-work\` for unresolved scope or technology decisions, \`aios-build-work\`
-for implementation, \`aios-review-work\` for acceptance or repository audit, and
-\`aios-ship-work\` for authorized delivery. Keep accepted context and action/
-destination authority through checks, review and in-scope fixes. Preserve
-separate acceptance and delivery boundaries when delegated.
-
-Work in the current task; delegate only when requested or concretely useful.
-Verify each selected root and keep one writer per overlapping change. A
-mechanical edit needs only its relevant context, scoped diff and affected check.
-Do not preload personal AIOS context or copy shared procedures. If a required
-method is unavailable, report the gap and continue work adequately covered by
-the local contract. The plugin is no product runtime dependency.
-
-Use shared design and content skills when needed. Keep working material in
-project-local \`design/\` and \`content/\` as needed and retain input provenance.
-Use the [local skill index](.agents/skills/README.md) for repeatable specialist
-methods. \`AGENTS.md\` owns these instructions; \`CLAUDE.md\` only imports it.
-
-## Engineering constraints
-
-- Keep an existing working stack unless the contract needs a material change.
-  Prefer one deployable unit and keep vendor/framework details at the edges of
-  reusable domain logic. Add infrastructure only for demonstrated responsibilities.
-- Prefer existing maintainable patterns and small coherent components; comments
-  explain non-obvious intent, tradeoffs or constraints.
-- Validate external input. Enforce protected actions and irreversible policy at
-  a trusted server or worker boundary; public or local-only interfaces do not
-  gain authentication by default.
-- Make retried effects idempotent; bound reads, timeouts, retries, concurrency
-  and cost. Check current official terms when cost changes the chosen shape.
-- Keep secrets and private data out of source, logs, exports and client builds.
-  Use synthetic fixtures; never copy real \`.env\` files into fixtures or worktrees
-  by default. Preserve unrelated work.
-
-## Local proof and operation
-
-Keep entrypoints and actual check commands in README as implementation develops.
-Record current responsibilities in [ownership](docs/ownership.md), acceptance
-and measurement evidence in [proof](docs/proof.md), and the tested rollback,
-restore, replay or reconciliation path in [recovery](docs/recovery.md).
-
-Verify through the real interface or validator, including failure, denial,
-duplicate and recovery behavior as relevant. Review the diff, fix in-scope
-findings and rerun affected checks. Report actual results and material limits;
-delivery and outcome measurement remain pending until evidenced. Hand back
-clear, concise results in the user's language and at the requested depth.
-EOF
-
-# Native Claude Code import; AGENTS.md remains the only instruction body.
-printf '%s\n' '@AGENTS.md' > "$staging_directory/CLAUDE.md"
-
-cat > "$staging_directory/README.md" <<EOF
-# $markdown_name
-
-## Outcome
-
-$markdown_outcome
-
-$canonical_section
-
-## Start
-
-Follow [AGENTS.md](AGENTS.md) for local requirements and shared method discovery.
-Work from this repository in the current task. Record the implementation's
-entrypoints, setup and check commands here as they become known.
-
-This repository owns its instructions, implementation, proof and recovery.
-Bring in relevant context and approved assets with their provenance. Shared
-AIOS methods are authoring capabilities; the product runs independently.
-Design and content working material stays in project-local \`design/\` and
-\`content/\` as needed. The [skill index](.agents/skills/README.md) is for local
-specialist methods.
-
-\`AGENTS.md\` is the maintained instruction source; \`CLAUDE.md\` imports it for
-Claude Code. Harness setup and shared method installation remain native.
-
-## Ownership and recovery
-
-- [Ownership](docs/ownership.md) records responsibilities and canonical sources.
-- [Proof](docs/proof.md) records acceptance evidence and outcome measurement.
-- [Recovery](docs/recovery.md) records the actual recovery path and rehearsal.
-
-The repository starts with fresh empty Git history and no remote. The owner
-makes the first commit and adds a canonical remote within the granted authority.
-See [LICENSE](LICENSE) for the applicable license.
-EOF
-
-mkdir -p "$staging_directory/docs"
-cat > "$staging_directory/docs/ownership.md" <<EOF
-# Ownership
-
-## Canonical Project
-
-- Name: $markdown_name
-- Outcome: $markdown_outcome
-- Technical source of truth: this repository
-- Lifecycle owner: record the person or team responsible for decisions,
-  operation, and handover
-
-## Responsibilities
-
-Record one owner for each material responsibility, data source, external
-dependency, trust boundary, and operational decision. Link to the authoritative
-contract rather than copying it into this record.
-
-For a material Project-owned decision, record its context, alternatives,
-rationale, consequences, and any supersession in the existing owning record.
-
-| Responsibility | Source of truth | Owner | Failure or escalation route |
-| --- | --- | --- | --- |
-| Project outcome | [README.md](../README.md) | To be recorded | To be recorded |
-| Implementation | This repository | To be recorded | To be recorded |
-| Operation | To be recorded | To be recorded | To be recorded |
-| Recovery | [recovery.md](recovery.md) | To be recorded | To be recorded |
-
-## Boundary
-
-The Project is canonical after creation. Context providers and adjacent
-repositories may be referenced as inputs, but they do not own this Project's
-runtime truth.
-
-$historical_provenance
-EOF
-
-cat > "$staging_directory/docs/proof.md" <<EOF
-# Proof
-
-## Intended outcome
-
-$markdown_outcome
-
-## Acceptance evidence
-
-Record the real interface, validator, rehearsal, or runtime journey that proves
-the outcome. Keep command output or links to durable evidence with the change.
-
-- [ ] Success behavior verified
-- [ ] Invalid or denied behavior checked where relevant
-- [ ] Duplicate, partial-failure, and recovery behavior checked where relevant
-- [ ] Documentation and local links checked
-
-## Security and denial evidence
-
-Classify each interface as local-only, intentionally public, or protected and
-record its callers and trust boundary. When protection is relevant, record the
-chosen authentication mechanism, server-side authorization rule, and evidence
-for a permitted request plus missing, invalid, expired or replayed, and
-authenticated-but-forbidden requests as applicable.
-
-- [ ] Production security misconfiguration fails closed where protection is required
-- [ ] Secrets and private data are absent from source, client builds, logs, and
-  evidence
-- [ ] External input, resource use, retries, concurrency, and cost are bounded
-  as relevant
-- [ ] Security-relevant failures are visible without exposing sensitive data
-
-## Measurement
-
-- Outcome signal: To be recorded
-- Measurement owner: To be recorded
-- Measurement point or window: To be recorded
-
-Tests supply behavior evidence. Record delivery only after destination
-verification and the outcome only after its measurement window has elapsed.
-EOF
-
-cat > "$staging_directory/docs/recovery.md" <<EOF
-# Recovery
-
-## Recovery owner
-
-Record the person or team who can disable, roll back, rebuild, restore, replay,
-or reconcile the Project and who owns the recovery decision.
-
-## Current path
-
-Document the actual deployment or operating shape, the last known good
-artifact, required configuration, and the exact recovery command or runbook.
-Do not place secrets in this record.
-
-1. Identify the affected artifact or state.
-2. Stop or disable the unsafe operation when applicable.
-3. Apply the tested rollback, rebuild, restore, replay, or reconciliation path.
-4. Verify the critical journey and failure visibility.
-5. Record the result in [docs/proof.md](proof.md) and return to operation within
-   existing owner authority; obtain only genuinely missing authorization.
-
-## Rehearsal
-
-- Last recovery rehearsal: To be recorded
-- Result and evidence: To be recorded
-- Remaining risk: To be recorded
-EOF
+# Generate the foundation from validated facts; keep transfer guards below separate.
+source "$source_root/scripts/foundation-content.sh"
 
 if ! git -C "$staging_directory" -c init.defaultBranch=main init --quiet; then
   fail "could not initialize generated Project Git repository"

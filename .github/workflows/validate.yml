@@ -1,0 +1,25 @@
+name: Template validation
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: template-validation-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ripgrep shellcheck
+      - name: Validate generation and recovery
+        run: bash tests/validate-project-template.sh
+      - name: Check generator shell contracts
+        run: shellcheck scripts/create-project.sh scripts/foundation-content.sh
