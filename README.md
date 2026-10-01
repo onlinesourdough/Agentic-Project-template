@@ -1,11 +1,7 @@
-![Agentic Project Template banner](assets/branding/project-banner.png)
-
 # Agentic Project Template (APT)
 
-[<img src="assets/branding/project-icon.png" alt="Agentic Project Template icon" width="32" height="32">](assets/branding/project-icon.png)
-
-APT is a small optional repository starter for turning an idea into a new
-independent project.
+Start a new project with clear instructions, an outcome and a place for its
+documentation. APT creates an independent repository that you own and maintain.
 
 ## Start
 

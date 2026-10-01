@@ -35,8 +35,7 @@ check_skill_layout() {
 
 skills_root="$repository_root/.agents/skills"
 check_skill_layout "$skills_root" "seed"
-for file in scripts/create-project.sh scripts/foundation-content.sh README.md AGENTS.md LICENSE \
-  assets/branding/project-banner.png assets/branding/project-icon.png; do
+for file in scripts/create-project.sh scripts/foundation-content.sh README.md AGENTS.md LICENSE; do
   require_file "$repository_root/$file"
 done
 check_instruction_adapter() {
